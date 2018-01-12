@@ -1,0 +1,32 @@
+{
+  "name": "hypertonic",
+  "version": "1.0.0",
+  "description": "Fitbit API Client",
+  "main": "./src/index.js",
+  "repository": {},
+  "author": "jbw",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.15.4",
+    "moment": "^2.18.1",
+    "node-fetch": "^1.7.1",
+    "simple-oauth2": "^1.3.0"
+  },
+  "scripts": {
+    "start": "node ./src/index.js",
+    "watch": "nodemon ./src/index.js",
+    "test": "mocha"
+  },
+  "devDependencies": {
+    "chai": "^4.1.0",
+    "eslint": "^4.4.1",
+    "eslint-loader": "^1.9.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-mocha": "^4.11.0",
+    "mocha": "^3.4.2",
+    "nodemon": "^1.11.0",
+    "source-map-loader": "^0.2.1",
+    "source-map-support": "^0.4.15",
+    "webpack": "^3.4.1"
+  }
+}

@@ -1,0 +1,53 @@
+{
+    "base": "https://api.fitbit.com/1/user/-",
+    "profile": "https://api.fitbit.com/1/user/-/profile.json",
+    "activities": {
+        "route": "activities",
+        "types": {
+            "calories": {
+                "name": "calories"
+            },
+            "steps": {
+                "name": "steps"
+            },
+            "distance": {
+                "name": "distance"
+            },
+            "goals": {
+                "name": "goals"
+            },
+            "frequent": {
+                "name": "frequent"
+            },
+            "recent": {
+                "name": "recent"
+            },
+            "favorite": {
+                "name": "favorite"
+            }
+        }
+    },
+    "dateFormats": {
+        "route": {
+            "name": "date"
+        },
+        "from": {
+            "name": "{DATEFROM}"
+        },
+        "fromto": {
+            "name": "{DATEFROM}/{DATETO}"
+        },
+        "sevendays": {
+            "name": "{DATEFROM}/7d"
+        },
+        "1day": {
+            "name": "{DATEFROM}/1d"
+        },
+        "daily": {
+            "name": "daily"
+        },
+        "weekly": {
+            "name": "weekly"
+        }
+    }
+}

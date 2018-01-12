@@ -1,0 +1,23 @@
+image: node:latest
+
+
+cache:
+  paths:
+  - node_modules/
+
+stages:
+    - test
+    - dev
+
+test:
+    stage: test
+    script:
+        - yarn
+        - REMOTE_BUILD=true npm test 
+dev:
+    stage: dev
+    only:
+        - develop
+    script:
+        - yarn
+        - REMOTE_BUILD=true npm test
