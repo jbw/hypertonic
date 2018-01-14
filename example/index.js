@@ -2,6 +2,7 @@ const fs = require('fs');
 const oauth2 = require('simple-oauth2');
 const express = require('express');
 const Hypertonic = require('../src/api');
+
 const token = require('./secret/token.json');
 const credentials = require('./secret/fitbit.json');
 

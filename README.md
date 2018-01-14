@@ -3,13 +3,39 @@
 
 Fitbit API Wrapper
 
-### Options
+`hypertonic` requires only the token to get started. How you manage authentication flow is up to you but you can see some example code in the example directory.
 
-`hypertonic` accepts two objects (`credentials` and `config`) which contains an authenitcation specific configurations.
+### Example
 
-The `config` object contains internal options to be used by the server configuration.
+#### OAuth2 Credentials
 
-#### Application configuration object
+External specific configurations for a Fitbit application. You can find this information on the Fitbit SDK. It is used to form an oAuth request.
+
+``` javascript
+const oauth2Credentials = {
+    client: {
+        id: '<from_registered_app>',
+        secret: '<from_registered_app>'
+    },
+    auth: {
+        tokenHost: 'https://api.fitbit.com',
+        tokenPath: '/oauth2/token',
+        authorizeHost: 'https://www.fitbit.com',
+        authorizePath: '/oauth2/authorize'
+    }
+};
+```
+
+| Option             | Description                                                      |
+| ------------------ | ---------------------------------------------------------------- |
+| client.id          | Identifier for your application given by the oAuth server.       |
+| client.secret      | Only known to the application and the authorisation server.      |
+| auth.tokenHost     | Host address for fetching a token.                               |
+| auth.tokenPath     | Path after the host. Joined together with `auth.tokenHost`.      |
+| auth.authorizeHost | Host address for authorising the application.                    |
+| auth.authorizePath | Path after the host. Joining together with `auth.authorizeHost`. |
+
+#### Server and Authentication configuration
 
 ``` javascript
 const config = {
@@ -34,45 +60,8 @@ const config = {
 | app.callbackHost         | Portion of the web address containing the address only. Where the service redirects after authorisation is granted. |
 | app.callbackPath         | Path after the host. Joined together with `app.callbackHost`.                                                       |
 
-
-#### OAuth2 Credential object
-
-External specific configurations for a Fitbit application. You can find this information on the Fitbit SDK. Used to form a oAuth request.
-
-``` javascript
-const oauth2Credentials = {
-    client: {
-        id: '<from_registered_app>',
-        secret: '<from_registered_app>'
-    },
-    auth: {
-        tokenHost: 'https://api.fitbit.com',
-        tokenPath: '/oauth2/token',
-        authorizeHost: 'https://www.fitbit.com',
-        authorizePath: '/oauth2/authorize'
-    }
-};
-```
-
-
-
-| Option             | Description                                                      |
-| ------------------ | ---------------------------------------------------------------- |
-| client.id          | Identifier for your application given by the oAuth server.       |
-| client.secret      | Only known to the application and the authorisation server.      |
-| auth.tokenHost     | Host address for fetching a token.                               |
-| auth.tokenPath     | Path after the host. Joined together with `auth.tokenHost`.      |
-| auth.authorizeHost | Host address for authorising the application.                    |
-| auth.authorizePath | Path after the host. Joining together with `auth.authorizeHost`. |
-
-
-## Example
-
-See examples directory.
-
-`const hypertonic = new Hypertonic(token);`
-
 ```javascript
+const hypertonic = new Hypertonic(token);
 api.getActivities().fetch().then(data =>
     res.status(200).json(data);
 });
