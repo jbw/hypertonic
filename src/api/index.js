@@ -4,7 +4,7 @@ const nodeFetch = require('node-fetch');
 
 const _utils = () => {
 
-    const _getHeaderOptions = () => {
+    const getHeaderOptions = () => {
         return {
             headers: {
                 'Authorization': 'Bearer '
@@ -12,17 +12,17 @@ const _utils = () => {
         };
     };
 
-    const _getDateNow = function (offset) {
+    const getDateNow = function (offset) {
         return moment(new Date()).add(offset, 'days').format('YYYY-MM-DD');
     };
 
-    const _addHeader = function (name, value, headerOptions) {
+    const addHeader = function (name, value, headerOptions) {
 
         headerOptions.headers[name] = value;
         return headerOptions;
     };
 
-    const _setAuthHeader = function (token, headerOptions) {
+    const setAuthHeader = function (token, headerOptions) {
 
         if (token && headerOptions.headers['Authorization'] !== undefined) {
             headerOptions.headers['Authorization'] = 'Bearer ' + token;
@@ -31,16 +31,22 @@ const _utils = () => {
         return headerOptions;
     };
 
-    const _setLocale = (locale, headerOptions) => {
+    const setLocale = (locale, headerOptions) => {
         _utils().addHeader('Accept-Language', locale, headerOptions);
     };
 
-    const _getLocale = (headerOptions) => {
+    const getLocale = (headerOptions) => {
         return headerOptions.headers['Accept-Language'];
     };
 
-    return { _getDateNow, _addHeader, _setAuthHeader, _setLocale, _getLocale, _getHeaderOptions };
-
+    return {
+        getDateNow,
+        addHeader,
+        setAuthHeader,
+        setLocale,
+        getLocale,
+        getHeaderOptions
+    };
 };
 
 const FitbitApi = (token) => {
@@ -68,6 +74,10 @@ const FitbitApi = (token) => {
 
     const getFavoriteActivities = () => {
         return getActivities(routes.activities.types.favorite.name).fetch();
+    };
+
+    const getWeeklySummary = () => {
+        return undefined;
     };
 
     const getActivities = (activity) => {
@@ -112,7 +122,9 @@ const FitbitApi = (token) => {
     const fetch = () => {
         const options = _utils().getHeaderOptions();
         _utils().setAuthHeader(token, options);
-        return nodeFetch(context.getURL(), options).then(res => res.json()).catch(err => err);
+        return nodeFetch(context.getURL(), options)
+            .then(res => res.json())
+            .catch(err => { throw (err); });
     };
 
     const context = {
@@ -126,6 +138,7 @@ const FitbitApi = (token) => {
         getFavoriteActivities,
         getFrequentActivities,
         getRecentActivities,
+        getWeeklySummary,
         fetch
     };
 };

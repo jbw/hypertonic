@@ -6,6 +6,7 @@ examples/dist/**/*
 coverage/
 
 secret/
+secrets/
 .secret/
 
 # Logs

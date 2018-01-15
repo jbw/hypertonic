@@ -1,0 +1,18 @@
+{
+    "fitbit": {
+        "client": {
+            "id": "0",
+            "secret": "0"
+        },
+        "auth": {
+            "tokenHost": "https://api.fitbit.com",
+            "tokenPath": "/oauth2/token",
+            "authorizeHost": "https://www.fitbit.com",
+            "authorizePath": "/oauth2/authorize"
+        }
+    },
+    "config": {
+        "scopes": "activity profile settings",
+        "expires_in": 604800
+    }
+}

@@ -3,81 +3,68 @@ const oauth2 = require('simple-oauth2');
 const express = require('express');
 const Hypertonic = require('../src/api');
 
-const token = require('./secret/token.json');
-const credentials = require('./secret/fitbit.json');
+const secrets_path = '../secrets/';
+const credentials = require(secrets_path + 'fitbit.json');
+let token = require(secrets_path + 'token.json').token;
 
-const config = {
-    auth: token,
-    app: {
-        scopes: 'activity profile settings',
-        expires_in: 604800,
-        store: __dirname + '/secret/token.json',
-        callbackHost: 'http://localhost:3000',
-        callbackPath: '/auth/fitbit/callback',
-        refreshPath: '/refresh',
-        authPath: '/auth'
-    }
+const serverConfig = {
+    callbackHost: 'http://localhost:3000',
+    callbackPath: '/auth/fitbit/callback',
+    refreshPath: '/refresh',
+    authPath: '/auth'
 };
 
-const fitbitServer = (oauthCredentials, appConfig) => {
-    const app = express();
-    const auth = oauth2.create(oauthCredentials);
-    const api = Hypertonic(appConfig.auth);
+const auth = oauth2.create(credentials.fitbit);
+const authUrl = auth.authorizationCode.authorizeURL({ scope: credentials.config.scopes });
 
-    const authUrl = auth.authorizationCode.authorizeURL({
-        scope: appConfig.app.scopes
+let _hypertonic = null;
+
+const app = express();
+
+app.get(serverConfig.refreshPath, (req, res) => {
+    const tokenObj = auth.accessToken.create(token);
+
+    tokenObj.refresh().then(newAccessToken => {
+        token = newAccessToken;
+        return res.status(200).json(token);
     });
+});
 
-    app.get(appConfig.app.refreshPath, (req, res) => {
-        const token = appConfig.auth.token;
+app.get(serverConfig.authPath, (req, res) => res.redirect(authUrl));
 
-        const tokenObj = auth.accessToken.create(token);
+app.get(serverConfig.callbackPath, (req, res) => {
 
-        tokenObj.refresh().then(newAccessToken => {
-            appConfig.auth = newAccessToken;
-            return res.status(200).json(appConfig.auth);
-        });
-    });
+    const tokenConfig = {
+        code: req.query.code,
+        expires_in: credentials.config.expires_in
+    };
 
-    app.get(appConfig.app.authPath, (req, res) => {
-        res.redirect(authUrl);
-    });
+    auth.authorizationCode.getToken(tokenConfig, (err, result) => {
 
-    app.get(appConfig.app.callbackPath, (req, res) => {
+        if (err) return res.json(err);
 
-        const tokenConfig = {
-            code: req.query.code,
-            expires_in: appConfig.app.expires_in
-        };
+        token = auth.accessToken.create(result);
+        const savePath = '../secrets/token.json';
 
-        auth.authorizationCode.getToken(tokenConfig, (err, result) => {
-
-            if (err) return res.json(err);
-
-            appConfig.auth = auth.accessToken.create(result);
-
-            fs.writeFile(appConfig.app.store, JSON.stringify(appConfig.auth, null, 2), function (err) {
-                if (err) console.log(err);
-                console.log('Token saved token to ' + appConfig.app.store);
-            });
-
-            return res.status(200).json(appConfig.auth);
-
+        fs.writeFile(savePath, JSON.stringify(token, null, 2), function (err) {
+            if (err) console.log(err);
+            console.log('Token saved token to ' + savePath);
         });
 
-    });
-
-    app.get('/example', (req, res) => {
-
-        api.getActivities().fetch().then(json => {
-            return res.status(200).json(json);
-        });
+        return res.status(200).json(token);
 
     });
 
-    app.listen(3000);
+});
 
-};
+app.get('/example', (req, res) => {
 
+    _hypertonic = Hypertonic(token.access_token);
+    _hypertonic.getActivities().fetch().then(json => {
+        return res.status(200).json(json);
+    });
 
-fitbitServer(credentials, config);
+});
+
+console.log('Server started at:', serverConfig.callbackHost);
+app.listen(3000);

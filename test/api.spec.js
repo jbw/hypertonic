@@ -1,73 +1,25 @@
 
-var assert = require('assert');
-var chai = require('chai');
-var should = chai.should();
-var expect = chai.expect;
+const assert = require('assert');
+const chai = require('chai');
+const should = chai.should();
+const expect = chai.expect;
 
-let appConfig = {};
-let authCreds = {};
-
-if (process.env.REMOTE_BUILD) {
-
-    appConfig = {
-        auth: {
-            token: {
-                access_token: '',
-                refresh_token: ''
-            }
-        },
-        app: {
-            scopes: '',
-            callbackHost: '',
-            callbackPath: ''
-        }
-    };
-
-    authCreds = {
-        client: {
-            id: '0',
-            secret: '0'
-        },
-        auth: {
-            tokenHost: 'https://api.fitbit.com',
-            tokenPath: '/oauth2/token',
-            authorizeHost: 'https://www.fitbit.com',
-            authorizePath: '/oauth2/authorize'
-        }
-    };
-
-
-} else {
-
-    const token = require('../.secret/token.json');
-
-    const authConfig = {
-        callbackHost: 'http://localhost:3000',
-        callbackPath: '/auth/fitbit/callback'
-    };
-
-    appConfig = {
-
-        auth: token,
-
-        app: {
-            scopes: 'activity profile settings',
-            callbackHost: authConfig.callbackHost,
-            callbackPath: authConfig.callbackPath
-        }
-    };
-
-    authCreds = require('../.secret/fitbit.json');
-}
+let secretsPath = process.env.REMOTE_BUILD ? '../secrets_template/' : '../secrets/';
+const token = require(secretsPath + 'token.json').token.access_token;
 
 const Hypertonic = require('../src/api');
-const api = Hypertonic(appConfig.auth);
+
+const api = Hypertonic(token);
 
 describe('API', () => {
 
     describe('#Connection', () => {
         it('should return invalid client with no credentials', () => {
-            return api.getActivities().fetch().then(json => {
+            return api.getActivities().fetch().then((json, error) => {
+                console.log(error)
+                if(error){
+                    assert.fail(error.message);
+                }
                 if (process.env.REMOTE_BUILD) {
                     expect(json.errors.length).to.equal(1);
                     expect(json.errors[0].errorType).to.equal('invalid_client');
@@ -99,7 +51,7 @@ describe('API', () => {
                         .getActivities()
                         .from('today')
                         .fetch()
-                        .then(json => {
+                        .then((json) => {
                             expect(json.activities).to.not.equal(undefined);
                         })
                         .catch(err => {
@@ -171,6 +123,14 @@ describe('API', () => {
                 it('should return summary stats for today', () => {
                     if (process.env.REMOTE_BUILD) return;
                     return api.getActivities().fetch().then(json => {
+                        expect(json.summary).to.be.not.equal(undefined);
+                    });
+
+                });
+
+                it('should return summary stats for the last 7 days', () => {
+                    if (process.env.REMOTE_BUILD) return;
+                    return api.getWeeklySummary().fetch().then(json => {
                         expect(json.summary).to.be.not.equal(undefined);
                     });
 
