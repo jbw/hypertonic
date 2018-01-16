@@ -77,7 +77,7 @@ const FitbitApi = (token) => {
     };
 
     const getWeeklySummary = () => {
-        return undefined;
+        return getActivities().from(routes.dateFormats.route.sevendays).fetch();
     };
 
     const getActivities = (activity) => {

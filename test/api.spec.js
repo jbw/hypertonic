@@ -127,8 +127,10 @@ describe('API', () => {
 
                 it('should return summary stats for the last 7 days', () => {
                     if (process.env.REMOTE_BUILD) return;
-                    return api.getWeeklySummary().fetch().then(json => {
+                    return api.getWeeklySummary().then(json => {
                         expect(json.summary).to.be.not.equal(undefined);
+                    }).catch(err => {
+                        assert.fail(err.message);
                     });
 
                 });
