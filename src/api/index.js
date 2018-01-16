@@ -2,51 +2,40 @@ const moment = require('moment');
 const routes = require('./routes.json');
 const nodeFetch = require('node-fetch');
 
-const _utils = () => {
+const _utils = {
 
-    const getHeaderOptions = () => {
+    getHeaderOptions: () => {
         return {
             headers: {
                 'Authorization': 'Bearer '
             }
         };
-    };
+    },
 
-    const getDateNow = function (offset) {
+    getDateNow: (offset) => {
         return moment(new Date()).add(offset, 'days').format('YYYY-MM-DD');
-    };
+    },
 
-    const addHeader = function (name, value, headerOptions) {
-
+    addHeader: (name, value, headerOptions) => {
         headerOptions.headers[name] = value;
         return headerOptions;
-    };
+    },
 
-    const setAuthHeader = function (token, headerOptions) {
-
+    setAuthHeader: (token, headerOptions) => {
         if (token && headerOptions.headers['Authorization'] !== undefined) {
             headerOptions.headers['Authorization'] = 'Bearer ' + token;
         }
 
         return headerOptions;
-    };
+    },
 
-    const setLocale = (locale, headerOptions) => {
-        _utils().addHeader('Accept-Language', locale, headerOptions);
-    };
+    setLocale: (locale, headerOptions) => {
+        this.addHeader('Accept-Language', locale, headerOptions);
+    },
 
-    const getLocale = (headerOptions) => {
+    getLocale: (headerOptions) => {
         return headerOptions.headers['Accept-Language'];
-    };
-
-    return {
-        getDateNow,
-        addHeader,
-        setAuthHeader,
-        setLocale,
-        getLocale,
-        getHeaderOptions
-    };
+    }
 };
 
 const FitbitApi = (token) => {
@@ -89,13 +78,13 @@ const FitbitApi = (token) => {
 
         if (activity) {
             resourceParts.push(activity);
-            resourceParts.push(...[routes.dateFormats.route.name, _utils().getDateNow()], _utils().getDateNow());
+            resourceParts.push(...[routes.dateFormats.route.name, _utils.getDateNow()], _utils.getDateNow());
         } else {
-            resourceParts.push(...[routes.dateFormats.route.name, _utils().getDateNow()]);
+            resourceParts.push(...[routes.dateFormats.route.name, _utils.getDateNow()]);
         }
 
         const from = (dateFrom) => {
-            if (!dateFrom) dateFrom = _utils().getDateNow();
+            if (!dateFrom) dateFrom = _utils.getDateNow();
 
             const replaceIndex = resourceParts.indexOf(routes.dateFormats.route.name) + DATE_FROM_OFFSET;
             resourceParts[replaceIndex] = dateFrom;
@@ -104,7 +93,7 @@ const FitbitApi = (token) => {
         };
 
         const to = (dateTo) => {
-            if (!dateTo) dateTo = _utils().getDateNow();
+            if (!dateTo) dateTo = _utils.getDateNow();
 
             const replaceIndex = resourceParts.indexOf(routes.dateFormats.route.name) + DATE_TO_OFFSET;
             resourceParts[replaceIndex] = dateTo;
@@ -120,8 +109,8 @@ const FitbitApi = (token) => {
     };
 
     const fetch = () => {
-        const options = _utils().getHeaderOptions();
-        _utils().setAuthHeader(token, options);
+        const options = _utils.getHeaderOptions();
+        _utils.setAuthHeader(token, options);
         return nodeFetch(context.getURL(), options)
             .then(res => res.json())
             .catch(err => { throw (err); });
