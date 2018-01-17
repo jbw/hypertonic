@@ -27,6 +27,14 @@
             }
         }
     },
+    "friends": {
+        "route": "friends",
+        "types": {
+            "leaderboard": {
+                "name": "leaderboard"
+            }
+        }
+    },
     "dateFormats": {
         "route": {
             "name": "date"

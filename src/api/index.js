@@ -68,7 +68,9 @@ const FitbitApi = (token) => {
     const getWeeklySummary = () => {
         return getActivities().from(routes.dateFormats.route.sevendays).fetch();
     };
-
+    const getFriends = (friends) => {
+        return null;
+    };
     const getActivities = (activity) => {
 
         resourceParts = [routes.base, routes.activities.route];
@@ -128,6 +130,7 @@ const FitbitApi = (token) => {
         getFrequentActivities,
         getRecentActivities,
         getWeeklySummary,
+        getFriends,
         fetch
     };
 };

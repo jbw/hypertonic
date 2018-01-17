@@ -168,7 +168,15 @@ describe('API', () => {
     });
 
     describe('#Friends', () => {
+        it('should return leaderboard', () => {
+            if (process.env.REMOTE_BUILD) return;
+            return api.getFriends('leaderboard').then(json => {
+                expect(json.summary).to.be.not.equal(undefined);
+            }).catch(err => {
+                assert.fail(err.message);
+            });
 
+        });
     });
 
     describe('#Heart Rate', () => {
