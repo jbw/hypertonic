@@ -13,8 +13,8 @@
     "simple-oauth2": "^1.3.0"
   },
   "scripts": {
-    "start": "node ./src/index.js",
-    "watch": "nodemon ./src/index.js",
+    "start": "node ./src/api/index.js",
+    "watch": "nodemon ./src/api/index.js",
     "test": "mocha"
   },
   "devDependencies": {
@@ -24,6 +24,8 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-mocha": "^4.11.0",
     "mocha": "^3.4.2",
+    "mocha-nock-fixtures": "^0.2.0",
+    "nock": "^9.1.6",
     "nodemon": "^1.11.0",
     "source-map-loader": "^0.2.1",
     "source-map-support": "^0.4.15",

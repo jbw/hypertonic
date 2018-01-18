@@ -3,6 +3,8 @@ const assert = require('assert');
 const chai = require('chai');
 const should = chai.should();
 const expect = chai.expect;
+//var nock = require('nock');
+
 
 let secretsPath = process.env.REMOTE_BUILD ? '../secrets_template/' : '../secrets/';
 const token = require(secretsPath + 'token.json').token.access_token;
@@ -14,15 +16,13 @@ const api = Hypertonic(token);
 describe('API', () => {
 
     describe('#Connection', () => {
-        it('should return invalid client with no credentials', () => {
-            return api.getActivities().fetch().then((json, error) => {
-
-                if (process.env.REMOTE_BUILD) return;
-
+        it('should return invalid client with no credentials', (done) => {
+            api.getActivities().fetch().then((json, error) => {
                 if (error) {
                     assert.fail(error.message);
                 }
                 expect(json.summary).to.be.not.equal(undefined);
+                done();
 
             });
         });
@@ -32,34 +32,39 @@ describe('API', () => {
     describe('#Activities', () => {
         describe('#Time Series', () => {
             describe('#Activity Summary', () => {
-                it('should return a valid summary resource.', () => {
+                beforeEach(() => {
+
+                });
+
+                it('should return a valid summary resource.', (done) => {
                     const summary = api
                         .getActivities()
                         .from('today')
                         .getURL();
 
                     expect(summary).to.equal('https://api.fitbit.com/1/user/-/activities/date/today.json');
-
+                    done();
                 });
 
-                it('should return activities summary data from server', () => {
-                    if (process.env.REMOTE_BUILD) return;
-                    return api
-                        .getActivities()
+                it('should return activities summary data from server', (done) => {
+
+                    api.getActivities()
                         .from('today')
                         .fetch()
                         .then((json) => {
                             expect(json.activities).to.not.equal(undefined);
+                            done();
                         })
                         .catch(err => {
                             assert.fail(err.message);
+                            done(err);
                         });
                 });
             });
 
             describe('#Steps', () => {
 
-                it('should return a valid steps resource.', () => {
+                it('should return a valid steps resource.', (done) => {
 
                     const urlRange = api
                         .getActivities('steps')
@@ -78,61 +83,59 @@ describe('API', () => {
 
                     expect(url1Month).to.equal(url1MonthSpec);
                     expect(urlRange).to.equal(urlRangeSpec);
+                    done();
                 });
 
-                it('should return steps today', () => {
-                    if (process.env.REMOTE_BUILD) return;
-                    return api
-                        .getActivities('steps')
+                it('should return steps today', (done) => {
+                    api.getActivities('steps')
                         .from()
                         .to('1d')
                         .fetch()
                         .then(json => {
                             expect(json['activities-steps'][0].value).to.be.an('string');
+                            done();
                         }).catch(err => {
                             assert.fail(err.message);
+                            done(err);
                         });
                 });
 
-                it('should return distance today', () => {
-                    if (process.env.REMOTE_BUILD) return;
-                    return api
-                        .getActivities('distance')
+                it('should return distance today', (done) => {
+                    api.getActivities('distance')
                         .from()
                         .to('1d')
                         .fetch()
                         .then(json => {
                             expect(json['activities-distance'][0].value).to.be.an('string');
+                            done();
                         }).catch(err => {
                             assert.fail(err.message);
+                            done(err);
                         });
                 });
 
-                it('should return calories for today', () => {
-                    if (process.env.REMOTE_BUILD) return;
-
-                    return api.getActivities('calories').fetch().then(json => {
+                it('should return calories for today', (done) => {
+                    api.getActivities('calories').fetch().then(json => {
                         expect(json['activities-calories'][0].value).to.be.not.equal(undefined);
+                        done();
                     });
-
                 });
 
-                it('should return summary stats for today', () => {
-                    if (process.env.REMOTE_BUILD) return;
-                    return api.getActivities().fetch().then(json => {
+                it('should return summary stats for today', (done) => {
+                    api.getActivities().fetch().then(json => {
                         expect(json.summary).to.be.not.equal(undefined);
+                        done();
                     });
-
                 });
 
-                it('should return summary stats for the last 7 days', () => {
-                    if (process.env.REMOTE_BUILD) return;
-                    return api.getWeeklySummary().then(json => {
+                it('should return summary stats for the last 7 days', (done) => {
+                    api.getWeeklySummary().then(json => {
                         expect(json.summary).to.be.not.equal(undefined);
+                        done();
                     }).catch(err => {
                         assert.fail(err.message);
+                        done(err);
                     });
-
                 });
             });
 
@@ -169,9 +172,8 @@ describe('API', () => {
 
     describe('#Friends', () => {
         it('should return leaderboard', () => {
-            if (process.env.REMOTE_BUILD) return;
-            return api.getFriends('leaderboard').then(json => {
-                expect(json.summary).to.be.not.equal(undefined);
+            return api.getFriends('leaderboard').fetch().then(json => {
+                expect(json.friends).to.be.a('array');
             }).catch(err => {
                 assert.fail(err.message);
             });

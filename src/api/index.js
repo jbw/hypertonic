@@ -44,6 +44,8 @@ const FitbitApi = (token) => {
 
     let resourceParts = [];
 
+
+
     const getURL = () => {
         const route = resourceParts.join('/') + '.json';
         return route;
@@ -68,9 +70,18 @@ const FitbitApi = (token) => {
     const getWeeklySummary = () => {
         return getActivities().from(routes.dateFormats.route.sevendays).fetch();
     };
+
     const getFriends = (friends) => {
-        return null;
+
+        if (friends === undefined) {
+            resourceParts = [routes.base, routes.friends.route];
+        } else {
+            resourceParts = [routes.base, routes.friends.route, friends];
+        }
+
+        return context;
     };
+
     const getActivities = (activity) => {
 
         resourceParts = [routes.base, routes.activities.route];
