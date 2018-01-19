@@ -5,7 +5,7 @@ const should = chai.should();
 const expect = chai.expect;
 const nock = require('nock');
 
-
+//const token = require('../secrets/token').token.access_token;
 const Hypertonic = require('../src/api');
 const api = Hypertonic('NO_TOKEN');
 
@@ -14,8 +14,8 @@ const fitbitDomain = 'https://api.fitbit.com';
 describe('API', () => {
 
     describe('#Connection', () => {
-        it('should return invalid client with no credentials', (done) => {
-            api.getActivities().fetch().then((json) => {
+        it('should return error response if initialised with no token', (done) => {
+            Hypertonic().getActivities().fetch().then((json) => {
                 expect(json.summary).to.be.not.equal(undefined);
                 done();
             }).catch(err => {
@@ -29,11 +29,16 @@ describe('API', () => {
         describe('#Time Series', () => {
             describe('#Activity Summary', () => {
                 beforeEach(() => {
-                    const getActivitiesResponse = {
-                        activities: []
-                    };
+                    const getActivitiesResponse = require('./fixtures/activities_today.json');
 
-                    nock(fitbitDomain).get('/1/user/-/activities/date/today.json').reply(200, getActivitiesResponse);
+                    nock(fitbitDomain)
+                        .get('/1/user/-/activities/date/today.json')
+                        .reply(200, getActivitiesResponse);
+
+                    nock(fitbitDomain)
+                        .get('/1/user/-/activities/date/2018-01-19.json')
+                        .reply(200, getActivitiesResponse);
+
 
                 });
 
@@ -51,7 +56,7 @@ describe('API', () => {
                     done();
                 });
 
-                it('should return activities summary data from server', (done) => {
+                it('should return a summary of activities', (done) => {
 
                     api.getActivities()
                         .from('today')
@@ -63,6 +68,15 @@ describe('API', () => {
                         .catch(err => {
                             done(err);
                         });
+                });
+
+                it('should return summary stats for today', (done) => {
+                    api.getActivities().fetch().then(json => {
+                        expect(json.summary).to.be.not.equal(undefined);
+                        done();
+                    }).catch(err => {
+                        done(err);
+                    });
                 });
             });
 
@@ -125,14 +139,7 @@ describe('API', () => {
                     });
                 });
 
-                it('should return summary stats for today', (done) => {
-                    api.getActivities().fetch().then(json => {
-                        expect(json.summary).to.be.not.equal(undefined);
-                        done();
-                    }).catch(err => {
-                        done(err);
-                    });
-                });
+
 
                 it('should return summary stats for the last 7 days', (done) => {
                     api.getWeeklySummary().then(json => {
