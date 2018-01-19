@@ -3,27 +3,23 @@ const assert = require('assert');
 const chai = require('chai');
 const should = chai.should();
 const expect = chai.expect;
-//var nock = require('nock');
+const nock = require('nock');
 
-
-let secretsPath = process.env.REMOTE_BUILD ? '../secrets_template/' : '../secrets/';
-const token = require(secretsPath + 'token.json').token.access_token;
 
 const Hypertonic = require('../src/api');
+const api = Hypertonic('NO_TOKEN');
 
-const api = Hypertonic(token);
+const fitbitDomain = 'https://api.fitbit.com';
 
 describe('API', () => {
 
     describe('#Connection', () => {
         it('should return invalid client with no credentials', (done) => {
-            api.getActivities().fetch().then((json, error) => {
-                if (error) {
-                    assert.fail(error.message);
-                }
+            api.getActivities().fetch().then((json) => {
                 expect(json.summary).to.be.not.equal(undefined);
                 done();
-
+            }).catch(err => {
+                done(err);
             });
         });
 
@@ -33,7 +29,16 @@ describe('API', () => {
         describe('#Time Series', () => {
             describe('#Activity Summary', () => {
                 beforeEach(() => {
+                    const getActivitiesResponse = {
+                        activities: []
+                    };
 
+                    nock(fitbitDomain).get('/1/user/-/activities/date/today.json').reply(200, getActivitiesResponse);
+
+                });
+
+                after(() => {
+                    nock.cleanAll();
                 });
 
                 it('should return a valid summary resource.', (done) => {
@@ -56,7 +61,6 @@ describe('API', () => {
                             done();
                         })
                         .catch(err => {
-                            assert.fail(err.message);
                             done(err);
                         });
                 });
@@ -92,10 +96,9 @@ describe('API', () => {
                         .to('1d')
                         .fetch()
                         .then(json => {
-                            expect(json['activities-steps'][0].value).to.be.an('string');
+                            expect(json['activities-steps'][0].value).to.be.a('string');
                             done();
                         }).catch(err => {
-                            assert.fail(err.message);
                             done(err);
                         });
                 });
@@ -109,7 +112,6 @@ describe('API', () => {
                             expect(json['activities-distance'][0].value).to.be.an('string');
                             done();
                         }).catch(err => {
-                            assert.fail(err.message);
                             done(err);
                         });
                 });
@@ -118,6 +120,8 @@ describe('API', () => {
                     api.getActivities('calories').fetch().then(json => {
                         expect(json['activities-calories'][0].value).to.be.not.equal(undefined);
                         done();
+                    }).catch(err => {
+                        done(err);
                     });
                 });
 
@@ -125,6 +129,8 @@ describe('API', () => {
                     api.getActivities().fetch().then(json => {
                         expect(json.summary).to.be.not.equal(undefined);
                         done();
+                    }).catch(err => {
+                        done(err);
                     });
                 });
 
@@ -133,7 +139,6 @@ describe('API', () => {
                         expect(json.summary).to.be.not.equal(undefined);
                         done();
                     }).catch(err => {
-                        assert.fail(err.message);
                         done(err);
                     });
                 });
@@ -171,11 +176,11 @@ describe('API', () => {
     });
 
     describe('#Friends', () => {
-        it('should return leaderboard', () => {
+        it('should return leaderboard', (done) => {
             return api.getFriends('leaderboard').fetch().then(json => {
                 expect(json.friends).to.be.a('array');
             }).catch(err => {
-                assert.fail(err.message);
+                done(err);
             });
 
         });
