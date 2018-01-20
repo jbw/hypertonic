@@ -40,7 +40,7 @@ const _utils = {
 
 const FitbitApi = (token) => {
 
-    if (token === undefined) throw 'token is not defined.';
+    if (token === undefined) throw new Error('token is not defined.');
 
     let resourceParts = [];
 
