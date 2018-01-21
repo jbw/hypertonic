@@ -334,7 +334,7 @@ describe('API', () => {
                 .reply(200, getActivitiesResponse);
 
             nock(fitbitDomain)
-                .get(`/1/user/-/activities/heart/date/today/${todaysDate}.json`)
+                .get(`/1/user/-/activities/heart/date/${todaysDate}/${todaysDate}.json`)
                 .reply(200, getActivitiesResponse);
 
         });
@@ -344,7 +344,7 @@ describe('API', () => {
         });
 
         it('should return a heart rate data', (done) => {
-            api.getActivities('heart').from('today').to().fetch().then(json => {
+            api.getActivities('heart').fetch().then(json => {
                 expect(json['activities-heart']).to.not.be.undefined;
                 done();
             }).catch(err => {
