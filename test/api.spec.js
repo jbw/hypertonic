@@ -16,15 +16,15 @@ describe('API', () => {
 
     describe('#Connection', () => {
         it('should return error response if initialised with no token', (done) => {
-            expect(function() {Hypertonic();}).to.throw( Error);
+            expect(function () { Hypertonic(); }).to.throw(Error);
             done();
         });
-
     });
 
     describe('#Activities', () => {
-        describe('#Time Series', () => {
-            describe('#Activity Summary', () => {
+        describe('#Activity', () => {
+
+            describe('# Summary', () => {
                 beforeEach(() => {
                     const getActivitiesResponse = require('./fixtures/activities_today.json');
 
@@ -186,7 +186,6 @@ describe('API', () => {
                 });
             });
 
-
             describe('#Activity Types', () => {
 
             });
@@ -199,7 +198,7 @@ describe('API', () => {
 
             });
 
-            describe('#get Lifetime Stats', () => {
+            describe('#Lifetime Stats', () => {
 
             });
 
@@ -243,10 +242,58 @@ describe('API', () => {
 
     describe('#Heart Rate', () => {
 
+        beforeEach(() => {
+            const getActivitiesResponse = require('./fixtures/activities_today.json');
+
+            nock(fitbitDomain)
+                .get('/1/user/-/activities/heart/date/today/1d.json')
+                .reply(200, getActivitiesResponse);
+
+        });
+
+        after(() => {
+            nock.cleanAll();
+        });
+
+        it('should return a heart rate data', (done) => {
+            api.getActivities('heart').from('today').fetch().then(json => {
+                expect(json).to.not.be.undefined;
+                done();
+            });
+
+
+        });
+
     });
 
     describe('#Sleep', () => {
 
+        beforeEach(() => {
+            const getActivitiesResponse = require('./fixtures/activities_today.json');
+
+            nock(fitbitDomain)
+                .get('/1.2/user/-/sleep/date/2017-04-02.json')
+                .reply(200, getActivitiesResponse);
+
+        });
+
+        after(() => {
+            nock.cleanAll();
+        });
+
+        it('should return a sleep  data', (done) => {
+            api.getActivities('sleep').from('today').fetch().then(json => {
+                expect(json).to.not.be.undefined;
+                done();
+            });
+
+            api.getActivities('sleep').fetch().then(json => {
+                expect(json).to.not.be.undefined;
+                done();
+            });
+
+
+        });
     });
 
     describe('#Subscriptions', () => {
