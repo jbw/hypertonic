@@ -7,7 +7,9 @@ const nock = require('nock');
 const moment = require('moment');
 
 const Hypertonic = require('../src/api');
-const api = Hypertonic('NO_TOKEN');
+const token = process.env.NOCK_OFF ? require('../secrets/token.json').token.access_token : 'NO_TOKEN';
+
+const api = Hypertonic(token);
 
 const fitbitDomain = 'https://api.fitbit.com';
 
@@ -61,7 +63,8 @@ describe('API', () => {
                             done();
                         })
                         .catch(err => {
-                            done(err);
+                            console.log(err);
+                            done(new Error());
                         });
                 });
 
@@ -70,7 +73,8 @@ describe('API', () => {
                         expect(json.summary).to.be.not.equal(undefined);
                         done();
                     }).catch(err => {
-                        done(err);
+                        console.log(err);
+                        done(new Error());
                     });
                 });
 
@@ -79,7 +83,8 @@ describe('API', () => {
                         expect(json.summary).to.be.not.equal(undefined);
                         done();
                     }).catch(err => {
-                        done(err);
+                        console.log(err);
+                        done(new Error());
                     });
                 });
             });
@@ -133,7 +138,8 @@ describe('API', () => {
                             expect(json['activities-steps'][0].value).to.be.a('string');
                             done();
                         }).catch(err => {
-                            done(err);
+                            console.log(err);
+                            done(new Error());
                         });
                 });
             });
@@ -159,7 +165,8 @@ describe('API', () => {
                             expect(json['activities-distance'][0].value).to.be.an('string');
                             done();
                         }).catch(err => {
-                            done(err);
+                            console.log(err);
+                            done(new Error());
                         });
                 });
             });
@@ -174,6 +181,10 @@ describe('API', () => {
 
                     nock(fitbitDomain)
                         .get(`/1/user/-/activities/calories/date/${todaysDate}/today.json`)
+                        .reply(200, getCaloriesResponse);
+
+                    nock(fitbitDomain)
+                        .get(`/1/user/-/activities/calories/date/${todaysDate}/1d.json`)
                         .reply(200, getCaloriesResponse);
 
                     nock(fitbitDomain)
@@ -195,11 +206,14 @@ describe('API', () => {
                 });
 
                 it('should return calories for today', (done) => {
-                    api.getActivities('calories').fetch().then(json => {
+
+                    api.getActivities('calories').from().to('1d').fetch().then(json => {
+
                         expect(json['activities-calories'][0].value).to.be.not.equal(undefined);
                         done();
                     }).catch(err => {
-                        done(err);
+                        console.log(err);
+                        done(new Error());
                     });
                 });
 
@@ -209,7 +223,8 @@ describe('API', () => {
                         expect(json['activities-calories'][0].value).to.be.not.equal(undefined);
                         done();
                     }).catch(err => {
-                        done(err);
+                        console.log(err);
+                        done(new Error());
                     });
                 });
                 it('should return calories for the past 7 days', (done) => {
@@ -218,7 +233,8 @@ describe('API', () => {
                         expect(json['activities-calories'][0].value).to.be.not.equal(undefined);
                         done();
                     }).catch(err => {
-                        done(err);
+                        console.log(err);
+                        done(new Error());
                     });
                 });
 
@@ -228,7 +244,8 @@ describe('API', () => {
                         expect(json['activities-calories'][0].value).to.be.not.equal(undefined);
                         done();
                     }).catch(err => {
-                        done(err);
+                        console.log(err);
+                        done(new Error());
                     });
                 });
 
@@ -238,7 +255,8 @@ describe('API', () => {
                         expect(json['activities-calories'][0].value).to.be.not.equal(undefined);
                         done();
                     }).catch(err => {
-                        done(err);
+                        console.log(err);
+                        done(new Error());
                     });
                 });
             });
@@ -291,7 +309,8 @@ describe('API', () => {
                 expect(json.friends).to.be.a('array');
                 done();
             }).catch(err => {
-                done(err);
+                console.log(err);
+                done(new Error());
             });
 
         });
@@ -300,14 +319,22 @@ describe('API', () => {
     describe('#Heart Rate', () => {
 
         beforeEach(() => {
-            const getActivitiesResponse = require('./fixtures/activities_today.json');
+            const getActivitiesResponse = require('./fixtures/heart_rate.json');
 
             nock(fitbitDomain)
                 .get('/1/user/-/activities/heart/date/today/1d.json')
                 .reply(200, getActivitiesResponse);
 
             nock(fitbitDomain)
+                .get('/1/user/-/activities/heart/date/2017-01-01/2017-03-01.json')
+                .reply(200, getActivitiesResponse);
+
+            nock(fitbitDomain)
                 .get('/1/user/-/activities/heart/date/today.json')
+                .reply(200, getActivitiesResponse);
+
+            nock(fitbitDomain)
+                .get(`/1/user/-/activities/heart/date/today/${todaysDate}.json`)
                 .reply(200, getActivitiesResponse);
 
         });
@@ -317,23 +344,27 @@ describe('API', () => {
         });
 
         it('should return a heart rate data', (done) => {
-            api.getActivities('heart').from('today').fetch().then(json => {
+            api.getActivities('heart').from('today').to().fetch().then(json => {
                 expect(json['activities-heart']).to.not.be.undefined;
                 done();
+            }).catch(err => {
+                console.log(err);
+                done(new Error());
             });
-
-
         });
-
     });
 
     describe('#Sleep', () => {
 
         beforeEach(() => {
-            const getActivitiesResponse = require('./fixtures/activities_today.json');
+            const getActivitiesResponse = require('./fixtures/sleep.json');
 
             nock(fitbitDomain)
                 .get(`/1.2/user/-/sleep/date/${todaysDate}.json`)
+                .reply(200, getActivitiesResponse);
+
+            nock(fitbitDomain)
+                .get('/1.2/user/-/sleep/date/2017-01-01/2017-03-01.json')
                 .reply(200, getActivitiesResponse);
 
             nock(fitbitDomain)
@@ -350,6 +381,19 @@ describe('API', () => {
             api.getSleepLogs().from('today').fetch().then(json => {
                 expect(json.sleep).to.not.be.undefined;
                 done();
+            }).catch(err => {
+                console.log(err);
+                done(new Error());
+            });
+        });
+
+        it('should return a sleep data', (done) => {
+            api.getSleepLogs('sleep').from('2017-01-01').to('2017-03-01').fetch().then(json => {
+                expect(json.sleep).to.not.be.undefined;
+                done();
+            }).catch(err => {
+                console.log(err);
+                done(new Error());
             });
         });
 
@@ -357,6 +401,9 @@ describe('API', () => {
             api.getSleepLogs().fetch().then(json => {
                 expect(json.sleep).to.not.be.undefined;
                 done();
+            }).catch(err => {
+                console.log(err);
+                done(new Error());
             });
         });
     });

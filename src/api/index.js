@@ -128,8 +128,15 @@ const FitbitApi = (token) => {
         const options = _utils.getHeaderOptions();
         _utils.setAuthHeader(token, options);
         return nodeFetch(context.getURL(), options)
-            .then(res => res.json())
-            .catch(err => { throw (err); });
+            .then(res => {
+                return res.json();
+            }).then(json => {
+                if (json.errors !== undefined) throw json.errors;
+                return json;
+            })
+            .catch(err => {
+                throw err;
+            });
     };
 
     const DEFAULT_DATE = 'today';

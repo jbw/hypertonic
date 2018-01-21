@@ -1,0 +1,113 @@
+{
+    "sleep": [
+        {
+            "dateOfSleep": "2017-04-02",
+            "duration": 0,
+            "efficiency": 0,
+            "isMainSleep": true,
+            "levels": {
+                "summary": {
+                    "deep": {
+                        "count": 0,
+                        "minutes": 0,
+                        "thirtyDayAvgMinutes": 0
+                    },
+                    "light": {
+                        "count": 0,
+                        "minutes": 0,
+                        "thirtyDayAvgMinutes": 0
+                    },
+                    "rem": {
+                        "count": 0,
+                        "minutes": 0,
+                        "thirtyDayAvgMinutes": 0
+                    },
+                    "wake": {
+                        "count": 0,
+                        "minutes": 0,
+                        "thirtyDayAvgMinutes": 0
+                    }
+                },
+                "data": [
+                    {
+                        "datetime": "2017-04-01T23:58:30.000",
+                        "level": "wake",
+                        "seconds": 0
+                    },
+                    {
+                        "datetime": "2017-04-02T00:16:30.000",
+                        "level": "rem",
+                        "seconds": 0
+                    }
+                ],
+                "shortData": [
+                    {
+                        "datetime": "2017-04-02T05:58:30.000",
+                        "level": "wake",
+                        "seconds": 0
+                    }
+                ]
+            },
+            "logId": "",
+            "minutesAfterWakeup": 0,
+            "minutesAsleep": 0,
+            "minutesAwake": 0,
+            "minutesToFallAsleep":0,
+            "startTime": "2017-04-01T23:58:30.000",
+            "timeInBed": 0,
+            "type": "stages"
+        },
+        {
+            "dateOfSleep": "2017-04-02",
+            "duration": 0,
+            "efficiency": 0,
+            "isMainSleep": false,
+            "levels": {
+                "data": [
+                    {
+                        "dateTime": "2017-04-02T12:06:00.000",
+                        "level": "asleep",
+                        "seconds": 0
+                    },
+                    {
+                        "dateTime": "2017-04-02T12:13:00.000",
+                        "level": "restless",
+                        "seconds": 0
+                    },
+                    {
+                        "dateTime": "2017-04-02T12:14:00.000",
+                        "level": "awake",
+                        "seconds": 0
+                    }
+                ],
+                "summary": {
+                    "asleep": {
+                        "count": 0,
+                        "minutes": 0
+                    },
+                    "awake": {
+                        "count": 0,
+                        "minutes": 0
+                    },
+                    "restless": {
+                        "count": 0,
+                        "minutes": 0
+                    }
+                }
+            },
+            "logId": "",
+            "minutesAfterWakeup": 0,
+            "minutesAsleep": 0,
+            "minutesAwake": 0,
+            "minutesToFallAsleep": 0,
+            "startTime": "2017-04-02T12:06:00.000",
+            "timeInBed": 0,
+            "type": "classic"
+        }
+    ],
+    "summary": {
+        "totalMinutesAsleep": 0,
+        "totalSleepRecords": 2,
+        "totalTimeInBed": 0
+    }
+}
