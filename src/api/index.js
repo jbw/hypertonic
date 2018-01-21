@@ -44,8 +44,6 @@ const FitbitApi = (token) => {
 
     let resourceParts = [];
 
-
-
     const getURL = () => {
         const route = resourceParts.join('/') + '.json';
         return route;
@@ -82,6 +80,12 @@ const FitbitApi = (token) => {
         return context;
     };
 
+    const getSleepLogs = () => {
+        const context = getActivities();
+        resourceParts = [routes.sleep.base, routes.sleep.route, routes.dateFormats.route.name, DEFAULT_DATE];
+        return context;
+    };
+
     const getActivities = (activity) => {
 
         resourceParts = [routes.base, routes.activities.route];
@@ -91,10 +95,9 @@ const FitbitApi = (token) => {
 
         if (activity) {
             resourceParts.push(activity);
-            resourceParts.push(...[routes.dateFormats.route.name, _utils.getDateNow()], _utils.getDateNow());
-        } else {
-            resourceParts.push(...[routes.dateFormats.route.name, _utils.getDateNow()]);
         }
+
+        resourceParts.push(...[routes.dateFormats.route.name, DEFAULT_DATE]);
 
         const from = (dateFrom) => {
             if (!dateFrom) dateFrom = _utils.getDateNow();
@@ -129,6 +132,8 @@ const FitbitApi = (token) => {
             .catch(err => { throw (err); });
     };
 
+    const DEFAULT_DATE = 'today';
+
     const context = {
         getURL,
         fetch
@@ -142,6 +147,7 @@ const FitbitApi = (token) => {
         getRecentActivities,
         getWeeklySummary,
         getFriends,
+        getSleepLogs,
         fetch
     };
 };

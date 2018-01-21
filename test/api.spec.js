@@ -167,9 +167,27 @@ describe('API', () => {
             describe('#Calories', () => {
                 beforeEach(() => {
                     const getCaloriesResponse = require('./fixtures/activities_calories.json');
+
+                    nock(fitbitDomain)
+                        .get('/1/user/-/activities/calories/date/today.json')
+                        .reply(200, getCaloriesResponse);
+
+                    nock(fitbitDomain)
+                        .get(`/1/user/-/activities/calories/date/${todaysDate}/today.json`)
+                        .reply(200, getCaloriesResponse);
+
+                    nock(fitbitDomain)
+                        .get(`/1/user/-/activities/calories/date/${todaysDate}/7d.json`)
+                        .reply(200, getCaloriesResponse);
+
                     nock(fitbitDomain)
                         .get(`/1/user/-/activities/calories/date/${todaysDate}/${todaysDate}.json`)
                         .reply(200, getCaloriesResponse);
+
+                    nock(fitbitDomain)
+                        .get('/1/user/-/activities/calories/date/today/7d.json')
+                        .reply(200, getCaloriesResponse);
+
                 });
 
                 after(() => {
@@ -178,6 +196,45 @@ describe('API', () => {
 
                 it('should return calories for today', (done) => {
                     api.getActivities('calories').fetch().then(json => {
+                        expect(json['activities-calories'][0].value).to.be.not.equal(undefined);
+                        done();
+                    }).catch(err => {
+                        done(err);
+                    });
+                });
+
+                it('should return calories for the past 7 days', (done) => {
+
+                    api.getActivities('calories').from('today').to('7d').fetch().then(json => {
+                        expect(json['activities-calories'][0].value).to.be.not.equal(undefined);
+                        done();
+                    }).catch(err => {
+                        done(err);
+                    });
+                });
+                it('should return calories for the past 7 days', (done) => {
+
+                    api.getActivities('calories').from().to('7d').fetch().then(json => {
+                        expect(json['activities-calories'][0].value).to.be.not.equal(undefined);
+                        done();
+                    }).catch(err => {
+                        done(err);
+                    });
+                });
+
+                it('should return calories for the past 7 days', (done) => {
+
+                    api.getActivities('calories').from().to().fetch().then(json => {
+                        expect(json['activities-calories'][0].value).to.be.not.equal(undefined);
+                        done();
+                    }).catch(err => {
+                        done(err);
+                    });
+                });
+
+                it('should return calories for the past 7 days', (done) => {
+
+                    api.getActivities('calories').to('7d').fetch().then(json => {
                         expect(json['activities-calories'][0].value).to.be.not.equal(undefined);
                         done();
                     }).catch(err => {
@@ -249,6 +306,10 @@ describe('API', () => {
                 .get('/1/user/-/activities/heart/date/today/1d.json')
                 .reply(200, getActivitiesResponse);
 
+            nock(fitbitDomain)
+                .get('/1/user/-/activities/heart/date/today.json')
+                .reply(200, getActivitiesResponse);
+
         });
 
         after(() => {
@@ -257,7 +318,7 @@ describe('API', () => {
 
         it('should return a heart rate data', (done) => {
             api.getActivities('heart').from('today').fetch().then(json => {
-                expect(json).to.not.be.undefined;
+                expect(json['activities-heart']).to.not.be.undefined;
                 done();
             });
 
@@ -272,7 +333,11 @@ describe('API', () => {
             const getActivitiesResponse = require('./fixtures/activities_today.json');
 
             nock(fitbitDomain)
-                .get('/1.2/user/-/sleep/date/2017-04-02.json')
+                .get(`/1.2/user/-/sleep/date/${todaysDate}.json`)
+                .reply(200, getActivitiesResponse);
+
+            nock(fitbitDomain)
+                .get('/1.2/user/-/sleep/date/today.json')
                 .reply(200, getActivitiesResponse);
 
         });
@@ -281,18 +346,18 @@ describe('API', () => {
             nock.cleanAll();
         });
 
-        it('should return a sleep  data', (done) => {
-            api.getActivities('sleep').from('today').fetch().then(json => {
-                expect(json).to.not.be.undefined;
+        it('should return a sleep data', (done) => {
+            api.getSleepLogs().from('today').fetch().then(json => {
+                expect(json.sleep).to.not.be.undefined;
                 done();
             });
+        });
 
-            api.getActivities('sleep').fetch().then(json => {
-                expect(json).to.not.be.undefined;
+        it('should return a sleep data', (done) => {
+            api.getSleepLogs().fetch().then(json => {
+                expect(json.sleep).to.not.be.undefined;
                 done();
             });
-
-
         });
     });
 
