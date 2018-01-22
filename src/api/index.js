@@ -83,7 +83,16 @@ const FitbitApi = (token) => {
     const getSleepLogs = () => {
         const context = getActivities();
         resourceParts = [routes.sleep.base, routes.sleep.route, routes.dateFormats.route.name, DEFAULT_DATE];
+
         return context;
+    };
+
+    const getSummary = activity => {
+        throw 'not implemented';
+    };
+
+    const getTimeSeries = (activity, from, to) => {
+        throw 'not implemented';
     };
 
     const getActivities = (activity) => {
@@ -155,7 +164,9 @@ const FitbitApi = (token) => {
         getWeeklySummary,
         getFriends,
         getSleepLogs,
-        fetch
+        fetch,
+        getSummary,
+        getTimeSeries
     };
 };
 

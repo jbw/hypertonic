@@ -24,260 +24,271 @@ describe('API', () => {
     });
 
     describe('#Activities', () => {
-        describe('#Activity', () => {
+        describe('#Summary', () => {
 
-            describe('# Summary', () => {
-                beforeEach(() => {
-                    const getActivitiesResponse = require('./fixtures/activities_today.json');
+            beforeEach(() => {
+                const getActivitiesResponse = require('./fixtures/activities_today.json');
 
-                    nock(fitbitDomain)
-                        .get('/1/user/-/activities/date/today.json')
-                        .reply(200, getActivitiesResponse);
+                nock(fitbitDomain)
+                    .get('/1/user/-/activities/date/today.json')
+                    .reply(200, getActivitiesResponse);
 
-                    nock(fitbitDomain)
-                        .get(`/1/user/-/activities/date/${todaysDate}.json`)
-                        .reply(200, getActivitiesResponse);
-                });
+                nock(fitbitDomain)
+                    .get(`/1/user/-/activities/date/${todaysDate}.json`)
+                    .reply(200, getActivitiesResponse);
+            });
 
-                after(() => {
-                    nock.cleanAll();
-                });
+            after(() => {
+                nock.cleanAll();
+            });
 
-                it('should return a valid summary resource.', (done) => {
-                    const summary = api
-                        .getActivities()
-                        .from('today')
-                        .getURL();
+            it('should return a valid summary resource.', (done) => {
+                const summary = api
+                    .getActivities()
+                    .from('today')
+                    .getURL();
 
-                    expect(summary).to.equal('https://api.fitbit.com/1/user/-/activities/date/today.json');
+                expect(summary).to.equal('https://api.fitbit.com/1/user/-/activities/date/today.json');
+                done();
+            });
+
+            it('should return a summary of activities', (done) => {
+
+                api.getActivities()
+                    .from('today')
+                    .fetch()
+                    .then((json) => {
+                        expect(json.activities).to.not.equal(undefined);
+                        done();
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        done(new Error());
+                    });
+            });
+
+            it('should return summary stats for today', (done) => {
+                api.getActivities().fetch().then(json => {
+                    expect(json.summary).to.be.not.equal(undefined);
                     done();
-                });
-
-                it('should return a summary of activities', (done) => {
-
-                    api.getActivities()
-                        .from('today')
-                        .fetch()
-                        .then((json) => {
-                            expect(json.activities).to.not.equal(undefined);
-                            done();
-                        })
-                        .catch(err => {
-                            console.log(err);
-                            done(new Error());
-                        });
-                });
-
-                it('should return summary stats for today', (done) => {
-                    api.getActivities().fetch().then(json => {
-                        expect(json.summary).to.be.not.equal(undefined);
-                        done();
-                    }).catch(err => {
-                        console.log(err);
-                        done(new Error());
-                    });
-                });
-
-                it('should return summary stats for the last 7 days', (done) => {
-                    api.getWeeklySummary().then(json => {
-                        expect(json.summary).to.be.not.equal(undefined);
-                        done();
-                    }).catch(err => {
-                        console.log(err);
-                        done(new Error());
-                    });
+                }).catch(err => {
+                    console.log(err);
+                    done(new Error());
                 });
             });
 
-            describe('#Steps', () => {
-                beforeEach(() => {
-                    const getStepsResponse = require('./fixtures/activities_steps_1d.json');
-
-                    nock(fitbitDomain)
-                        .get(`/1/user/-/activities/steps/date/${todaysDate}/1d.json`)
-                        .reply(200, getStepsResponse);
-
-                    nock(fitbitDomain)
-                        .get('/1/user/-/activities/steps/date/today.json')
-                        .reply(200, getStepsResponse);
-
-                });
-
-                after(() => {
-                    nock.cleanAll();
-                });
-
-                it('should return a valid steps resource.', (done) => {
-
-                    const urlRange = api
-                        .getActivities('steps')
-                        .from('2017-07-28')
-                        .to('2017-07-30')
-                        .getURL();
-
-                    const url1Month = api
-                        .getActivities('steps')
-                        .from('2017-08-05')
-                        .to('1m')
-                        .getURL();
-
-                    const url1MonthSpec = 'https://api.fitbit.com/1/user/-/activities/steps/date/2017-08-05/1m.json';
-                    const urlRangeSpec = 'https://api.fitbit.com/1/user/-/activities/steps/date/2017-07-28/2017-07-30.json';
-
-                    expect(url1Month).to.equal(url1MonthSpec);
-                    expect(urlRange).to.equal(urlRangeSpec);
+            it('should return summary stats for the last 7 days', (done) => {
+                api.getWeeklySummary().then(json => {
+                    expect(json.summary).to.be.not.equal(undefined);
                     done();
-                });
-
-                it('should return steps today', (done) => {
-                    api.getActivities('steps')
-                        .from()
-                        .to('1d')
-                        .fetch()
-                        .then(json => {
-                            expect(json['activities-steps'][0].value).to.be.a('string');
-                            done();
-                        }).catch(err => {
-                            console.log(err);
-                            done(new Error());
-                        });
+                }).catch(err => {
+                    console.log(err);
+                    done(new Error());
                 });
             });
+        });
 
-            describe('#Distance', () => {
-                beforeEach(() => {
-                    const getDistanceResponse = require('./fixtures/activities_distance_1d.json');
-                    nock(fitbitDomain)
-                        .get(`/1/user/-/activities/distance/date/${todaysDate}/1d.json`)
-                        .reply(200, getDistanceResponse);
-                });
-
-                after(() => {
-                    nock.cleanAll();
-                });
-
-                it('should return distance today', (done) => {
-                    api.getActivities('distance')
-                        .from()
-                        .to('1d')
-                        .fetch()
-                        .then(json => {
-                            expect(json['activities-distance'][0].value).to.be.an('string');
-                            done();
-                        }).catch(err => {
-                            console.log(err);
-                            done(new Error());
-                        });
+        describe('#Time series', () => {
+            it('should return time series stats for calories', (done) => {
+                api.getTimeSeries('calories', '2017-05-01', '2017-05-05').then(json => {
+                    expect(json).to.be.not.equal(undefined);
+                    done();
+                }).catch(err => {
+                    console.log(err);
+                    done(new Error());
                 });
             });
+        });
 
-            describe('#Calories', () => {
-                beforeEach(() => {
-                    const getCaloriesResponse = require('./fixtures/activities_calories.json');
+        describe('#Steps', () => {
+            beforeEach(() => {
+                const getStepsResponse = require('./fixtures/activities_steps_1d.json');
 
-                    nock(fitbitDomain)
-                        .get('/1/user/-/activities/calories/date/today.json')
-                        .reply(200, getCaloriesResponse);
+                nock(fitbitDomain)
+                    .get(`/1/user/-/activities/steps/date/${todaysDate}/1d.json`)
+                    .reply(200, getStepsResponse);
 
-                    nock(fitbitDomain)
-                        .get(`/1/user/-/activities/calories/date/${todaysDate}/today.json`)
-                        .reply(200, getCaloriesResponse);
+                nock(fitbitDomain)
+                    .get('/1/user/-/activities/steps/date/today.json')
+                    .reply(200, getStepsResponse);
 
-                    nock(fitbitDomain)
-                        .get(`/1/user/-/activities/calories/date/${todaysDate}/1d.json`)
-                        .reply(200, getCaloriesResponse);
+            });
 
-                    nock(fitbitDomain)
-                        .get(`/1/user/-/activities/calories/date/${todaysDate}/7d.json`)
-                        .reply(200, getCaloriesResponse);
+            after(() => {
+                nock.cleanAll();
+            });
 
-                    nock(fitbitDomain)
-                        .get(`/1/user/-/activities/calories/date/${todaysDate}/${todaysDate}.json`)
-                        .reply(200, getCaloriesResponse);
+            it('should return a valid steps resource.', (done) => {
 
-                    nock(fitbitDomain)
-                        .get('/1/user/-/activities/calories/date/today/7d.json')
-                        .reply(200, getCaloriesResponse);
+                const urlRange = api
+                    .getActivities('steps')
+                    .from('2017-07-28')
+                    .to('2017-07-30')
+                    .getURL();
 
-                });
+                const url1Month = api
+                    .getActivities('steps')
+                    .from('2017-08-05')
+                    .to('1m')
+                    .getURL();
 
-                after(() => {
-                    nock.cleanAll();
-                });
+                const url1MonthSpec = 'https://api.fitbit.com/1/user/-/activities/steps/date/2017-08-05/1m.json';
+                const urlRangeSpec = 'https://api.fitbit.com/1/user/-/activities/steps/date/2017-07-28/2017-07-30.json';
 
-                it('should return calories for today', (done) => {
+                expect(url1Month).to.equal(url1MonthSpec);
+                expect(urlRange).to.equal(urlRangeSpec);
+                done();
+            });
 
-                    api.getActivities('calories').from().to('1d').fetch().then(json => {
-
-                        expect(json['activities-calories'][0].value).to.be.not.equal(undefined);
+            it('should return steps today', (done) => {
+                api.getActivities('steps')
+                    .from()
+                    .to('1d')
+                    .fetch()
+                    .then(json => {
+                        expect(json['activities-steps'][0].value).to.be.a('string');
                         done();
                     }).catch(err => {
                         console.log(err);
                         done(new Error());
                     });
-                });
+            });
+        });
 
-                it('should return calories for the past 7 days', (done) => {
+        describe('#Distance', () => {
+            beforeEach(() => {
+                const getDistanceResponse = require('./fixtures/activities_distance_1d.json');
+                nock(fitbitDomain)
+                    .get(`/1/user/-/activities/distance/date/${todaysDate}/1d.json`)
+                    .reply(200, getDistanceResponse);
+            });
 
-                    api.getActivities('calories').from('today').to('7d').fetch().then(json => {
-                        expect(json['activities-calories'][0].value).to.be.not.equal(undefined);
+            after(() => {
+                nock.cleanAll();
+            });
+
+            it('should return distance today', (done) => {
+                api.getActivities('distance')
+                    .from()
+                    .to('1d')
+                    .fetch()
+                    .then(json => {
+                        expect(json['activities-distance'][0].value).to.be.an('string');
                         done();
                     }).catch(err => {
                         console.log(err);
                         done(new Error());
                     });
+            });
+        });
+
+        describe('#Calories', () => {
+            beforeEach(() => {
+                const getCaloriesResponse = require('./fixtures/activities_calories.json');
+
+                nock(fitbitDomain)
+                    .get('/1/user/-/activities/calories/date/today.json')
+                    .reply(200, getCaloriesResponse);
+
+                nock(fitbitDomain)
+                    .get(`/1/user/-/activities/calories/date/${todaysDate}/today.json`)
+                    .reply(200, getCaloriesResponse);
+
+                nock(fitbitDomain)
+                    .get(`/1/user/-/activities/calories/date/${todaysDate}/1d.json`)
+                    .reply(200, getCaloriesResponse);
+
+                nock(fitbitDomain)
+                    .get(`/1/user/-/activities/calories/date/${todaysDate}/7d.json`)
+                    .reply(200, getCaloriesResponse);
+
+                nock(fitbitDomain)
+                    .get(`/1/user/-/activities/calories/date/${todaysDate}/${todaysDate}.json`)
+                    .reply(200, getCaloriesResponse);
+
+                nock(fitbitDomain)
+                    .get('/1/user/-/activities/calories/date/today/7d.json')
+                    .reply(200, getCaloriesResponse);
+
+            });
+
+            after(() => {
+                nock.cleanAll();
+            });
+
+            it('should return calories for today', (done) => {
+
+                api.getActivities('calories').from().to('1d').fetch().then(json => {
+
+                    expect(json['activities-calories'][0].value).to.be.not.equal(undefined);
+                    done();
+                }).catch(err => {
+                    console.log(err);
+                    done(new Error());
                 });
-                it('should return calories for the past 7 days', (done) => {
+            });
 
-                    api.getActivities('calories').from().to('7d').fetch().then(json => {
-                        expect(json['activities-calories'][0].value).to.be.not.equal(undefined);
-                        done();
-                    }).catch(err => {
-                        console.log(err);
-                        done(new Error());
-                    });
+            it('should return calories for the past 7 days', (done) => {
+
+                api.getActivities('calories').from('today').to('7d').fetch().then(json => {
+                    expect(json['activities-calories'][0].value).to.be.not.equal(undefined);
+                    done();
+                }).catch(err => {
+                    console.log(err);
+                    done(new Error());
                 });
+            });
+            it('should return calories for the past 7 days', (done) => {
 
-                it('should return calories for the past 7 days', (done) => {
-
-                    api.getActivities('calories').from().to().fetch().then(json => {
-                        expect(json['activities-calories'][0].value).to.be.not.equal(undefined);
-                        done();
-                    }).catch(err => {
-                        console.log(err);
-                        done(new Error());
-                    });
-                });
-
-                it('should return calories for the past 7 days', (done) => {
-
-                    api.getActivities('calories').to('7d').fetch().then(json => {
-                        expect(json['activities-calories'][0].value).to.be.not.equal(undefined);
-                        done();
-                    }).catch(err => {
-                        console.log(err);
-                        done(new Error());
-                    });
+                api.getActivities('calories').from().to('7d').fetch().then(json => {
+                    expect(json['activities-calories'][0].value).to.be.not.equal(undefined);
+                    done();
+                }).catch(err => {
+                    console.log(err);
+                    done(new Error());
                 });
             });
 
-            describe('#Activity Types', () => {
+            it('should return calories for the past 7 days', (done) => {
 
+                api.getActivities('calories').from().to().fetch().then(json => {
+                    expect(json['activities-calories'][0].value).to.be.not.equal(undefined);
+                    done();
+                }).catch(err => {
+                    console.log(err);
+                    done(new Error());
+                });
             });
 
-            describe('#Activity Logging', () => {
+            it('should return calories for the past 7 days', (done) => {
 
+                api.getActivities('calories').to('7d').fetch().then(json => {
+                    expect(json['activities-calories'][0].value).to.be.not.equal(undefined);
+                    done();
+                }).catch(err => {
+                    console.log(err);
+                    done(new Error());
+                });
             });
+        });
 
-            describe('#Activity Goals', () => {
-
-            });
-
-            describe('#Lifetime Stats', () => {
-
-            });
+        describe('#Activity Types', () => {
 
         });
+
+        describe('#Activity Logging', () => {
+
+        });
+
+        describe('#Activity Goals', () => {
+
+        });
+
+        describe('#Lifetime Stats', () => {
+
+        });
+
+
     });
 
     describe('#Body and Weight', () => {
@@ -368,6 +379,10 @@ describe('API', () => {
                 .reply(200, getActivitiesResponse);
 
             nock(fitbitDomain)
+                .get(`/1.2/user/-/sleep/date/${todaysDate}/${todaysDate}.json`)
+                .reply(200, getActivitiesResponse);
+
+            nock(fitbitDomain)
                 .get('/1.2/user/-/sleep/date/today.json')
                 .reply(200, getActivitiesResponse);
 
@@ -396,6 +411,15 @@ describe('API', () => {
                 done(new Error());
             });
         });
+        it('should return a sleep data', (done) => {
+            api.getSleepLogs('sleep').fetch().then(json => {
+                expect(json.sleep).to.not.be.undefined;
+                done();
+            }).catch(err => {
+                console.log(err);
+                done(new Error());
+            });
+        });
 
         it('should return a sleep data', (done) => {
             api.getSleepLogs().fetch().then(json => {
@@ -415,4 +439,5 @@ describe('API', () => {
     describe('#User', () => {
 
     });
+
 });
