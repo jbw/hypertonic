@@ -1,133 +1,112 @@
 const moment = require('moment');
 const routes = require('./routes.json');
-const nodeFetch = require('node-fetch');
-
-const _utils = {
-
-    getHeaderOptions: () => {
-        return {
-            headers: {
-                'Authorization': 'Bearer '
-            }
-        };
-    },
-
-    getDateNow: (offset) => {
-        return moment(new Date()).add(offset, 'days').format('YYYY-MM-DD');
-    },
-
-    addHeader: (name, value, headerOptions) => {
-        headerOptions.headers[name] = value;
-        return headerOptions;
-    },
-
-    setAuthHeader: (token, headerOptions) => {
-        if (token && headerOptions.headers['Authorization'] !== undefined) {
-            headerOptions.headers['Authorization'] = 'Bearer ' + token;
-        }
-
-        return headerOptions;
-    },
-
-    setLocale: (locale, headerOptions) => {
-        this.addHeader('Accept-Language', locale, headerOptions);
-    },
-
-    getLocale: (headerOptions) => {
-        return headerOptions.headers['Accept-Language'];
-    }
-};
+const fetch = require('node-fetch');
 
 const FitbitApi = (token) => {
 
     if (token === undefined) throw new Error('token is not defined.');
 
-    let resourceParts = [];
+    const DEFAULT_DATE = 'today';
 
-    const getURL = () => {
+    const _getHeaderOptions = (token, locale) => {
+        return {
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Accept-Language': locale
+            }
+        };
+    };
+
+    const _getDateNow = (offset) => {
+        return moment(new Date()).add(offset, 'days').format('YYYY-MM-DD');
+    };
+
+    const getURL = (resourceParts) => {
         const route = resourceParts.join('/') + '.json';
         return route;
     };
 
     const getProfile = () => {
-        return routes.profile;
+        throw 'not implemented';
     };
 
     const getFrequentActivities = () => {
-        return getActivities(routes.activities.types.frequent.name).fetch();
+        return getSummary(routes.activities.types.frequent.name);
     };
 
     const getRecentActivities = () => {
-        return getActivities(routes.activities.types.recent.name).fetch();
+        return getSummary(routes.activities.types.recent.name);
     };
 
     const getFavoriteActivities = () => {
-        return getActivities(routes.activities.types.favorite.name).fetch();
+        return getSummary(routes.activities.types.favorite.name);
     };
 
     const getWeeklySummary = () => {
-        return getActivities().from(routes.dateFormats.route.sevendays).fetch();
+        return getSummary().from(routes.dateFormats.route.sevendays);
     };
 
     const getFriends = (friends) => {
 
-        if (friends === undefined) {
-            resourceParts = [routes.base, routes.friends.route];
-        } else {
-            resourceParts = [routes.base, routes.friends.route, friends];
+        const resourceParts = [
+            routes.base,
+            routes.friends.route
+        ];
+
+        if (friends) {
+            resourceParts.push(friends);
         }
 
-        return context;
+        return _fetch(resourceParts);
     };
 
-    const getSleepLogs = () => {
-        const context = getActivities();
-        resourceParts = [routes.sleep.base, routes.sleep.route, routes.dateFormats.route.name, DEFAULT_DATE];
-        return context;
+    const getSleepLogs = (from) => {
+
+        const resourceParts = [
+            routes.sleep.base,
+            routes.sleep.route,
+            routes.dateFormats.route.name,
+            from || DEFAULT_DATE
+
+        ];
+
+        return _fetch(resourceParts);
     };
 
-    const getActivities = (activity) => {
+    const getSummary = (date) => {
+        const resourceParts = [
+            routes.base,
+            routes.activities.route,
+            routes.dateFormats.route.name
+        ];
 
-        resourceParts = [routes.base, routes.activities.route];
-
-        const DATE_FROM_OFFSET = 1;
-        const DATE_TO_OFFSET = 2;
-
-        if (activity) {
-            resourceParts.push(activity);
+        if (date) {
+            resourceParts.push(date);
         }
 
-        resourceParts.push(...[routes.dateFormats.route.name, DEFAULT_DATE]);
-
-        const from = (dateFrom) => {
-            if (!dateFrom) dateFrom = _utils.getDateNow();
-
-            const replaceIndex = resourceParts.indexOf(routes.dateFormats.route.name) + DATE_FROM_OFFSET;
-            resourceParts[replaceIndex] = dateFrom;
-
-            return context;
-        };
-
-        const to = (dateTo) => {
-            if (!dateTo) dateTo = _utils.getDateNow();
-
-            const replaceIndex = resourceParts.indexOf(routes.dateFormats.route.name) + DATE_TO_OFFSET;
-            resourceParts[replaceIndex] = dateTo;
-
-            return context;
-        };
-
-        context.to = to;
-        context.from = from;
-
-        return context;
-
+        return _fetch(resourceParts);
     };
 
-    const fetch = () => {
-        const options = _utils.getHeaderOptions();
-        _utils.setAuthHeader(token, options);
-        return nodeFetch(context.getURL(), options)
+    const getTimeSeries = (activity, from, to) => {
+        const resourceParts = [
+            routes.base,
+            routes.activities.route,
+            activity,
+            routes.dateFormats.route.name,
+            from || DEFAULT_DATE
+
+        ];
+
+        if(to) resourceParts.push(to);
+
+        return _fetch(resourceParts);
+    };
+
+    const _fetch = (resourceParts) => {
+        const options = _getHeaderOptions(token);
+        const url = getURL(resourceParts);
+
+        return fetch(url, options)
             .then(res => {
                 return res.json();
             }).then(json => {
@@ -139,15 +118,7 @@ const FitbitApi = (token) => {
             });
     };
 
-    const DEFAULT_DATE = 'today';
-
-    const context = {
-        getURL,
-        fetch
-    };
-
     return {
-        getActivities,
         getProfile,
         getFavoriteActivities,
         getFrequentActivities,
@@ -155,7 +126,8 @@ const FitbitApi = (token) => {
         getWeeklySummary,
         getFriends,
         getSleepLogs,
-        fetch
+        getSummary,
+        getTimeSeries
     };
 };
 
