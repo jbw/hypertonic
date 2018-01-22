@@ -60,14 +60,14 @@ const FitbitApi = (token) => {
         return _fetch(resourceParts);
     };
 
-    const getSleepLogs = () => {
+    const getSleepLogs = (from) => {
 
         const resourceParts = [
             routes.sleep.base,
-            resourceParts.activities.route,
             routes.sleep.route,
             routes.dateFormats.route.name,
-            DEFAULT_DATE
+            from || DEFAULT_DATE
+
         ];
 
         return _fetch(resourceParts);
@@ -93,9 +93,11 @@ const FitbitApi = (token) => {
             routes.activities.route,
             activity,
             routes.dateFormats.route.name,
-            from,
-            to
+            from || DEFAULT_DATE
+
         ];
+
+        if(to) resourceParts.push(to);
 
         return _fetch(resourceParts);
     };
