@@ -24,8 +24,8 @@ describe('API', () => {
     });
 
     describe('#Activities', () => {
-        describe('#Summary', () => {
 
+        describe('#Summary', () => {
             beforeEach(() => {
                 const getActivitiesResponse = require('./fixtures/activities_today.json');
 
@@ -42,34 +42,12 @@ describe('API', () => {
                 nock.cleanAll();
             });
 
-            it('should return a valid summary resource.', (done) => {
-                const summary = api
-                    .getActivities()
-                    .from('today')
-                    .getURL();
-
-                expect(summary).to.equal('https://api.fitbit.com/1/user/-/activities/date/today.json');
-                done();
-            });
-
             it('should return a summary of activities', (done) => {
 
-                api.getActivities()
-                    .from('today')
-                    .fetch()
-                    .then((json) => {
-                        expect(json.activities).to.not.equal(undefined);
-                        done();
-                    })
-                    .catch(err => {
-                        console.log(err);
-                        done(new Error());
-                    });
-            });
+                const summary = api.getSummary('today');
 
-            it('should return summary stats for today', (done) => {
-                api.getActivities().fetch().then(json => {
-                    expect(json.summary).to.be.not.equal(undefined);
+                summary.then((json) => {
+                    expect(json.activities).to.not.equal(undefined);
                     done();
                 }).catch(err => {
                     console.log(err);
@@ -77,18 +55,31 @@ describe('API', () => {
                 });
             });
 
-            it('should return summary stats for the last 7 days', (done) => {
-                api.getWeeklySummary().then(json => {
-                    expect(json.summary).to.be.not.equal(undefined);
-                    done();
-                }).catch(err => {
-                    console.log(err);
-                    done(new Error());
-                });
-            });
+
         });
 
         describe('#Time series', () => {
+
+            beforeEach(() => {
+                const getActivitiesResponse = require('./fixtures/activities_today.json');
+
+                nock(fitbitDomain)
+                    .get('/1/user/-/activities/calories/date/2017-05-01/2017-05-05.json')
+                    .reply(200, getActivitiesResponse);
+                nock(fitbitDomain)
+                    .get('/1/user/-/activities/calories/date/today/1d')
+                    .reply(200, getActivitiesResponse);
+                nock(fitbitDomain)
+                    .get('/1/user/-/activities/calories/date/today/2018-01-01.json')
+                    .reply(200, getActivitiesResponse);
+
+            });
+
+            after(() => {
+                nock.cleanAll();
+            });
+
+
             it('should return time series stats for calories', (done) => {
                 api.getTimeSeries('calories', '2017-05-01', '2017-05-05').then(json => {
                     expect(json).to.be.not.equal(undefined);
@@ -144,7 +135,7 @@ describe('API', () => {
                 api.getActivities('steps')
                     .from()
                     .to('1d')
-                    .fetch()
+
                     .then(json => {
                         expect(json['activities-steps'][0].value).to.be.a('string');
                         done();
@@ -171,7 +162,7 @@ describe('API', () => {
                 api.getActivities('distance')
                     .from()
                     .to('1d')
-                    .fetch()
+
                     .then(json => {
                         expect(json['activities-distance'][0].value).to.be.an('string');
                         done();
@@ -218,7 +209,7 @@ describe('API', () => {
 
             it('should return calories for today', (done) => {
 
-                api.getActivities('calories').from().to('1d').fetch().then(json => {
+                api.getActivities('calories').from().to('1d').then(json => {
 
                     expect(json['activities-calories'][0].value).to.be.not.equal(undefined);
                     done();
@@ -230,7 +221,7 @@ describe('API', () => {
 
             it('should return calories for the past 7 days', (done) => {
 
-                api.getActivities('calories').from('today').to('7d').fetch().then(json => {
+                api.getActivities('calories').from('today').to('7d').then(json => {
                     expect(json['activities-calories'][0].value).to.be.not.equal(undefined);
                     done();
                 }).catch(err => {
@@ -240,18 +231,7 @@ describe('API', () => {
             });
             it('should return calories for the past 7 days', (done) => {
 
-                api.getActivities('calories').from().to('7d').fetch().then(json => {
-                    expect(json['activities-calories'][0].value).to.be.not.equal(undefined);
-                    done();
-                }).catch(err => {
-                    console.log(err);
-                    done(new Error());
-                });
-            });
-
-            it('should return calories for the past 7 days', (done) => {
-
-                api.getActivities('calories').from().to().fetch().then(json => {
+                api.getActivities('calories').from().to('7d').then(json => {
                     expect(json['activities-calories'][0].value).to.be.not.equal(undefined);
                     done();
                 }).catch(err => {
@@ -262,7 +242,18 @@ describe('API', () => {
 
             it('should return calories for the past 7 days', (done) => {
 
-                api.getActivities('calories').to('7d').fetch().then(json => {
+                api.getActivities('calories').from().to().then(json => {
+                    expect(json['activities-calories'][0].value).to.be.not.equal(undefined);
+                    done();
+                }).catch(err => {
+                    console.log(err);
+                    done(new Error());
+                });
+            });
+
+            it('should return calories for the past 7 days', (done) => {
+
+                api.getActivities('calories').to('7d').then(json => {
                     expect(json['activities-calories'][0].value).to.be.not.equal(undefined);
                     done();
                 }).catch(err => {
@@ -316,7 +307,7 @@ describe('API', () => {
         });
 
         it('should return leaderboard', (done) => {
-            api.getFriends('leaderboard').fetch().then(json => {
+            api.getFriends('leaderboard').then(json => {
                 expect(json.friends).to.be.a('array');
                 done();
             }).catch(err => {
@@ -355,7 +346,7 @@ describe('API', () => {
         });
 
         it('should return a heart rate data', (done) => {
-            api.getActivities('heart').fetch().then(json => {
+            api.getActivities('heart').then(json => {
                 expect(json['activities-heart']).to.not.be.undefined;
                 done();
             }).catch(err => {
@@ -393,7 +384,7 @@ describe('API', () => {
         });
 
         it('should return a sleep data', (done) => {
-            api.getSleepLogs().from('today').fetch().then(json => {
+            api.getSleepLogs().from('today').then(json => {
                 expect(json.sleep).to.not.be.undefined;
                 done();
             }).catch(err => {
@@ -403,7 +394,7 @@ describe('API', () => {
         });
 
         it('should return a sleep data', (done) => {
-            api.getSleepLogs('sleep').from('2017-01-01').to('2017-03-01').fetch().then(json => {
+            api.getSleepLogs('sleep').from('2017-01-01').to('2017-03-01').then(json => {
                 expect(json.sleep).to.not.be.undefined;
                 done();
             }).catch(err => {
@@ -412,7 +403,7 @@ describe('API', () => {
             });
         });
         it('should return a sleep data', (done) => {
-            api.getSleepLogs('sleep').fetch().then(json => {
+            api.getSleepLogs('sleep').then(json => {
                 expect(json.sleep).to.not.be.undefined;
                 done();
             }).catch(err => {
@@ -422,7 +413,7 @@ describe('API', () => {
         });
 
         it('should return a sleep data', (done) => {
-            api.getSleepLogs().fetch().then(json => {
+            api.getSleepLogs().then(json => {
                 expect(json.sleep).to.not.be.undefined;
                 done();
             }).catch(err => {
