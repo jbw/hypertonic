@@ -85,5 +85,4 @@ api.getSummary('today').then(data => console.log(data));
 // Activity Time Series
 api.getTimeSeries('calories', 'today', '7d').then(data => console.log(data));
 api.getTimeSeries('steps', 'today', '1m').then(data => console.log(data));
-
 ```
