@@ -45,12 +45,20 @@ External specific configurations for a Fitbit application. You can find this inf
 | auth.token.refresh_token | Token which allows you to keep reauthenticate when the token has expired.            |
 | app.scopes               | Specify allowed access granted by the user. Must be a <i>space delimited string</i>. |
 
+You can find some sample configuration files located in the `secrets_template/` directory. This contains:
+* `fitbit.json` which contains auth properties (that must be kept secret)
+* `token.json` which is the structure of the recieved token object from Fitbit
+
+
 ``` javascript
 const auth = oauth2.create(credentials.fitbit);
-const authUrl = auth.authorizationCode.authorizeURL({ scope: credentials.config.scopes });
+const authUrl = auth.authorizationCode
+                        .authorizeURL({ scope: credentials.config.scopes });
 ```
 
 ### Fitbit Token Object
+
+Once you authenticate with Fitbit you will recieve an object which looks like the below code snippet. Hypertonic accepts the access_token value (e.g. `new Hypertonic(token.access_token)`).
 
 ```json
 {
