@@ -32,10 +32,6 @@ describe('API', () => {
                 nock(fitbitDomain)
                     .get('/1/user/-/activities/date/today.json')
                     .reply(200, getActivitiesResponse);
-
-                nock(fitbitDomain)
-                    .get(`/1/user/-/activities/date/${todaysDate}.json`)
-                    .reply(200, getActivitiesResponse);
             });
 
             after(() => {
@@ -82,7 +78,7 @@ describe('API', () => {
                     nock.cleanAll();
                 });
 
-                it('should return steps today', (done) => {
+                it('should return steps for today', (done) => {
 
                     api.getTimeSeries('steps', 'today')
                         .then(json => {
@@ -141,7 +137,7 @@ describe('API', () => {
                         .reply(200, getCaloriesResponse);
 
                     nock(fitbitDomain)
-                        .get('/1/user/-/activities/calories/date/today/1d')
+                        .get('/1/user/-/activities/calories/date/today/1d.json')
                         .reply(200, getCaloriesResponse);
 
                     nock(fitbitDomain)
@@ -153,7 +149,19 @@ describe('API', () => {
                         .reply(200, getCaloriesResponse);
 
                     nock(fitbitDomain)
+                        .get('/1/user/-/activities/calories/date/bad.json')
+                        .reply(200, getCaloriesResponse);
+
+                    nock(fitbitDomain)
                         .get('/1/user/-/activities/calories/date/today/7d.json')
+                        .reply(200, getCaloriesResponse);
+
+                    nock(fitbitDomain)
+                        .get('/1/user/-/activities/bad/date/today/7d.json')
+                        .reply(200, getCaloriesResponse);
+
+                    nock(fitbitDomain)
+                        .get('/1/user/-/activities/calories/date/today/bad.json')
                         .reply(200, getCaloriesResponse);
 
                 });
@@ -173,13 +181,37 @@ describe('API', () => {
                     });
                 });
 
-                it('should return calories for the past 7 days', (done) => {
+                it('should return validation errors', (done) => {
 
+                    Promise.all([
+                        api.getTimeSeries('calories', 'today', 'bad').then(json => {
+                            return Promise.reject(false);
+                        }).catch(err => {
+                            return Promise.resolve();
+                        }),
+
+                        api.getTimeSeries('bad', 'today', '7d').then(json => {
+                            return Promise.reject(false);
+                        }).catch(err => {
+                            return Promise.resolve();
+                        }),
+
+                        api.getTimeSeries('calories', 'bad').then(json => {
+                            return Promise.reject(false);
+                        }).catch(err => {
+                            return Promise.resolve();
+                        })
+
+                    ]).then(results => {
+                        results.includes(false) ? done(new Error()) : done();
+                    });
+                });
+
+                it('should return calories for the past 7 days', (done) => {
                     api.getTimeSeries('calories', 'today', '7d').then(json => {
                         expect(json['activities-calories'][0].value).to.be.not.equal(undefined);
                         done();
                     }).catch(err => {
-                        console.log(err);
                         done(new Error());
                     });
                 });

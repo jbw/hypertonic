@@ -7,6 +7,8 @@ const FitbitApi = (token) => {
     if (token === undefined) throw new Error('token is not defined.');
 
     const DEFAULT_DATE = 'today';
+    const DEFAULT_PERIOD = '1d';
+    const FITBIT_DATE_FORMAT = 'YYYY-MM-DD';
 
     const _getHeaderOptions = (token, locale) => {
         return {
@@ -17,9 +19,14 @@ const FitbitApi = (token) => {
         };
     };
 
-    const _getDateNow = (offset) => {
-        return moment(new Date()).add(offset, 'days').format('YYYY-MM-DD');
-    };
+    const _getDateNow = offset => moment(new Date()).add(offset, 'days').format(FITBIT_DATE_FORMAT);
+
+    const _isValidDateFormat = dateString => moment(dateString, FITBIT_DATE_FORMAT).isValid();
+
+    const _isValidDatePeriod = period => routes.dateFormats.periods.includes(period);
+
+    const _isValidBaseDate = baseDate => routes.dateFormats.basedate.includes(baseDate);
+
 
     const getURL = (resourceParts) => {
         const route = resourceParts.join('/') + '.json';
@@ -81,23 +88,37 @@ const FitbitApi = (token) => {
         ];
 
         if (date) {
-            resourceParts.push(date);
+            if (_isValidDateFormat(date) || _isValidBaseDate(date)) {
+                resourceParts.push(date);
+            } else {
+                throw new Error('Functions parameters invalid');
+            }
         }
 
         return _fetch(resourceParts);
     };
 
     const getTimeSeries = (activity, from, to) => {
+        from = from || DEFAULT_DATE;
+        to = to || DEFAULT_PERIOD;
+
         const resourceParts = [
             routes.base,
             routes.activities.route,
             activity,
             routes.dateFormats.route.name,
-            from || DEFAULT_DATE
-
+            from,
+            to
         ];
 
-        if(to) resourceParts.push(to);
+        const isFromValid = _isValidBaseDate(from) || _isValidDateFormat(from);
+        const isToValid = _isValidDatePeriod(to) || _isValidDateFormat(to);
+
+        if (!isFromValid || !isToValid) {
+            return new Promise(function (resolve, reject) {
+                throw new Error('Functions parameters invalid');
+            });
+        }
 
         return _fetch(resourceParts);
     };

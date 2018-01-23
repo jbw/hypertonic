@@ -10,7 +10,7 @@ Fitbit API Wrapper
 
 ### oAuth2
 
-External specific configurations for a Fitbit application. You can find this information on the Fitbit SDK. It is used to form an oAuth request.
+External specific configurations for a Fitbit application. You can find this information on the Fitbit SDK. It is used to form an oAuth request. Get your `client.id` and `client.secret` from your registered application on https://dev.fitbit.com/
 
 ``` json
 {
@@ -71,7 +71,11 @@ const authUrl = auth.authorizationCode.authorizeURL({ scope: credentials.config.
 ```javascript
 const hypertonic = new Hypertonic(token);
 
-api.getActivities().fetch().then(data =>
-    res.status(200).json(data);
-});
+// Activity Summary data
+api.getSummary('today').then(data => console.log(data));
+
+// Activity Time Series
+api.getTimeSeries('calories', 'today', '7d').then(data => console.log(data));
+api.getTimeSeries('steps', 'today', '1m').then(data => console.log(data));
+
 ```

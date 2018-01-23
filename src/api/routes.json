@@ -30,9 +30,7 @@
     "sleep": {
         "base": "https://api.fitbit.com/1.2/user/-",
         "route": "sleep",
-        "types": {
-
-        }
+        "types": {}
     },
     "friends": {
         "route": "friends",
@@ -46,23 +44,18 @@
         "route": {
             "name": "date"
         },
-        "from": {
-            "name": "{DATEFROM}"
-        },
-        "fromto": {
-            "name": "{DATEFROM}/{DATETO}"
-        },
-        "sevendays": {
-            "name": "{DATEFROM}/7d"
-        },
-        "1day": {
-            "name": "{DATEFROM}/1d"
-        },
-        "daily": {
-            "name": "daily"
-        },
-        "weekly": {
-            "name": "weekly"
-        }
+        "basedate": [
+            "today"
+        ],
+        "periods": [
+            "1d",
+            "7d",
+            "30d",
+            "1w",
+            "1m",
+            "3m",
+            "6m",
+            "1y"
+        ]
     }
 }
