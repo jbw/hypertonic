@@ -6,5 +6,7 @@ const api = test.api;
 const fitbitDomain = test.fitbitDomain;
 
 describe('#Lifetime Stats', () => {
+    it('should get life time stats', (done) => {
 
+    });
 });
