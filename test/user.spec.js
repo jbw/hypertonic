@@ -7,4 +7,15 @@ const fitbitDomain = test.fitbitDomain;
 
 describe('#User', () => {
 
+    after(() => {
+        nock.cleanAll();
+    });
+
+    it('should get profile', (done) => {
+    });
+
+    it('should get badges', (done) => {
+
+    });
+
 });

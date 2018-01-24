@@ -3,7 +3,6 @@ const expect = chai.expect;
 const nock = require('nock');
 const test = require('./common.js');
 const api = test.api;
-const noScopeApi = test.noScopeApi;
 const fitbitDomain = test.fitbitDomain;
 
 
