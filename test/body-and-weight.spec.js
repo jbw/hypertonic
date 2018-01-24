@@ -132,3 +132,42 @@ describe('#Body Time Series', () => {
         });
     });
 });
+
+describe('#Body Goals', () => {
+
+    beforeEach(() => {
+        const goalWeight = require('./fixtures/goal-weight.json');
+        const goalFat = require('./fixtures/goal-fat.json');
+
+        nock(fitbitDomain)
+            .get('/1/user/-/body/log/weight/goal.json')
+            .reply(200, goalWeight);
+        nock(fitbitDomain)
+            .get('/1/user/-/body/log/fat/goal.json')
+            .reply(200, goalFat);
+    });
+
+    after(() => {
+        nock.cleanAll();
+    });
+
+    it('should get body fat goal', (done) => {
+        api.getGoal('fat').then(json => {
+            expect(json.goal).to.be.an('object');
+            done();
+        }).catch(err => {
+            done(new Error(err));
+        });
+    });
+
+    it('should get body weight goal', (done) => {
+        api.getGoal('weight').then(json => {
+            expect(json.goal).to.be.an('object');
+            done();
+        }).catch(err => {
+            done(new Error(err));
+        });
+    });
+
+
+});
