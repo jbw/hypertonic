@@ -10,39 +10,8 @@ describe('#Connection', () => {
     });
 });
 
-describe('#Activity Types', () => {
 
-});
 
-describe('#Activity Logging', () => {
 
-});
 
-describe('#Activity Goals', () => {
-
-});
-
-describe('#Lifetime Stats', () => {
-
-});
-
-describe('#Body and Weight', () => {
-
-});
-
-describe('#Devices', () => {
-
-});
-
-describe('#Food Logging', () => {
-
-});
-
-describe('#Subscriptions', () => {
-
-});
-
-describe('#User', () => {
-
-});
 
