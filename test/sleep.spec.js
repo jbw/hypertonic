@@ -51,7 +51,6 @@ describe('#Sleep', () => {
         });
     });
 
-
     it('should handle missing scope error', (done) => {
         api.getSleepLogs('2017-12-12').then(json => {
             done(new Error());

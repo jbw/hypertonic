@@ -81,19 +81,19 @@ const FitbitApi = (token) => {
     };
 
     const getSummary = (date) => {
-        const resourceParts = [
-            routes.base,
-            routes.activities.route,
-            routes.dateFormats.route.name
-        ];
 
         if (date) {
-            if (_isValidDateFormat(date) || _isValidBaseDate(date)) {
-                resourceParts.push(date);
-            } else {
+            if (!(_isValidDateFormat(date) || _isValidBaseDate(date))) {
                 throw new Error('Functions parameters invalid');
             }
         }
+
+        const resourceParts = [
+            routes.base,
+            routes.activities.route,
+            routes.dateFormats.route.name,
+            date
+        ];
 
         return _fetch(resourceParts);
     };
@@ -115,7 +115,7 @@ const FitbitApi = (token) => {
         const isToValid = _isValidDatePeriod(to) || _isValidDateFormat(to);
 
         if (!isFromValid || !isToValid) {
-            return new Promise(function (resolve, reject) {
+            return new Promise(function () {
                 throw new Error('Functions parameters invalid');
             });
         }

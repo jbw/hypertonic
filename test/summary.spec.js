@@ -30,8 +30,6 @@ describe('#Summary', () => {
             done(new Error());
         });
     });
-
-
 });
 
 

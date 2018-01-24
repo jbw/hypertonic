@@ -75,6 +75,31 @@ describe('#Time series', () => {
         });
     });
 
+    describe('#Sleep', () => {
+        beforeEach(() => {
+            const getDistanceResponse = require('./fixtures/sleep.json');
+            nock(fitbitDomain)
+                .get('/1/user/-/activities/sleep/date/today/1d.json')
+                .reply(200, getDistanceResponse);
+        });
+
+        after(() => {
+            nock.cleanAll();
+        });
+
+        it('should return sleep today', (done) => {
+            api.getTimeSeries('sleep', 'today', '1d')
+                .then(json => {
+                    expect(json.sleep).to.be.an('array');
+                    done();
+                }).catch(err => {
+                    console.log(err);
+                    done(new Error());
+                });
+        });
+    });
+
+
     describe('#Calories', () => {
 
         beforeEach(() => {
