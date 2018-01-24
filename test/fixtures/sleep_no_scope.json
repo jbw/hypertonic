@@ -1,0 +1,8 @@
+{
+    "errors": [
+        {
+            "errorType": "insufficient_scope",
+            "message": "This application does not have permission to access sleep data. Visit https: //dev.fitbit.com/docs/oauth2 for more information on the Fitbit Web API authorization process."
+        }
+    ]
+}

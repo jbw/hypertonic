@@ -129,14 +129,17 @@ const FitbitApi = (token) => {
 
         return fetch(url, options)
             .then(res => {
-                return res.json();
+
+                if (res.status >= 200 && res.status < 300) return res.json();
+
+                return res.json().then(Promise.reject.bind(Promise));
+
             }).then(json => {
+
                 if (json.errors !== undefined) throw json.errors;
                 return json;
             })
-            .catch(err => {
-                throw err;
-            });
+            .catch(err => { throw err; });
     };
 
     return {
