@@ -18,6 +18,15 @@ describe('#Friends', () => {
         nock.cleanAll();
     });
 
+    it('should get friends', (done) => {
+    });
+
+    it('should get invitations', (done) => {
+    });
+
+    it('should get badges', (done) => {
+    });
+
     it('should return leaderboard', (done) => {
         api.getFriends('leaderboard').then(json => {
             expect(json.friends).to.be.a('array');
