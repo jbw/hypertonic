@@ -7,6 +7,16 @@ const fitbitDomain = test.fitbitDomain;
 
 describe('#Activity Types', () => {
     beforeEach(() => {
+        const bodyAndWeight = require('./fixtures/body-and-weight.json');
+
+        nock(fitbitDomain)
+            .get('/1/activities.json')
+            .reply(200, bodyAndWeight);
+
+        nock(fitbitDomain)
+            .get('/1/activities/9001.json')
+            .reply(200, bodyAndWeight);
+
     });
 
     after(() => {
