@@ -34,7 +34,12 @@ const FitbitApi = (token) => {
     };
 
     const getProfile = () => {
-        throw 'not implemented';
+        const resourceParts = [
+            routes.base,
+            routes.profile.route
+        ];
+
+        return _fetch(resourceParts);
     };
 
     const getFrequentActivities = () => {

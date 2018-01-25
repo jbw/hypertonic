@@ -1,0 +1,32 @@
+{
+    "user": {
+        "aboutMe":"",
+        "avatar":"",
+        "avatar150":"",
+        "avatar640":"",
+        "city":"",
+        "clockTimeDisplayFormat":"",
+        "country":"",
+        "dateOfBirth":"",
+        "displayName":"",
+        "distanceUnit":"",
+        "encodedId":"",
+        "foodsLocale":"",
+        "fullName":"",
+        "gender":"",
+        "glucoseUnit":"",
+        "height":"",
+        "heightUnit":"",
+        "locale":"",
+        "memberSince":"",
+        "offsetFromUTCMillis":"",
+        "startDayOfWeek":"",
+        "state":"",
+        "strideLengthRunning":"",
+        "strideLengthWalking":"",
+        "timezone":"",
+        "waterUnit":"",
+        "weight":"",
+        "weightUnit":""
+    }
+}
