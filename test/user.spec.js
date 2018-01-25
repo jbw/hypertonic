@@ -26,7 +26,7 @@ describe('#User', () => {
         nock.cleanAll();
     });
 
-    it.only('should get profile', (done) => {
+    it('should get profile', (done) => {
         api.getProfile().then(json => {
             expect(json.user).to.not.be.undefined;
             done();
