@@ -36,7 +36,16 @@ const FitbitApi = (token) => {
     const getProfile = () => {
         const resourceParts = [
             routes.base,
-            routes.profile.route
+            routes.user.profile.route
+        ];
+
+        return _fetch(resourceParts);
+    };
+
+    const getBadges = () => {
+        const resourceParts = [
+            routes.base,
+            routes.user.badges.route
         ];
 
         return _fetch(resourceParts);
@@ -149,6 +158,7 @@ const FitbitApi = (token) => {
 
     return {
         getProfile,
+        getBadges,
         getFavoriteActivities,
         getFrequentActivities,
         getRecentActivities,

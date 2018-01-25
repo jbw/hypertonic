@@ -9,7 +9,6 @@ describe('#User', () => {
 
     beforeEach(() => {
 
-
         const userProfile = require('./fixtures/user-profile.json');
         nock(fitbitDomain)
             .get('/1/user/-/profile.json')
@@ -31,7 +30,7 @@ describe('#User', () => {
             expect(json.user).to.not.be.undefined;
             done();
         }).catch(err => {
-            console.log(err)
+            console.log(err);
             done(new Error());
         });
     });
@@ -39,8 +38,10 @@ describe('#User', () => {
     it('should get badges', (done) => {
         api.getBadges().then(json => {
             expect(json.badges).to.not.be.undefined;
+            done()
         }).catch(err => {
-
+            console.log(err);
+            done(new Error());
         });
     });
 

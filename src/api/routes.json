@@ -1,7 +1,12 @@
 {
     "base": "https://api.fitbit.com/1/user/-",
-    "profile": {
-        "route": "profile"
+    "user": {
+        "profile": {
+            "route": "profile"
+        },
+        "badges": {
+            "route": "badges"
+        }
     },
     "activities": {
         "route": "activities",
