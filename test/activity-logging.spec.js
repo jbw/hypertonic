@@ -14,11 +14,11 @@ describe('#Activity Logging', () => {
     });
 
     it('should get activity logs list', (done) => {
-
+        done(new Error());
     });
 
     it('should get activity TCX', (done) => {
-
+        done(new Error());
     });
 });
 

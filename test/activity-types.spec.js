@@ -14,22 +14,22 @@ describe('#Activity Types', () => {
     });
 
     it('should get activity types list', (done) => {
-
+        done(new Error());
     });
 
     it('should get activity type detail', (done) => {
-
+        done(new Error());
     });
 
     it('should get frequent activity types', (done) => {
-
+        done(new Error());
     });
 
     it('should get recent activity types', (done) => {
-
+        done(new Error());
     });
 
     it('should get favourite activity types', (done) => {
-
+        done(new Error());
     });
 });

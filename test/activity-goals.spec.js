@@ -14,6 +14,6 @@ describe('#Activity Goals', () => {
     });
 
     it('should get activity goals', (done) => {
-
+        done(new Error());
     });
 });

@@ -11,11 +11,11 @@ describe('#Devices', () => {
     });
 
     it('should get device list', (done) => {
-
+        done(new Error());
     });
 
     it('should get alarms', (done) => {
-
+        done(new Error());
     });
 
 });

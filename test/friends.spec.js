@@ -19,12 +19,15 @@ describe('#Friends', () => {
     });
 
     it('should get friends', (done) => {
+        done(new Error());
     });
 
     it('should get invitations', (done) => {
+        done(new Error());
     });
 
     it('should get badges', (done) => {
+        done(new Error());
     });
 
     it('should return leaderboard', (done) => {
