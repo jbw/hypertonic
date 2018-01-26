@@ -1,0 +1,59 @@
+{
+    "activity": {
+        "accessLevel":"PUBLIC",
+        "activityLevels":[
+            {
+                "id":1010,
+                "maxSpeedMPH":9.9,
+                "minSpeedMPH":-1,
+                "mets":4,
+                "name":"Very Leisurely - Less than 10 mph"
+            },
+            {
+                "id":1020,
+                "maxSpeedMPH":11.9,
+                "minSpeedMPH":10,
+                "mets":6,
+                "name":"Leisurely - 10 to 11.9mph"
+            },
+            {
+                "id":1030,
+                "maxSpeedMPH":13.9,
+                "minSpeedMPH":12,
+                "mets":8,
+                "name":"Moderate - 12 to 13.9mph"
+            },
+            {
+                "id":1009,
+                "maxSpeedMPH":-1,
+                "minSpeedMPH":-1,
+                "mets":8.5,
+                "name":"Mountain Biking/BMX"
+            },
+            {
+                "id":1040,
+                "maxSpeedMPH":15.9,
+                "minSpeedMPH":14,
+                "mets":10,
+                "name":"Fast - 14 to 15.9mph"
+            },
+            {
+                "id":1050,
+                "maxSpeedMPH":19,
+                "minSpeedMPH":16,
+                "mets":12,
+                "name":"Really Fast - 16 to 19mph"
+            },
+            {
+                "id":1060,
+                "maxSpeedMPH":-1,
+                "minSpeedMPH":20,
+                "mets":16,
+                "name":"Racing - Faster than 20mph"
+            }
+        ],
+        "hasSpeed":true,
+        "id":90001,
+        "name":"Bicycling"
+    }
+}

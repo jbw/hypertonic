@@ -7,7 +7,7 @@ const fitbitDomain = test.fitbitDomain;
 
 describe('#Activity Types', () => {
     beforeEach(() => {
-        const bodyAndWeight = require('./fixtures/body-and-weight.json');
+        const bodyAndWeight = require('./fixtures/activity-types.json');
 
         nock(fitbitDomain)
             .get('/1/activities.json')

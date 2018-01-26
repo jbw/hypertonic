@@ -47,13 +47,16 @@
     "sleep": {
         "base": "https://api.fitbit.com/1.2/user/-",
         "route": "sleep",
-        "types": {}
+        "type": {}
     },
     "friends": {
         "route": "friends",
-        "types": {
+        "type": {
             "leaderboard": {
                 "name": "leaderboard"
+            },
+            "invitations": {
+                "name": "invitations"
             }
         }
     },

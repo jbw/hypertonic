@@ -36,7 +36,7 @@ describe('#Body Fat Logs', () => {
             expect(json.fat).to.be.an('array');
             done();
         }).catch(err => {
-            console.log(err)
+            console.log(err);
             done(new Error(err));
         });
     });

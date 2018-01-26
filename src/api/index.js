@@ -42,6 +42,17 @@ const FitbitApi = (token) => {
         return _fetch(resourceParts);
     };
 
+    const getInvitations = () => {
+        const resourceParts = [
+            routes.base,
+            routes.friends.route,
+            routes.friends.type.invitations.name
+
+        ];
+
+        return _fetch(resourceParts);
+    };
+
     const getBadges = () => {
         const resourceParts = [
             routes.base,
@@ -105,7 +116,7 @@ const FitbitApi = (token) => {
             from
         ];
 
-        if(to){
+        if (to) {
             resourceParts.push(to);
         }
 
@@ -184,8 +195,7 @@ const FitbitApi = (token) => {
             to
         ];
 
-        _handleFromAndToParameter(from, to);
-        return _fetch(resourceParts);
+        return _handleFromAndToParameter(from, to) || _fetch(resourceParts);
     };
 
     const _fetch = (resourceParts) => {
@@ -220,7 +230,8 @@ const FitbitApi = (token) => {
         getTimeSeries,
         getBodyGoal,
         getBodyTimeSeries,
-        getBodyFatLogs
+        getBodyFatLogs,
+        getInvitations
     };
 };
 
