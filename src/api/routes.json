@@ -8,6 +8,12 @@
             "route": "badges"
         }
     },
+    "body": {
+        "route": "body/log",
+        "type": {
+            "goal": "goal"
+        }
+    },
     "activities": {
         "route": "activities",
         "types": {

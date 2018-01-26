@@ -147,7 +147,7 @@ describe('#Body Goals', () => {
     });
 
     it('should get body fat goal', (done) => {
-        api.getGoal('fat').then(json => {
+        api.getBodyGoal('fat').then(json => {
             expect(json.goal).to.be.an('object');
             done();
         }).catch(err => {
@@ -156,7 +156,7 @@ describe('#Body Goals', () => {
     });
 
     it('should get body weight goal', (done) => {
-        api.getGoal('weight').then(json => {
+        api.getBodyGoal('weight').then(json => {
             expect(json.goal).to.be.an('object');
             done();
         }).catch(err => {

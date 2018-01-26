@@ -67,6 +67,19 @@ const FitbitApi = (token) => {
         return getSummary().from(routes.dateFormats.route.sevendays);
     };
 
+    const getBodyGoal = (bodyMetric) => {
+
+
+        const resourceParts = [
+            routes.base,
+            routes.body.route,
+            bodyMetric,
+            routes.body.type.goal
+        ];
+
+        return _fetch(resourceParts);
+    };
+
     const getFriends = (friends) => {
 
         const resourceParts = [
@@ -112,6 +125,18 @@ const FitbitApi = (token) => {
         return _fetch(resourceParts);
     };
 
+    const _isFromParamterValid = (from) => _isValidBaseDate(from) || _isValidDateFormat(from);
+    const _isToParamterValid = (to) => _isValidDatePeriod(to) || _isValidDateFormat(to);
+    const _isFromAndToParamtersValid = (from, to) => _isFromParamterValid(from) && _isToParamterValid(to);
+
+    const _handleFromAndToParameter = (from, to) => {
+        if (!_isFromAndToParamtersValid(from, to)) {
+            return new Promise(function () {
+                throw new Error('Functions parameters invalid');
+            });
+        }
+    };
+
     const getTimeSeries = (activity, from, to) => {
         from = from || DEFAULT_DATE;
         to = to || DEFAULT_PERIOD;
@@ -125,15 +150,7 @@ const FitbitApi = (token) => {
             to
         ];
 
-        const isFromValid = _isValidBaseDate(from) || _isValidDateFormat(from);
-        const isToValid = _isValidDatePeriod(to) || _isValidDateFormat(to);
-
-        if (!isFromValid || !isToValid) {
-            return new Promise(function () {
-                throw new Error('Functions parameters invalid');
-            });
-        }
-
+        _handleFromAndToParameter(from, to);
         return _fetch(resourceParts);
     };
 
@@ -166,7 +183,8 @@ const FitbitApi = (token) => {
         getFriends,
         getSleepLogs,
         getSummary,
-        getTimeSeries
+        getTimeSeries,
+        getBodyGoal
     };
 };
 
