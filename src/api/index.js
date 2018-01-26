@@ -94,6 +94,24 @@ const FitbitApi = (token) => {
         return _fetch(resourceParts);
     };
 
+    const getBodyFatLogs = (from, to) => {
+
+        const resourceParts = [
+            routes.base,
+            routes.body.route,
+            routes.body.log.route,
+            routes.body.log.type.fat,
+            routes.dateFormats.route.name,
+            from
+        ];
+
+        if(to){
+            resourceParts.push(to);
+        }
+
+        return _fetch(resourceParts);
+    };
+
     const getSleepLogs = (from) => {
 
         const resourceParts = [
@@ -201,7 +219,8 @@ const FitbitApi = (token) => {
         getSummary,
         getTimeSeries,
         getBodyGoal,
-        getBodyTimeSeries
+        getBodyTimeSeries,
+        getBodyFatLogs
     };
 };
 

@@ -7,18 +7,22 @@ const fitbitDomain = test.fitbitDomain;
 
 describe('#Body Fat Logs', () => {
     beforeEach(() => {
-        const bodyAndWeight = require('./fixtures/body-and-weight.json');
+        const bodyAndWeight = require('./fixtures/body-log.json');
 
         nock(fitbitDomain)
-            .get('/1/user/[user-id]/body/log/fat/date/[date].json')
+            .get('/1/user/-/body/log/fat/date/2017-01-01.json')
             .reply(200, bodyAndWeight);
 
         nock(fitbitDomain)
-            .get('/1/user/[user-id]/body/log/fat/date/[date]/[period].json')
+            .get('/1/user/-/body/log/fat/date/2017-01-01/7d.json')
             .reply(200, bodyAndWeight);
 
         nock(fitbitDomain)
-            .get('/1/user/[user-id]/body/log/fat/date/[base-date]/[end-date].json')
+            .get('/1/user/-/body/log/fat/date/today/7d.json')
+            .reply(200, bodyAndWeight);
+
+        nock(fitbitDomain)
+            .get('/1/user/-/body/log/fat/date/today.json')
             .reply(200, bodyAndWeight);
 
     });
@@ -28,16 +32,17 @@ describe('#Body Fat Logs', () => {
     });
 
     it('should get body fat logs', (done) => {
-        api.getBodyFatLogs('2018-01-01').then(json => {
+        api.getBodyFatLogs('2017-01-01').then(json => {
             expect(json.fat).to.be.an('array');
             done();
         }).catch(err => {
+            console.log(err)
             done(new Error(err));
         });
     });
 
     it('should get body fat logs', (done) => {
-        api.getBodyFatLogs('2018-01-01', '7d').then(json => {
+        api.getBodyFatLogs('2017-01-01', '7d').then(json => {
             expect(json.fat).to.be.an('array');
             done();
         }).catch(err => {
@@ -56,7 +61,7 @@ describe('#Body Fat Logs', () => {
     });
 
     it('should get body fat logs', (done) => {
-        api.getBodyFatLogs('today', '1m').then(json => {
+        api.getBodyFatLogs('today', '7d').then(json => {
             expect(json.fat).to.be.an('array');
             done();
         }).catch(err => {

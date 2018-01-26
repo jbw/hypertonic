@@ -13,7 +13,8 @@
         "log": {
             "route": "log",
             "type": {
-                "goal": "goal"
+                "goal": "goal",
+                "fat": "fat"
             }
         }
     },
