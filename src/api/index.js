@@ -107,6 +107,12 @@ const FitbitApi = (token) => {
 
     const getBodyFatLogs = (from, to) => {
 
+        if (to !== undefined) {
+            if (!_isValidDateFormat(from)) {
+                return _throwInvalidParameterException();
+            }
+        }
+
         const resourceParts = [
             routes.base,
             routes.body.route,
@@ -139,7 +145,7 @@ const FitbitApi = (token) => {
 
         if (date) {
             if (!(_isValidDateFormat(date) || _isValidBaseDate(date))) {
-                throw new Error('Functions parameters invalid');
+                return _throwInvalidParameterException();
             }
         }
 
@@ -157,11 +163,15 @@ const FitbitApi = (token) => {
     const _isToParamterValid = (to) => _isValidDatePeriod(to) || _isValidDateFormat(to);
     const _isFromAndToParamtersValid = (from, to) => _isFromParamterValid(from) && _isToParamterValid(to);
 
+    const _throwInvalidParameterException = () => {
+        return new Promise(function () {
+            throw new Error('Functions parameters invalid');
+        });
+    };
+
     const _handleFromAndToParameter = (from, to) => {
         if (!_isFromAndToParamtersValid(from, to)) {
-            return new Promise(function () {
-                throw new Error('Functions parameters invalid');
-            });
+            return _throwInvalidParameterException();
         }
     };
 
