@@ -71,7 +71,7 @@ describe('#Body Time Series', () => {
         const bodyAndWeight = require('./fixtures/body-and-weight.json');
 
         nock(fitbitDomain)
-            .get('/1/user/-/body/bmi/date/2017-05-01/1d.json')
+            .get('/1/user/-/body/bmi/date/2017-01-01/1d.json')
             .reply(200, bodyAndWeight);
 
         nock(fitbitDomain)
@@ -79,11 +79,11 @@ describe('#Body Time Series', () => {
             .reply(200, bodyAndWeight);
 
         nock(fitbitDomain)
-            .get('/1/user/-/body/fat/date/2017-05-01/1d.json')
+            .get('/1/user/-/body/fat/date/2017-01-01/1d.json')
             .reply(200, bodyAndWeight);
 
         nock(fitbitDomain)
-            .get('/1/user/-/body/fat/date/today/2017-01-01.json')
+            .get('/1/user/-/body/fat/date/today/2017-01-01/1d.json')
             .reply(200, bodyAndWeight);
 
         nock(fitbitDomain)
@@ -91,7 +91,7 @@ describe('#Body Time Series', () => {
             .reply(200, bodyAndWeight);
 
         nock(fitbitDomain)
-            .get('/1/user/-/body/weight/date/2017-05-01/1d.json')
+            .get('/1/user/-/body/weight/date/2017-01-01/1d.json')
             .reply(200, bodyAndWeight);
 
     });
@@ -101,7 +101,7 @@ describe('#Body Time Series', () => {
     });
 
     it('should get body fat logs', (done) => {
-        api.getBodyTimeSeries('fat', '2018-01-01').then(json => {
+        api.getBodyTimeSeries('fat', '2017-01-01').then(json => {
             expect(json.fat).to.be.an('array');
             done();
         }).catch(err => {
@@ -110,7 +110,7 @@ describe('#Body Time Series', () => {
     });
 
     it('should get body bmi logs', (done) => {
-        api.getBodyTimeSeries('bmi', '2018-01-01').then(json => {
+        api.getBodyTimeSeries('bmi', 'today', '2017-01-01').then(json => {
             expect(json.bmi).to.be.an('array');
             done();
         }).catch(err => {
@@ -119,7 +119,7 @@ describe('#Body Time Series', () => {
     });
 
     it('should get body weight logs', (done) => {
-        api.getBodyTimeSeries('weight', '2018-01-01').then(json => {
+        api.getBodyTimeSeries('weight', '2017-01-01', '1d').then(json => {
             expect(json.weight).to.be.an('array');
             done();
         }).catch(err => {

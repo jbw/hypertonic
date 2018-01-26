@@ -69,12 +69,12 @@ const FitbitApi = (token) => {
 
     const getBodyGoal = (bodyMetric) => {
 
-
         const resourceParts = [
             routes.base,
             routes.body.route,
+            routes.body.log.route,
             bodyMetric,
-            routes.body.type.goal
+            routes.body.log.type.goal
         ];
 
         return _fetch(resourceParts);
@@ -101,7 +101,6 @@ const FitbitApi = (token) => {
             routes.sleep.route,
             routes.dateFormats.route.name,
             from || DEFAULT_DATE
-
         ];
 
         return _fetch(resourceParts);
@@ -135,6 +134,23 @@ const FitbitApi = (token) => {
                 throw new Error('Functions parameters invalid');
             });
         }
+    };
+
+    const getBodyTimeSeries = (bodyMetric, from, to) => {
+        from = from || DEFAULT_DATE;
+        to = to || DEFAULT_PERIOD;
+
+        const resourceParts = [
+            routes.base,
+            routes.body.route,
+            bodyMetric,
+            routes.dateFormats.route.name,
+            from,
+            to
+        ];
+
+        _handleFromAndToParameter(from, to);
+        return _fetch(resourceParts);
     };
 
     const getTimeSeries = (activity, from, to) => {
@@ -184,7 +200,8 @@ const FitbitApi = (token) => {
         getSleepLogs,
         getSummary,
         getTimeSeries,
-        getBodyGoal
+        getBodyGoal,
+        getBodyTimeSeries
     };
 };
 

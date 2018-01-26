@@ -9,9 +9,12 @@
         }
     },
     "body": {
-        "route": "body/log",
-        "type": {
-            "goal": "goal"
+        "route": "body",
+        "log": {
+            "route": "log",
+            "type": {
+                "goal": "goal"
+            }
         }
     },
     "activities": {
