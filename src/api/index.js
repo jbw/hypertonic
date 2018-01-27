@@ -42,12 +42,21 @@ const FitbitApi = (token) => {
         return _fetch(resourceParts);
     };
 
+    const getLifetimeStats = () => {
+        const resourceParts = [
+            routes.base,
+            routes.activities.route
+        ];
+
+        return _fetch(resourceParts);
+
+    };
+
     const getInvitations = () => {
         const resourceParts = [
             routes.base,
             routes.friends.route,
             routes.friends.type.invitations.name
-
         ];
 
         return _fetch(resourceParts);
@@ -241,7 +250,8 @@ const FitbitApi = (token) => {
         getBodyGoal,
         getBodyTimeSeries,
         getBodyFatLogs,
-        getInvitations
+        getInvitations,
+        getLifetimeStats
     };
 };
 
