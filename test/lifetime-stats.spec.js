@@ -17,7 +17,7 @@ describe('#Lifetime Stats', () => {
         nock.cleanAll();
     });
 
-    it.only('should get life time stats', (done) => {
+    it('should get life time stats', (done) => {
         api.getLifetimeStats().then(json => {
             expect(json.lifetime).to.not.be.undefined;
             done();

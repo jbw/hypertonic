@@ -34,6 +34,6 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       # run tests!
-      - run: REMOTE_BUILD=true yarn test
+      - run: yarn test
 
 
