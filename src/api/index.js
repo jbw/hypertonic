@@ -238,15 +238,27 @@ const FitbitApi = (token) => {
     const _fetch = (resourceParts, extension = '.json') => {
         const options = _getHeaderOptions(token);
         const url = getURL(resourceParts, extension);
+
         return fetch(url, options)
             .then(res => {
-                if (res.status >= 200 && res.status < 300) return res.json();
+
+                const contentType = res.headers.get('content-type');
+
+                if (res.status >= 200 && res.status < 300) {
+
+                    if (contentType.includes('application/json')) {
+                        return res.json();
+                    }
+
+                    else if (contentType.includes('application/vnd.garmin.tcx+xml;charset=UTF-8')) {
+                        return res.text();
+                    }
+                }
+
                 return res.json().then(Promise.reject.bind(Promise));
 
-            }).then(json => {
-
-                if (json.errors !== undefined) throw json.errors;
-                return json;
+            }).then(data => {
+                return data;
             })
             .catch(err => { throw err; });
     };
