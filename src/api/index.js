@@ -28,8 +28,8 @@ const FitbitApi = (token) => {
     const _isValidBaseDate = baseDate => routes.dateFormats.basedate.includes(baseDate);
 
 
-    const getURL = (resourceParts) => {
-        const route = resourceParts.join('/') + '.json';
+    const getURL = (resourceParts, extension = '.json') => {
+        const route = resourceParts.join('/') + extension;
         return route;
     };
 
@@ -112,6 +112,24 @@ const FitbitApi = (token) => {
         }
 
         return _fetch(resourceParts);
+    };
+
+    const getActivityLogsList = () => {
+        const resourceParts = [
+            routes.base,
+            routes.activities.route,
+            routes.activities.types.list.name
+        ];
+        return _fetch(resourceParts);
+    };
+
+    const getActivityTCX = (logId) => {
+        const resourceParts = [
+            routes.base,
+            routes.activities.route,
+            logId
+        ];
+        return _fetch(resourceParts, '.tcx');
     };
 
     const getBodyFatLogs = (from, to) => {
@@ -217,15 +235,12 @@ const FitbitApi = (token) => {
         return _handleFromAndToParameter(from, to) || _fetch(resourceParts);
     };
 
-    const _fetch = (resourceParts) => {
+    const _fetch = (resourceParts, extension = '.json') => {
         const options = _getHeaderOptions(token);
-        const url = getURL(resourceParts);
-
+        const url = getURL(resourceParts, extension);
         return fetch(url, options)
             .then(res => {
-
                 if (res.status >= 200 && res.status < 300) return res.json();
-
                 return res.json().then(Promise.reject.bind(Promise));
 
             }).then(json => {
@@ -251,7 +266,9 @@ const FitbitApi = (token) => {
         getBodyTimeSeries,
         getBodyFatLogs,
         getInvitations,
-        getLifetimeStats
+        getLifetimeStats,
+        getActivityLogsList,
+        getActivityTCX
     };
 };
 

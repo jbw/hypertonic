@@ -41,6 +41,9 @@
             },
             "favorite": {
                 "name": "favorite"
+            },
+            "list": {
+                "name": "list"
             }
         }
     },
