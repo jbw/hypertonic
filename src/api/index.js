@@ -129,6 +129,7 @@ const FitbitApi = (token) => {
             routes.activities.route,
             logId
         ];
+
         return _fetch(resourceParts, '.tcx');
     };
 
@@ -250,7 +251,7 @@ const FitbitApi = (token) => {
                         return res.json();
                     }
 
-                    else if (contentType.includes('application/vnd.garmin.tcx+xml;charset=UTF-8')) {
+                    else if (contentType.includes('application/vnd.garmin.tcx+xml')) {
                         return res.text();
                     }
                 }
