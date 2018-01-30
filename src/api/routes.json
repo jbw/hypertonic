@@ -1,5 +1,6 @@
 {
     "base": "https://api.fitbit.com/1/user/-",
+    "global": "https://api.fitbit.com/1",
     "user": {
         "profile": {
             "route": "profile"
@@ -70,6 +71,7 @@
         "basedate": [
             "today"
         ],
+        "sevendays": "7d",
         "periods": [
             "1d",
             "7d",

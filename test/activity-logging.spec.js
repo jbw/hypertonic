@@ -4,7 +4,6 @@ const nock = require('nock');
 const test = require('./common.js');
 const api = test.api;
 const fitbitDomain = test.fitbitDomain;
-const fs = require('fs');
 
 describe('#Activity Logging', () => {
     beforeEach(() => {

@@ -1,0 +1,42 @@
+[
+    {
+        "activityId": 1030,
+        "calories": 1721,
+        "description": "Moderate - 12 to 13.9mph",
+        "distance": 1,
+        "duration": 3723000,
+        "name": "Bicycling"
+    },
+    {
+        "activityId": 12030,
+        "calories": 1124,
+        "description": "Running - 5 mph (12 min/mile)",
+        "distance": 2,
+        "duration": 7322000,
+        "name": "Running"
+    },
+    {
+        "activityId": 18240,
+        "calories": 1476,
+        "description": "",
+        "distance": 0,
+        "duration": 10983000,
+        "name": "Swimming laps, freestyle, slow, moderate or light effort"
+    },
+    {
+        "activityId": 17151,
+        "calories": 357,
+        "description": "Walking less than 2 mph, strolling very slowly",
+        "distance": 4,
+        "duration": 3723000,
+        "name": "Walking"
+    },
+    {
+        "activityId": 18120,
+        "calories": 1291,
+        "description": "",
+        "distance": 0,
+        "duration": 3723000,
+        "name": "Sailing, boat and board sailing, windsurfing, ice sailing, general"
+    }
+]

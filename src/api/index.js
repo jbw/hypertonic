@@ -72,19 +72,35 @@ const FitbitApi = (token) => {
     };
 
     const getFrequentActivities = () => {
-        return getSummary(routes.activities.types.frequent.name);
+        return getActivity(routes.activities.types.frequent.name);
     };
 
     const getRecentActivities = () => {
-        return getSummary(routes.activities.types.recent.name);
+        return getActivity(routes.activities.types.recent.name);
     };
 
     const getFavoriteActivities = () => {
-        return getSummary(routes.activities.types.favorite.name);
+        return getActivity(routes.activities.types.favorite.name);
     };
 
-    const getWeeklySummary = () => {
-        return getSummary().from(routes.dateFormats.route.sevendays);
+    const getActivityTypes = () => {
+        const resourceParts = [
+            routes.global,
+            routes.activities.route
+
+        ];
+
+        return _fetch(resourceParts);
+    };
+
+    const getActivityType = (activityId) => {
+        const resourceParts = [
+            routes.global,
+            routes.activities.route,
+            activityId
+        ];
+
+        return _fetch(resourceParts);
     };
 
     const getBodyGoal = (bodyMetric) => {
@@ -164,6 +180,17 @@ const FitbitApi = (token) => {
             routes.sleep.route,
             routes.dateFormats.route.name,
             from || DEFAULT_DATE
+        ];
+
+        return _fetch(resourceParts);
+    };
+
+    const getActivity = (activity) => {
+
+        const resourceParts = [
+            routes.base,
+            routes.activities.route,
+            activity
         ];
 
         return _fetch(resourceParts);
@@ -270,7 +297,6 @@ const FitbitApi = (token) => {
         getFavoriteActivities,
         getFrequentActivities,
         getRecentActivities,
-        getWeeklySummary,
         getFriends,
         getSleepLogs,
         getSummary,
@@ -281,7 +307,9 @@ const FitbitApi = (token) => {
         getInvitations,
         getLifetimeStats,
         getActivityLogsList,
-        getActivityTCX
+        getActivityTCX,
+        getActivityType,
+        getActivityTypes
     };
 };
 
