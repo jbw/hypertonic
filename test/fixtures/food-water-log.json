@@ -1,10 +1,19 @@
 {
-    "summary":{
-       "water":800
+    "summary": {
+        "water": 800
     },
-    "water":[
-        {"amount":500,"logId":950},
-        {"amount":200,"logId":951},
-        {"amount":100,"logId":952}
+    "water": [
+        {
+            "amount": 500,
+            "logId": 950
+        },
+        {
+            "amount": 200,
+            "logId": 951
+        },
+        {
+            "amount": 100,
+            "logId": 952
+        }
     ]
 }

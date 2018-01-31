@@ -1,31 +1,56 @@
 {
-    "mealFoods":[
+    "meals": [
         {
-            "accessLevel":"PUBLIC",
-            "amount":1,
-            "brand":"Dannon",
-            "calories":15,
-            "foodId":33893,
-            "mealTypeId":7,
-            "locale":"en_US",
-            "name":"Yogurt, Dan-o-nino, Banana",
-            "unit":{"id":91,"name":"cup","plural":"cups"},
-            "units":[91,256,279,226,180,147,389]
-        },
-        {
-            "accessLevel":"PUBLIC",
-            "amount":16,
-            "brand":"",
-            "calories":9,
-            "foodId":17222,
-            "mealTypeId":7,
-            "locale":"en_US",
-            "name":"Coffee",
-            "unit":{"id":147,"name":"gram","plural":"grams"},
-            "units":[226,180,147,389]
+            "mealFoods": [
+                {
+                    "accessLevel": "PUBLIC",
+                    "amount": 1,
+                    "brand": "Dannon",
+                    "calories": 15,
+                    "foodId": 33893,
+                    "mealTypeId": 7,
+                    "locale": "en_US",
+                    "name": "Yogurt, Dan-o-nino, Banana",
+                    "unit": {
+                        "id": 91,
+                        "name": "cup",
+                        "plural": "cups"
+                    },
+                    "units": [
+                        91,
+                        256,
+                        279,
+                        226,
+                        180,
+                        147,
+                        389
+                    ]
+                },
+                {
+                    "accessLevel": "PUBLIC",
+                    "amount": 16,
+                    "brand": "",
+                    "calories": 9,
+                    "foodId": 17222,
+                    "mealTypeId": 7,
+                    "locale": "en_US",
+                    "name": "Coffee",
+                    "unit": {
+                        "id": 147,
+                        "name": "gram",
+                        "plural": "grams"
+                    },
+                    "units": [
+                        226,
+                        180,
+                        147,
+                        389
+                    ]
+                }
+            ],
+            "id": 12430,
+            "description": "",
+            "name": "Weekend Breakfast"
         }
-    ],
-    "id":12430,
-    "description":"",
-    "name":"Weekend Breakfast"
+    ]
 }

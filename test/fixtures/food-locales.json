@@ -1,57 +1,57 @@
 [
     {
-     "barcode": true,
-     "label": "Deutschland",
-     "value": "de_DE"
-   },
+        "barcode": true,
+        "label": "Deutschland",
+        "value": "de_DE"
+    },
     {
-     "barcode": true,
-     "label": "France",
-     "value": "fr_FR"
-   },
+        "barcode": true,
+        "label": "France",
+        "value": "fr_FR"
+    },
     {
-     "barcode": true,
-     "label": "España",
-     "value": "es_ES"
-   },
+        "barcode": true,
+        "label": "España",
+        "value": "es_ES"
+    },
     {
-     "barcode": true,
-     "label": "United Kingdom",
-     "value": "en_GB"
-   },
+        "barcode": true,
+        "label": "United Kingdom",
+        "value": "en_GB"
+    },
     {
-     "barcode": true,
-     "label": "United States",
-     "value": "en_US"
-   },
+        "barcode": true,
+        "label": "United States",
+        "value": "en_US"
+    },
     {
-     "barcode": false,
-     "label": "日本",
-     "value": "ja_JP"
-   },
+        "barcode": false,
+        "label": "日本",
+        "value": "ja_JP"
+    },
     {
-     "barcode": true,
-     "label": "Australia",
-     "value": "en_AU"
-   },
+        "barcode": true,
+        "label": "Australia",
+        "value": "en_AU"
+    },
     {
-     "barcode": true,
-     "label": "Canada",
-     "value": "en_CA"
-   },
+        "barcode": true,
+        "label": "Canada",
+        "value": "en_CA"
+    },
     {
-     "barcode": true,
-     "label": "Italia",
-     "value": "it_IT"
-   },
+        "barcode": true,
+        "label": "Italia",
+        "value": "it_IT"
+    },
     {
-     "barcode": true,
-     "label": "한국",
-     "value": "ko_KR"
-   },
+        "barcode": true,
+        "label": "한국",
+        "value": "ko_KR"
+    },
     {
-     "barcode": true,
-     "label": "México",
-     "value": "es_MX"
-   }
- ]
+        "barcode": true,
+        "label": "México",
+        "value": "es_MX"
+    }
+]
