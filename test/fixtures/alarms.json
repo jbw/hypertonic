@@ -1,0 +1,19 @@
+{
+    "trackerAlarms": [
+        {
+            "alarmId": 11426382,
+            "deleted": false,
+            "enabled": true,
+            "recurring": true,
+            "snoozeCount": 3,
+            "snoozeLength": 9,
+            "syncedToDevice": false,
+            "time": "07:15-08:00",
+            "vibe": "DEFAULT",
+            "weekDays": [
+                "MONDAY",
+                "TUESDAY"
+            ]
+        }
+    ]
+}

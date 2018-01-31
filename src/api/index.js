@@ -83,6 +83,27 @@ const FitbitApi = (token) => {
         return getActivity(routes.activities.types.favorite.name);
     };
 
+    const getDevices = () => {
+        const resourceParts = [
+            routes.base,
+            routes.devices.name
+        ];
+
+        return _fetch(resourceParts);
+    };
+
+    const getAlarms = (trackerId) => {
+        const resourceParts = [
+            routes.base,
+            routes.devices.name,
+            routes.devices.tracker.name,
+            trackerId,
+            routes.devices.alarms.name
+        ];
+
+        return _fetch(resourceParts);
+    };
+
     const getActivityTypes = () => {
         const resourceParts = [
             routes.global,
@@ -93,7 +114,7 @@ const FitbitApi = (token) => {
     };
 
     const getActivityGoals = (period) => {
-          const resourceParts = [
+        const resourceParts = [
             routes.base,
             routes.activities.route,
             routes.activities.types.goals.name,
@@ -321,7 +342,9 @@ const FitbitApi = (token) => {
         getActivityTCX,
         getActivityType,
         getActivityTypes,
-        getActivityGoals
+        getActivityGoals,
+        getDevices,
+        getAlarms
     };
 };
 

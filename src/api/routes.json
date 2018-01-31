@@ -45,9 +45,6 @@
             },
             "list": {
                 "name": "list"
-            },
-            "goals": {
-                "name":"goals"
             }
         }
     },
@@ -55,6 +52,15 @@
         "base": "https://api.fitbit.com/1.2/user/-",
         "route": "sleep",
         "type": {}
+    },
+    "devices": {
+        "name": "devices",
+        "tracker": {
+            "name": "tracker"
+        },
+        "alarms": {
+            "name": "alarms"
+        }
     },
     "friends": {
         "route": "friends",
