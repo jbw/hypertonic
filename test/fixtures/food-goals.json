@@ -1,0 +1,10 @@
+{
+    "goals":{
+        "calories":1800
+    },
+    "foodPlan":{
+        "intensity":"MEDIUM",
+        "estimatedDate":"2014-12-31",
+        "personalized":true
+    }
+}
