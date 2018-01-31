@@ -87,10 +87,21 @@ const FitbitApi = (token) => {
         const resourceParts = [
             routes.global,
             routes.activities.route
-
         ];
 
         return _fetch(resourceParts);
+    };
+
+    const getActivityGoals = (period) => {
+          const resourceParts = [
+            routes.base,
+            routes.activities.route,
+            routes.activities.types.goals.name,
+            period
+        ];
+
+        return _fetch(resourceParts);
+
     };
 
     const getActivityType = (activityId) => {
@@ -309,7 +320,8 @@ const FitbitApi = (token) => {
         getActivityLogsList,
         getActivityTCX,
         getActivityType,
-        getActivityTypes
+        getActivityTypes,
+        getActivityGoals
     };
 };
 

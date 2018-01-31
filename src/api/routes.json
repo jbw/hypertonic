@@ -45,6 +45,9 @@
             },
             "list": {
                 "name": "list"
+            },
+            "goals": {
+                "name":"goals"
             }
         }
     },
