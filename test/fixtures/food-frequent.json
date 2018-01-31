@@ -1,0 +1,25 @@
+[
+    {
+        "accessLevel":"PRIVATE",
+        "amount":1,
+        "brand":"",
+        "calories":59,
+        "foodId":25868,
+        "mealTypeId":7,
+        "name":"Papaya, Raw",
+        "unit":{"id":319,"name":"small","plural":"smalls"},
+        "units":[319,204,179,91,256,279,226,180,147,389]
+    },
+    {
+        "accessLevel":"PUBLIC",
+        "amount":1,
+        "brand":"",
+        "calories":154,
+        "foodId":1182,
+        "mealTypeId":7,
+        "locale":"en_US",
+        "name":"Yogurt, Lowfat",
+        "unit":{"id":91,"name":"cup","plural":"cups"},
+        "units":[91,256,279,226,180,147,389]
+    }
+]

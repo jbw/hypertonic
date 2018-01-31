@@ -13,6 +13,14 @@ describe('#Food Logging', () => {
         const logs = require('./fixtures/food-logs.json');
         const waterLog = require('./fixtures/food-water-log.json');
         const waterGoal = require('./fixtures/food-water-goal.json');
+        const foodTimeSeries = require('./fixtures/food-time-series.json');
+        const favorite = require('./fixtures/food-favorite.json');
+        const recent = require('./fixtures/food-recent.json');
+        const frequent = require('./fixtures/food-frequent.json');
+        const meals = require('./fixtures/food-meals.json');
+        const meal = require('./fixtures/food-meal.json');
+        const food = require('./fixtures/food.json');
+        const units = require('./fixtures/food-units.json');
 
         nock(fitbitDomain)
             .get('/1/foods/locales.json')
@@ -30,6 +38,36 @@ describe('#Food Logging', () => {
             .get('/1/user/-/foods/log/water/goal.json')
             .reply(200, waterGoal);
 
+        nock(fitbitDomain)
+            .get('/1/user/-/foods/log/caloriesIn/date/today/7d.json')
+            .reply(200, foodTimeSeries);
+        nock(fitbitDomain)
+            .get('/1/user/-/foods/log/water/date/2017-01-01/2017-20-01.json')
+            .reply(200, foodTimeSeries);
+
+        nock(fitbitDomain)
+            .get('/1/user/-/foods/log/favorite.json')
+            .reply(200, favorite);
+        nock(fitbitDomain)
+            .get('/1/user/-/foods/log/recent.json')
+            .reply(200, recent);
+        nock(fitbitDomain)
+            .get('/1/user/-/foods/log/frequent.json')
+            .reply(200, frequent);
+
+        nock(fitbitDomain)
+            .get('/1/user/-/meals.json')
+            .reply(200, meals);
+        nock(fitbitDomain)
+            .get('/1/user/-/meals/1000.json')
+            .reply(200, meal);
+
+        nock(fitbitDomain)
+            .get('/1/foods/1000.json')
+            .reply(200, food);
+        nock(fitbitDomain)
+            .get('/1/foods/units.json')
+            .reply(200, units);
     });
 
     after(() => {
