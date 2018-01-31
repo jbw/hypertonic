@@ -11,7 +11,7 @@ describe('#Food Logging', () => {
         const locales = require('./fixtures/food-locales.json');
         const goals = require('./fixtures/food-goals.json');
         const logs = require('./fixtures/food-logs.json');
-        const waterLog = require('./fixtures/food-water-logs.json');
+        const waterLog = require('./fixtures/food-water-log.json');
         const waterGoal = require('./fixtures/food-water-goal.json');
 
         nock(fitbitDomain)
