@@ -42,7 +42,7 @@ describe('#Food Logging', () => {
             .get('/1/user/-/foods/log/caloriesIn/date/today/7d.json')
             .reply(200, foodTimeSeries);
         nock(fitbitDomain)
-            .get('/1/user/-/foods/log/water/date/2017-01-01/2017-20-01.json')
+            .get('/1/user/-/foods/log/water/date/2017-01-01/2017-01-20.json')
             .reply(200, foodTimeSeries);
 
         nock(fitbitDomain)
@@ -110,17 +110,26 @@ describe('#Food Logging', () => {
     });
 
     it('should get food time series', (done) => {
-        api.getFoodTimeSeries().then(json => {
+        api.getFoodTimeSeries('today', '7d').then(json => {
             expect(json).to.not.be.undefined;
             done();
         }).catch(err => done(new Error(JSON.stringify(err))));
     });
 
     it('should get water time series', (done) => {
-        api.getWaterTimeSeries().then(json => {
+        api.getWaterTimeSeries('2017-01-01', '2017-01-20').then(json => {
             expect(json).to.not.be.undefined;
             done();
         }).catch(err => done(new Error(JSON.stringify(err))));
+    });
+
+    it('should error with invalid date', (done) => {
+        api.getWaterTimeSeries('2017-01-01', '2017-20-20').then(json => {
+            done(new Error());
+        }).catch(err => {
+            expect(err).to.not.be.undefined;
+            done();
+        });
     });
 
     it('should get favorite foods', (done) => {

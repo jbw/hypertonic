@@ -20,6 +20,8 @@
         }
     },
     "food": {
+        "water": "water",
+        "caloriesIn": "caloriesIn",
         "route": "foods",
         "log": {
             "route": "log",
@@ -36,6 +38,7 @@
             }
         },
         "type":{
+
             "meals": {
                 "name": "meals"
             },

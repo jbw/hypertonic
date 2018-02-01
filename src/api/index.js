@@ -124,7 +124,7 @@ const FitbitApi = (token) => {
     };
 
     const getFoodUnits = () => {
-         const resourceParts = [
+        const resourceParts = [
             routes.global,
             routes.food.route,
             routes.food.type.units.name,
@@ -134,7 +134,7 @@ const FitbitApi = (token) => {
     };
 
     const getFoodLocales = () => {
-          const resourceParts = [
+        const resourceParts = [
             routes.global,
             routes.food.route,
             routes.food.type.locales.name,
@@ -148,6 +148,14 @@ const FitbitApi = (token) => {
     };
 
     const getWaterGoals = () => {
+    };
+
+    const getFoodTimeSeries = (from, to) => {
+        return _getFoodWaterTimeSeries(routes.food.log.route + '/' + routes.food.caloriesIn, from, to);
+    };
+
+    const getWaterTimeSeries = (from, to) => {
+        return _getFoodWaterTimeSeries(routes.food.log.route + '/' + routes.food.water, from, to);
     };
 
     const getDevices = () => {
@@ -362,6 +370,22 @@ const FitbitApi = (token) => {
         return _handleFromAndToParameter(from, to) || _fetch(resourceParts);
     };
 
+    const _getFoodWaterTimeSeries = (activity, from, to) => {
+        from = from || DEFAULT_DATE;
+        to = to || DEFAULT_PERIOD;
+
+        const resourceParts = [
+            routes.base,
+            routes.food.route,
+            activity,
+            routes.dateFormats.route.name,
+            from,
+            to
+        ];
+
+        return _handleFromAndToParameter(from, to) || _fetch(resourceParts);
+    };
+
     const _fetch = (resourceParts, extension = '.json') => {
         const options = _getHeaderOptions(token);
         const url = getURL(resourceParts, extension);
@@ -420,7 +444,9 @@ const FitbitApi = (token) => {
         getFoodGoals,
         getFoodLocales,
         getFoodUnits,
-        getWaterGoals
+        getWaterGoals,
+        getFoodTimeSeries,
+        getWaterTimeSeries
 
     };
 };
