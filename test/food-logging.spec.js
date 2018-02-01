@@ -131,14 +131,14 @@ describe('#Food Logging', () => {
     });
 
     it('should get frequent foods', (done) => {
-        api.getFrequentFood().then(json => {
+        api.getFrequentFoods().then(json => {
             expect(json).to.not.be.undefined;
             done();
         }).catch(err => done(new Error(JSON.stringify(err))));
     });
 
     it('should get recent foods', (done) => {
-        api.getRecentFood().then(json => {
+        api.getRecentFoods().then(json => {
             expect(json).to.not.be.undefined;
             done();
         }).catch(err => done(new Error(JSON.stringify(err))));

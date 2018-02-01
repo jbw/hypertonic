@@ -19,6 +19,23 @@
             }
         }
     },
+    "food": {
+        "route": "foods",
+        "log": {
+            "route": "log",
+            "type": {
+                "frequent": {
+                    "name": "frequent"
+                },
+                "recent": {
+                    "name": "recent"
+                },
+                "favorite": {
+                    "name": "favorite"
+                }
+            }
+        }
+    },
     "activities": {
         "route": "activities",
         "types": {

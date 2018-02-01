@@ -83,6 +83,29 @@ const FitbitApi = (token) => {
         return getActivity(routes.activities.types.favorite.name);
     };
 
+    const getFood = (foodType) => {
+        const resourceParts = [
+            routes.base,
+            routes.food.route,
+            routes.food.log.route,
+            foodType
+        ];
+
+        return _fetch(resourceParts);
+    };
+
+    const getFavoriteFoods = () => {
+        return getFood(routes.food.log.type.favorite.name);
+    };
+
+    const getFrequentFoods = () => {
+        return getFood(routes.food.log.type.favorite.name);
+    };
+
+    const getRecentFoods = () => {
+        return getFood(routes.food.log.type.favorite.name);
+    };
+
     const getDevices = () => {
         const resourceParts = [
             routes.base,
@@ -344,7 +367,11 @@ const FitbitApi = (token) => {
         getActivityTypes,
         getActivityGoals,
         getDevices,
-        getAlarms
+        getAlarms,
+        getFrequentFoods,
+        getFavoriteFoods,
+        getRecentFoods
+
     };
 };
 
