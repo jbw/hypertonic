@@ -27,7 +27,6 @@ const FitbitApi = (token) => {
 
     const _isValidBaseDate = baseDate => routes.dateFormats.basedate.includes(baseDate);
 
-
     const getURL = (resourceParts, extension = '.json') => {
         const route = resourceParts.join('/') + extension;
         return route;
@@ -49,7 +48,6 @@ const FitbitApi = (token) => {
         ];
 
         return _fetch(resourceParts);
-
     };
 
     const getInvitations = () => {
@@ -106,6 +104,24 @@ const FitbitApi = (token) => {
         return getFood(routes.food.log.type.favorite.name);
     };
 
+    const getMeal = () => {
+    };
+
+    const getMeals = (mealId) => {
+    };
+
+    const getFoodUnits = () => {
+    };
+
+    const getFoodLocales = () => {
+    };
+
+    const getFoodGoals = () => {
+    };
+
+    const getWaterGoals = () => {
+    };
+
     const getDevices = () => {
         const resourceParts = [
             routes.base,
@@ -117,13 +133,12 @@ const FitbitApi = (token) => {
 
     const getAlarms = (trackerId) => {
         const resourceParts = [
-            routes.base,
             routes.devices.name,
             routes.devices.tracker.name,
             trackerId,
             routes.devices.alarms.name
-        ];
 
+        ];
         return _fetch(resourceParts);
     };
 
@@ -370,7 +385,13 @@ const FitbitApi = (token) => {
         getAlarms,
         getFrequentFoods,
         getFavoriteFoods,
-        getRecentFoods
+        getRecentFoods,
+        getMeal,
+        getMeals,
+        getFoodGoals,
+        getFoodLocales,
+        getFoodUnits,
+        getWaterGoals
 
     };
 };
