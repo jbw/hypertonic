@@ -104,16 +104,44 @@ const FitbitApi = (token) => {
         return getFood(routes.food.log.type.favorite.name);
     };
 
-    const getMeal = () => {
+    const getMeals = () => {
+        const resourceParts = [
+            routes.base,
+            routes.food.type.meals.name
+        ];
+
+        return _fetch(resourceParts);
     };
 
-    const getMeals = (mealId) => {
+    const getMeal = (mealId) => {
+        const resourceParts = [
+            routes.base,
+            routes.food.type.meals.name,
+            mealId
+        ];
+
+        return _fetch(resourceParts);
     };
 
     const getFoodUnits = () => {
+         const resourceParts = [
+            routes.global,
+            routes.food.route,
+            routes.food.type.units.name,
+        ];
+
+        return _fetch(resourceParts);
     };
 
     const getFoodLocales = () => {
+          const resourceParts = [
+            routes.global,
+            routes.food.route,
+            routes.food.type.locales.name,
+        ];
+
+        return _fetch(resourceParts);
+
     };
 
     const getFoodGoals = () => {
@@ -133,12 +161,13 @@ const FitbitApi = (token) => {
 
     const getAlarms = (trackerId) => {
         const resourceParts = [
+            routes.base,
             routes.devices.name,
             routes.devices.tracker.name,
             trackerId,
             routes.devices.alarms.name
-
         ];
+
         return _fetch(resourceParts);
     };
 

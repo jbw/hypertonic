@@ -152,7 +152,7 @@ describe('#Food Logging', () => {
     });
 
     it('should get a single meal', (done) => {
-        api.getMeal('meal_id').then(json => {
+        api.getMeal('1000').then(json => {
             expect(json).to.not.be.undefined;
             done();
         }).catch(err => done(new Error(JSON.stringify(err))));
