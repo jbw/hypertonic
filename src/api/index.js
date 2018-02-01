@@ -83,6 +83,16 @@ const FitbitApi = (token) => {
 
     const getFood = (foodType) => {
         const resourceParts = [
+            routes.global,
+            routes.food.route,
+            foodType
+        ];
+
+        return _fetch(resourceParts);
+    };
+
+    const _getFoodLogInfo = (foodType) => {
+        const resourceParts = [
             routes.base,
             routes.food.route,
             routes.food.log.route,
@@ -93,15 +103,15 @@ const FitbitApi = (token) => {
     };
 
     const getFavoriteFoods = () => {
-        return getFood(routes.food.log.type.favorite.name);
+        return _getFoodLogInfo(routes.food.log.type.favorite.name);
     };
 
     const getFrequentFoods = () => {
-        return getFood(routes.food.log.type.favorite.name);
+        return _getFoodLogInfo(routes.food.log.type.frequent.name);
     };
 
     const getRecentFoods = () => {
-        return getFood(routes.food.log.type.favorite.name);
+        return _getFoodLogInfo(routes.food.log.type.recent.name);
     };
 
     const getMeals = () => {
@@ -145,7 +155,7 @@ const FitbitApi = (token) => {
     };
 
     const getFoodGoals = () => {
-     const resourceParts = [
+        const resourceParts = [
             routes.base,
             routes.food.route,
             routes.food.log.route,
@@ -156,7 +166,7 @@ const FitbitApi = (token) => {
     };
 
     const getWaterGoals = () => {
-          const resourceParts = [
+        const resourceParts = [
             routes.base,
             routes.food.route,
             routes.food.log.route,
@@ -454,6 +464,7 @@ const FitbitApi = (token) => {
         getActivityGoals,
         getDevices,
         getAlarms,
+        getFood,
         getFrequentFoods,
         getFavoriteFoods,
         getRecentFoods,

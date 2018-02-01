@@ -168,7 +168,7 @@ describe('#Food Logging', () => {
     });
 
     it('should get food', (done) => {
-        api.getFood().then(json => {
+        api.getFood('1000').then(json => {
             expect(json).to.not.be.undefined;
             done();
         }).catch(err => done(new Error(JSON.stringify(err))));
