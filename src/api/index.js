@@ -145,9 +145,27 @@ const FitbitApi = (token) => {
     };
 
     const getFoodGoals = () => {
+     const resourceParts = [
+            routes.base,
+            routes.food.route,
+            routes.food.log.route,
+            routes.food.log.type.goals.name,
+        ];
+
+        return _fetch(resourceParts);
     };
 
     const getWaterGoals = () => {
+          const resourceParts = [
+            routes.base,
+            routes.food.route,
+            routes.food.log.route,
+            routes.food.water,
+            routes.food.log.type.goals.name,
+        ];
+
+        return _fetch(resourceParts);
+
     };
 
     const getFoodTimeSeries = (from, to) => {

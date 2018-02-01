@@ -34,6 +34,9 @@
                 },
                 "favorite": {
                     "name": "favorite"
+                },
+                "goals":{
+                    "name":"goal"
                 }
             }
         },
