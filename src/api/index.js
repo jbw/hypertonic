@@ -347,11 +347,11 @@ const FitbitApi = (token) => {
         return _fetch(resourceParts);
     };
 
-    const getWaterLogs= (date)=> {
+    const getWaterLogs = (date) => {
         return _getFoodWaterLog(routes.food.log.route + '/' + routes.food.water, date);
     };
-    const getFoodLogs= (date)=> {
-        return _getFoodWaterLog(routes.food.log.route,  date);
+    const getFoodLogs = (date) => {
+        return _getFoodWaterLog(routes.food.log.route, date);
     };
 
     const _getFoodWaterLog = (type, date) => {
