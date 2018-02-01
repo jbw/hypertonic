@@ -151,7 +151,6 @@ const FitbitApi = (token) => {
         ];
 
         return _fetch(resourceParts);
-
     };
 
     const getFoodGoals = () => {
@@ -175,7 +174,6 @@ const FitbitApi = (token) => {
         ];
 
         return _fetch(resourceParts);
-
     };
 
     const getFoodTimeSeries = (from, to) => {
@@ -349,6 +347,32 @@ const FitbitApi = (token) => {
         return _fetch(resourceParts);
     };
 
+    const getWaterLogs= (date)=> {
+        return _getFoodWaterLog(routes.food.log.route + '/' + routes.food.water, date);
+    };
+    const getFoodLogs= (date)=> {
+        return _getFoodWaterLog(routes.food.log.route,  date);
+    };
+
+    const _getFoodWaterLog = (type, date) => {
+
+        if (date) {
+            if (!(_isValidDateFormat(date) || _isValidBaseDate(date))) {
+                return _throwInvalidParameterException();
+            }
+        }
+
+        const resourceParts = [
+            routes.base,
+            routes.food.route,
+            type,
+            routes.dateFormats.route.name,
+            date
+        ];
+
+        return _fetch(resourceParts);
+    };
+
     const _isFromParamterValid = (from) => _isValidBaseDate(from) || _isValidDateFormat(from);
     const _isToParamterValid = (to) => _isValidDatePeriod(to) || _isValidDateFormat(to);
     const _isFromAndToParamtersValid = (from, to) => _isFromParamterValid(from) && _isToParamterValid(to);
@@ -475,7 +499,9 @@ const FitbitApi = (token) => {
         getFoodUnits,
         getWaterGoals,
         getFoodTimeSeries,
-        getWaterTimeSeries
+        getWaterTimeSeries,
+        getFoodLogs,
+        getWaterLogs
 
     };
 };

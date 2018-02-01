@@ -89,14 +89,14 @@ describe('#Food Logging', () => {
     });
 
     it('should get food logs', (done) => {
-        api.getFoodLogs().then(json => {
+        api.getFoodLogs('2017-01-01').then(json => {
             expect(json).to.not.be.undefined;
             done();
         }).catch(err => done(new Error(JSON.stringify(err))));
     });
 
     it('should get water logs', (done) => {
-        api.getWaterLogs().then(json => {
+        api.getWaterLogs('2017-01-01').then(json => {
             expect(json).to.not.be.undefined;
             done();
         }).catch(err => done(new Error(JSON.stringify(err))));
