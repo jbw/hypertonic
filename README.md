@@ -10,7 +10,7 @@ Fitbit API Wrapper :running: :tropical_drink:
 ## Example
 
 ```javascript
-const HyperTonic = require('hypertonic');
+const Hypertonic = require('hypertonic');
 
 const token = '<YOUR_FITBIT_ACCESS_TOKEN>';
 const hypertonic = `hypertonic` (token);
