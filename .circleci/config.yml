@@ -16,10 +16,6 @@ jobs:
 
     working_directory: ~/temp
 
-    general:
-        artifacts:
-            - ./coverage
-
     steps:
       - checkout
 
@@ -39,5 +35,9 @@ jobs:
 
       # run tests!
       - run: yarn run coverage
+
+      - store_artifacts:
+            path: ./coverage
+            destination: artifact-coverage
 
 
