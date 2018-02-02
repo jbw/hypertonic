@@ -18,7 +18,7 @@ jobs:
 
     general:
         artifacts:
-            - "coverage"
+            - ./coverage
 
     steps:
       - checkout
