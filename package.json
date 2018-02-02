@@ -15,7 +15,14 @@
   "scripts": {
     "start": "node ./src/api/index.js",
     "watch": "nodemon ./src/api/index.js",
-    "test": "mocha"
+    "test": "mocha",
+    "coverage": "nyc --reporter=html mocha"
+  },
+  "nyc": {
+    "exclude": [
+      "test/**",
+      "build"
+    ]
   },
   "devDependencies": {
     "chai": "^4.1.0",
@@ -23,10 +30,12 @@
     "eslint-loader": "^1.9.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-mocha": "^4.11.0",
+    "istanbul": "^0.4.5",
     "mocha": "^3.4.2",
     "mocha-nock-fixtures": "^0.2.0",
     "nock": "^9.1.6",
     "nodemon": "^1.11.0",
+    "nyc": "^11.4.1",
     "source-map-loader": "^0.2.1",
     "source-map-support": "^0.4.15",
     "webpack": "^3.4.1"
