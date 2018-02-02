@@ -2,9 +2,7 @@
 
 Fitbit API Wrapper
 
-[![CircleCI](https://circleci.com/gh/jbw/hypertonic/tree/master.svg?style=svg)](https://circleci.com/gh/jbw/hypertonic/tree/master)
-
-[![Coverage Status](https://coveralls.io/repos/github/jbw/hypertonic/badge.svg?branch=master)](https://coveralls.io/github/jbw/hypertonic?branch=master)
+[![CircleCI](https://circleci.com/gh/jbw/hypertonic/tree/master.svg?style=shield)](https://circleci.com/gh/jbw/hypertonic/tree/master) [![Coverage Status](https://coveralls.io/repos/github/jbw/hypertonic/badge.svg?branch=master)](https://coveralls.io/github/jbw/hypertonic?branch=master) [![Known Vulnerabilities](https://snyk.io/test/github/jbw/hypertonic/badge.svg)](https://snyk.io/test/github/jbw/hypertonic)
 
 `hypertonic` requires only the token to get started. How you manage authentication flow is up to you but you can see some example code in the example directory.
 
