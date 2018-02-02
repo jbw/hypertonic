@@ -1,23 +1,41 @@
-# Hypertonic
+# Hypertonic 
 
-Fitbit API Wrapper
+Fitbit API Wrapper :running: :tropical_drink:
 
 [![CircleCI](https://circleci.com/gh/jbw/hypertonic/tree/master.svg?style=shield)](https://circleci.com/gh/jbw/hypertonic/tree/master) [![Coverage Status](https://coveralls.io/repos/github/jbw/hypertonic/badge.svg?branch=master)](https://coveralls.io/github/jbw/hypertonic?branch=master) [![Known Vulnerabilities](https://snyk.io/test/github/jbw/hypertonic/badge.svg)](https://snyk.io/test/github/jbw/hypertonic)
 
 `hypertonic` requires only the token to get started. How you manage authentication flow is up to you but you can see some example code in the example directory.
 
-## Configuration
 
-### oAuth2
+## Example
 
-External specific configurations for a Fitbit application. You can find this information on the Fitbit SDK. It is used to form an oAuth request. Get your `client.id` and `client.secret` from your registered application on https://dev.fitbit.com/
+```javascript
+const HyperTonic = require('hypertonic');
+
+const token = '<YOUR_FITBIT_ACCESS_TOKEN>';
+const hypertonic = `hypertonic` (token);
+
+// Activity Summary data
+api.getSummary('today').then(data => console.log(data));
+
+// Activity Time Series
+api.getTimeSeries('calories', 'today', '7d').then(data => console.log(data));
+api.getTimeSeries('steps', 'today', '1m').then(data => console.log(data));
+```
+
+## How can I get my token?
+
+A working example can be found in the example directory.
+### OAuth 2
+
+First off, to be able to authenticate and get your access token, you will need a <b>client id and secret</b> from [Fitbit](https://dev.fitbit.com/). This example uses `simple-oauth2`. The JSON object below contains the necessary information needed to authenticate.
 
 ``` json
-{
-    "fitbit": {
-        "client": {
-            "id": "0",
-            "secret": "0"
+{ 
+    "credentials": {
+        "client": { 
+            "id": "<FROM_FITBIT>",  
+            "secret": "<FROM_FITBIT>" 
         },
         "auth": {
             "tokenHost": "https://api.fitbit.com",
@@ -26,39 +44,30 @@ External specific configurations for a Fitbit application. You can find this inf
             "authorizePath": "/oauth2/authorize"
         }
     },
-    "config": {
+    "settings": {
         "scopes": "activity profile settings social heartrate sleep",
         "expires_in": 604800
     }
 }
 ```
 
-| Option                   | Description                                                                          |
-| ------------------------ | ------------------------------------------------------------------------------------ |
-| client.id                | Identifier for your application given by the oAuth server.                           |
-| client.secret            | Only known to the application and the authorisation server.                          |
-| auth.tokenHost           | Host address for fetching a token.                                                   |
-| auth.tokenPath           | Path after the host. Joined together with `auth.tokenHost`.                          |
-| auth.authorizeHost       | Host address for authorising the application.                                        |
-| auth.authorizePath       | Path after the host. Joining together with `auth.authorizeHost`.                     |
-| auth.token.access_token  | Authenication token received through oAuth2.                                         |
-| auth.token.refresh_token | Token which allows you to keep reauthenticate when the token has expired.            |
-| app.scopes               | Specify allowed access granted by the user. Must be a <i>space delimited string</i>. |
+| Option        | Description                                                                      |
+| ------------- | -------------------------------------------------------------------------------- |
+| client id     | Identifier for your application given by the OAuth server.                       |
+| client secret | Only known to the application and the authorisation server.                      |
+| scopes        | Specify API access granted to the user. Must be a <i>space delimited string</i>. |
 
-You can find some sample configuration files located in the `secrets_template/` directory. This contains:
-* `fitbit.json` which contains auth properties (that must be kept secret)
-* `token.json` which is the structure of the recieved token object from Fitbit
 
 
 ``` javascript
-const auth = oauth2.create(credentials.fitbit);
+const auth = oauth2.create(fitbit.credentials);
 const authUrl = auth.authorizationCode
-                        .authorizeURL({ scope: credentials.config.scopes });
+                        .authorizeURL({ scope: fitbit.settings.scopes });
 ```
 
 ### Fitbit Token Object
 
-Once you authenticate with Fitbit you will recieve an object which looks like the below code snippet. Hypertonic accepts the access_token value (e.g. `new Hypertonic(token.access_token)`).
+Once you authenticate with Fitbit you will receive an object which looks like the below code snippet. `hypertonic`  accepts the access_token value (e.g. `new `hypertonic` (token.access_token)`).
 
 ```json
 {
@@ -72,17 +81,4 @@ Once you authenticate with Fitbit you will recieve an object which looks like th
         "expires_at": ""
     }
 }
-```
-
-### Example
-
-```javascript
-const hypertonic = new Hypertonic(token);
-
-// Activity Summary data
-api.getSummary('today').then(data => console.log(data));
-
-// Activity Time Series
-api.getTimeSeries('calories', 'today', '7d').then(data => console.log(data));
-api.getTimeSeries('steps', 'today', '1m').then(data => console.log(data));
 ```

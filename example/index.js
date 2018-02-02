@@ -15,8 +15,6 @@ const serverConfig = {
 const auth = oauth2.create(fitbitConfig.credentials);
 const authUrl = auth.authorizationCode.authorizeURL({ scope: fitbitConfig.settings.scopes });
 
-let hypertonic = null;
-
 const app = express();
 
 let _token = null;
