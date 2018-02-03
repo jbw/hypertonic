@@ -15,6 +15,10 @@ describe('#Sleep', () => {
             .get('/1.2/user/-/sleep/date/2017-01-01.json')
             .reply(200, getActivitiesResponse);
 
+            nock(fitbitDomain)
+            .get('/1.2/user/-/sleep/date/2017-01-01/2017-01-05.json')
+            .reply(200, getActivitiesResponse);
+
         nock(fitbitDomain)
             .get('/1.2/user/-/sleep/date/today.json')
             .reply(200, getActivitiesResponse);
@@ -24,10 +28,29 @@ describe('#Sleep', () => {
         nock(fitbitDomain)
             .get('/1.2/user/-/sleep/date/2017-12-12.json')
             .reply(300, sleepNoScope);
+
+        nock(fitbitDomain)
+            .get('/1.2/user/-/sleep/list.json')
+            .reply(300, getActivitiesResponse);
+
+        nock(fitbitDomain)
+            .get('/1.2/user/-/sleep/goal.json')
+            .reply(300, getActivitiesResponse);
     });
 
     after(() => {
         nock.cleanAll();
+    });
+
+
+    it('should return a sleep goals', (done) => {
+        api.getSleepGoal().then(json => {
+            expect(json.sleep).to.not.be.undefined;
+            done();
+        }).catch(err => {
+            console.log(err);
+            done(new Error());
+        });
     });
 
     it('should return a sleep data', (done) => {
@@ -49,6 +72,28 @@ describe('#Sleep', () => {
             done(new Error());
         });
     });
+
+    it('should return a sleep log list', (done) => {
+        api.getSleepLogsList().then(json => {
+            expect(json.sleep).to.not.be.undefined;
+            done();
+        }).catch(err => {
+            console.log(err);
+            done(new Error());
+        });
+    });
+
+
+    it('should return a sleep data give a date range', (done) => {
+        api.getSleepLogs('2017-01-01', '2017-01-05').then(json => {
+            expect(json.sleep).to.not.be.undefined;
+            done();
+        }).catch(err => {
+            console.log(err);
+            done(new Error());
+        });
+    });
+
 
     it('should handle missing scope error', (done) => {
         api.getSleepLogs('2017-12-12').then(json => {

@@ -69,8 +69,9 @@ const Hypertonic = (token) => {
     };
 
     /**
+     * Get Friend Invitations
      *
-     *
+     * The Get Friend Invitations endpoint returns a list of invitations to become friends with a user in the format requested.
      * @returns {Promise}
      */
     const getInvitations = () => {
@@ -84,8 +85,9 @@ const Hypertonic = (token) => {
     };
 
     /**
+     * Get Badges
      *
-     *
+     * The Get Badges endpoint retrieves user's badges in the format requested. Response includes all badges for the user as seen on the Fitbit website badge locker (both activity and weight related). Fitbit returns weight and distance badges based on the user's unit profile preference as on the website.
      * @returns {Promise}
      */
     const getBadges = () => {
@@ -101,38 +103,36 @@ const Hypertonic = (token) => {
      * Get Frequent Activities
      *
      * The Get Frequent Activities endpoint retrieves a list of a user's frequent activities in the format requested using units in the unit system which corresponds to the Accept-Language header provided. A frequent activity record contains the distance and duration values recorded the last time the activity was logged. The record retrieved can be used to log the activity via the Log Activity endpoint with the same or adjusted values for distance and duration.
-     *
      * @returns {Promise}
      */
     const getFrequentActivities = () => {
-        return getActivity(routes.activities.types.frequent.name);
+        return _getActivity(routes.activities.types.frequent.name);
     };
 
     /**
      * Get Recent Activity Types
      *
      * The Get Recent Activity Types endpoint retrieves a list of a user's recent activities types logged with some details of the last activity log of that type using units in the unit system which corresponds to the Accept-Language header provided. The record retrieved can be used to log the activity via the Log Activity endpoint with the same or adjusted values for distance and duration.
-     *
      * @returns {Promise}
      */
     const getRecentActivities = () => {
-        return getActivity(routes.activities.types.recent.name);
+        return _getActivity(routes.activities.types.recent.name);
     };
 
     /**
      * Get Favorite Activities
      *
      * The Get Favorite Activities endpoint returns a list of a user's favorite activities.
-     *
      * @returns {Promise}
      */
     const getFavoriteActivities = () => {
-        return getActivity(routes.activities.types.favorite.name);
+        return _getActivity(routes.activities.types.favorite.name);
     };
 
     /**
+     * Get Food
      *
-     *
+     * The Get Food endpoint returns the details of a specific food in the Fitbit food database or a private food the authorized user has entered in the format requested.
      * @param {any} foodType
      * @returns {Promise}
      */
@@ -158,8 +158,9 @@ const Hypertonic = (token) => {
     };
 
     /**
+     * Get Favorite Foods
      *
-     *
+     * This endpoint returns a list of a user's favorite foods in the format requested. A favorite food in the list provides a quick way to log the food via the Log Food endpoint.
      * @returns {Promise}
      */
     const getFavoriteFoods = () => {
@@ -167,8 +168,9 @@ const Hypertonic = (token) => {
     };
 
     /**
+     * Get Frequent Foods
      *
-     *
+     * This endpoint returns a list of a user's frequent foods in the format requested. A frequent food in the list provides a quick way to log the food via the Log Food endpoint.
      * @returns {Promise}
      */
     const getFrequentFoods = () => {
@@ -176,8 +178,9 @@ const Hypertonic = (token) => {
     };
 
     /**
+     * Get Recent Foods
      *
-     *
+     * The Get Recent Foods endpoint returns a list of a user's recent foods in the format requested. A recent food provides a quick way to log the food via the Log Food endpoint.
      * @returns {Promise}
      */
     const getRecentFoods = () => {
@@ -185,8 +188,9 @@ const Hypertonic = (token) => {
     };
 
     /**
+     * Get Meals
      *
-     *
+     * This endpoint returns a list of meals created by user in his or her food log in the format requested. Meals in the list provide a quick way to log several foods at a time via the calls to the Log Food endpoint.
      * @returns {Promise}
      */
     const getMeals = () => {
@@ -199,8 +203,9 @@ const Hypertonic = (token) => {
     };
 
     /**
+     * Get Meal
      *
-     *
+     * The Get Meal endpoint retrieves a meal for a user given the meal id.
      * @param {any} mealId
      * @returns {Promise}
      */
@@ -215,8 +220,9 @@ const Hypertonic = (token) => {
     };
 
     /**
+     * Get Food Units
      *
-     *
+     * The Get Food Units endpoint returns a list of all valid Fitbit food units in the format requested.
      * @returns {Promise}
      */
     const getFoodUnits = () => {
@@ -230,8 +236,9 @@ const Hypertonic = (token) => {
     };
 
     /**
+     * Get Food Locales
      *
-     *
+     * The Get Food Locales endpoint returns the food locales that the user may choose to search, log, and create food in.
      * @returns {Promise}
      */
     const getFoodLocales = () => {
@@ -245,7 +252,9 @@ const Hypertonic = (token) => {
     };
 
     /**
+     * Get Food Goals
      *
+     * The Get Food Goals endpoint returns a user's current daily calorie consumption goal and/or food Plan in the format requested.
      *
      * @returns {Promise}
      */
@@ -261,8 +270,9 @@ const Hypertonic = (token) => {
     };
 
     /**
+     * Get Water Goals
      *
-     *
+     * The Get Water Goals endpoint returns a user's current daily water consumption goal.
      * @returns {Promise}
      */
     const getWaterGoals = () => {
@@ -278,8 +288,9 @@ const Hypertonic = (token) => {
     };
 
     /**
+     * Get Food Time Series
      *
-     *
+     * The Get Food or Water Time Series endpoint returns time series data in the specified range for a given resource in the format requested using units in the unit systems that corresponds to the Accept-Language header provided.
      * @param {any} from
      * @param {any} to
      * @returns {Promise}
@@ -287,9 +298,11 @@ const Hypertonic = (token) => {
     const getFoodTimeSeries = (from, to) => {
         return _getFoodWaterTimeSeries(routes.food.log.route + '/' + routes.food.caloriesIn, from, to);
     };
+
     /**
+     * Get Water Time Series
      *
-     *
+     * The Get Food or Water Time Series endpoint returns time series data in the specified range for a given resource in the format requested using units in the unit systems that corresponds to the Accept-Language header provided.
      * @param {any} from
      * @param {any} to
      * @returns {Promise}
@@ -297,9 +310,11 @@ const Hypertonic = (token) => {
     const getWaterTimeSeries = (from, to) => {
         return _getFoodWaterTimeSeries(routes.food.log.route + '/' + routes.food.water, from, to);
     };
+
     /**
+     * Get Devices
      *
-     *
+     * The Get Device endpoint returns a list of the Fitbit devices connected to a user's account.
      * @returns {Promise}
      */
     const getDevices = () => {
@@ -312,8 +327,9 @@ const Hypertonic = (token) => {
     };
 
     /**
+     * Get Alarms
      *
-     *
+     * The Get Alarms endpoint returns a list of the set alarms connected to a user's account.
      * @param {any} trackerId
      * @returns {Promise}
      */
@@ -403,9 +419,10 @@ const Hypertonic = (token) => {
     };
 
     /**
+     * Get Friends
      *
-     *
-     * @param {any} friends
+     * The Get Friends endpoint returns data of a user's friends in the format requested using units in the unit system which corresponds to the Accept-Language header provided.
+     * @param {any} friends e.g. 'leaderboard'
      * @returns {Promise}
      */
     const getFriends = (friends) => {
@@ -493,7 +510,9 @@ const Hypertonic = (token) => {
     };
 
     /**
+     * Get Weight Logs
      *
+     * The Get Weight Logs API retrieves a list of all user's body weight log entries for a given day using units in the unit systems which corresponds to the Accept-Language header provided. Body weight log entries are available only to authorized user. Body weight log entries in response are sorted exactly the same as they are presented on the Fitbit website.
      * @param {any} from
      * @param {any} to
      * @returns {Promise}
@@ -503,12 +522,14 @@ const Hypertonic = (token) => {
     };
 
     /**
+     * Get Sleep Logs
      *
-     *
+     * The Get Sleep Logs by Date endpoint returns a summary and list of a user's sleep log entries (including naps) as well as detailed sleep entry data for a given day.
      * @param {any} from
+     * @param {any} to
      * @returns {Promise}
      */
-    const getSleepLogs = (from) => {
+    const getSleepLogs = (from, to) => {
 
         const resourceParts = [
             routes.sleep.base,
@@ -517,16 +538,15 @@ const Hypertonic = (token) => {
             from || DEFAULT_DATE
         ];
 
+        if (to) {
+            resourceParts.push(to);
+        }
+
         return _fetch(resourceParts);
     };
-    /**
-     *
-     *
-     * @param {any} activity
-     * @returns {Promise}
-     */
 
-    const getActivity = (activity) => {
+
+    const _getActivity = (activity) => {
 
         const resourceParts = [
             routes.base,
@@ -567,8 +587,9 @@ const Hypertonic = (token) => {
     };
 
     /**
+     * Get Water Logs
      *
-     *
+     * The Get Water Logs endpoint retrieves a summary and list of a user's water log entries for a given day in the format requested using units in the unit system that corresponds to the Accept-Language header provided. Water log entries are available only to an authorized user.
      * @param {any} date
      * @returns {Promise}
      */
@@ -577,7 +598,9 @@ const Hypertonic = (token) => {
     };
 
     /**
+     * Get Food Logs
      *
+     * The Get Food Logs endpoint returns a summary and list of a user's food log entries for a given day in the format requested.
      * @param {any} date
      * @returns {Promise}
      */
@@ -652,7 +675,7 @@ const Hypertonic = (token) => {
      *
      * The Get Activity Time Series endpoint returns time series data in the specified range for a given resource in the format requested using units in the unit system that corresponds to the Accept-Language header provided.
      *
-     * @param {any} activity name of activity
+     * @param {any} activity name of activity e.g. steps, heartrate
      * @param {any} from from date
      * @param {any} to to date
      * @returns {Promise} Activity time series data.

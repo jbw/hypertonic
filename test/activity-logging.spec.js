@@ -1,3 +1,4 @@
+const fs = require('fs');
 const chai = require('chai');
 const expect = chai.expect;
 const nock = require('nock');
@@ -9,7 +10,11 @@ describe('#Activity Logging', () => {
     beforeEach(() => {
 
         const logList = require('./fixtures/activity-log-list.json');
-        //const tcx = fs.readFileSync('./test/fixtures/gnr.tcx', 'utf8');
+        const tcx = fs.readFileSync('./test/fixtures/gnr.tcx', 'utf8');
+
+        nock(fitbitDomain)
+            .get('/1/user/-/activities/9810280066.tcx')
+            .reply(200, tcx);
 
         nock(fitbitDomain)
             .get('/1/user/-/activities/list.json')
