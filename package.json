@@ -7,6 +7,7 @@
   "author": "jbw",
   "license": "MIT",
   "dependencies": {
+    "append-query": "^2.0.1",
     "express": "^4.15.4",
     "moment": "^2.20.1",
     "node-fetch": "^1.7.1",

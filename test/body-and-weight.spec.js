@@ -5,34 +5,35 @@ const test = require('./common.js');
 const api = test.api;
 const fitbitDomain = test.fitbitDomain;
 
-describe('#Body Fat Logs', () => {
+describe('#Body Fat and Weight Logs', () => {
     beforeEach(() => {
-        const bodyAndWeight = require('./fixtures/body-log.json');
+
+        const bodyWeightLog = require('./fixtures/body-weight-log.json');
+        const bodyFatLog = require('./fixtures/body-fat-log.json');
 
         nock(fitbitDomain)
             .get('/1/user/-/body/log/fat/date/2017-01-01.json')
-            .reply(200, bodyAndWeight);
-
-        nock(fitbitDomain)
-            .get('/1/user/-/body/log/weight/date/2017-01-01.json')
-            .reply(200, bodyAndWeight);
-
-        nock(fitbitDomain)
-            .get('/1/user/-/body/log/weight/date/2017-01-01/7d.json')
-            .reply(200, bodyAndWeight);
+            .reply(200, bodyFatLog);
 
         nock(fitbitDomain)
             .get('/1/user/-/body/log/fat/date/2017-01-01/7d.json')
-            .reply(200, bodyAndWeight);
+            .reply(200, bodyFatLog);
 
         nock(fitbitDomain)
             .get('/1/user/-/body/log/fat/date/today/7d.json')
-            .reply(200, bodyAndWeight);
+            .reply(200, bodyFatLog);
 
         nock(fitbitDomain)
             .get('/1/user/-/body/log/fat/date/2017-12-01.json')
-            .reply(200, bodyAndWeight);
+            .reply(200, bodyFatLog);
 
+        nock(fitbitDomain)
+            .get('/1/user/-/body/log/weight/date/2017-01-01.json')
+            .reply(200, bodyWeightLog);
+
+        nock(fitbitDomain)
+            .get('/1/user/-/body/log/weight/date/2017-01-01/7d.json')
+            .reply(200, bodyWeightLog);
     });
 
     after(() => {
@@ -61,7 +62,7 @@ describe('#Body Fat Logs', () => {
 
     it('should get body weight logs', (done) => {
         api.getBodyWeightLogs('2017-01-01', '7d').then(json => {
-            expect(json.fat).to.be.an('array');
+            expect(json.weight).to.be.an('array');
             done();
         }).catch(err => {
             done(new Error(JSON.stringify(err)));
@@ -69,8 +70,8 @@ describe('#Body Fat Logs', () => {
     });
 
     it('should get body weight logs', (done) => {
-        api.getBodyWeightLogs('2017-12-01').then(json => {
-            expect(json.fat).to.be.an('array');
+        api.getBodyWeightLogs('2017-01-01').then(json => {
+            expect(json.weight).to.be.an('array');
             done();
         }).catch(err => {
 

@@ -1,0 +1,71 @@
+{
+    "pagination": {
+        "beforeDate": "2017-03-27",
+        "limit": 1,
+        "next": "https://api.fitbit.com/1.2/user/-/sleep/list.json?offset=1&limit=1&sort=desc&beforeDate=2017-03-27",
+        "offset": 0,
+        "previous": "",
+        "sort": "desc"
+    },
+    "sleep": [
+        {
+            "dateOfSleep": "2017-03-26",
+            "duration": "",
+            "efficiency": "",
+            "levels": {
+                "summary": {
+                    "deep": {
+                        "count": "",
+                        "minutes": "",
+                        "thirtyDayAvgMinutes": ""
+                    },
+                    "light": {
+                        "count": "",
+                        "minutes": "",
+                        "thirtyDayAvgMinutes": ""
+                    },
+                    "rem": {
+                        "count": "",
+                        "minutes": "",
+                        "thirtyDayAvgMinutes": ""
+                    },
+                    "wake": {
+                        "count": "",
+                        "minutes": "",
+                        "thirtyDayAvgMinutes": ""
+                    }
+                },
+                "data": [
+                    {
+                        "datetime": "2017-03-25T23:58:30.000",
+                        "level": "wake",
+                        "seconds": ""
+                    },
+                    {
+                        "datetime": "2017-03-26T00:16:30.000",
+                        "level": "light",
+                        "seconds": ""
+                    },
+                    ""
+                ],
+                "shortData": [
+                    {
+                        "datetime": "2017-03-26T05:58:30.000",
+                        "level": "wake",
+                        "seconds": ""
+                    },
+                    ""
+                ]
+            },
+            "logId": "",
+            "minutesAfterWakeup": "",
+            "minutesAsleep": "",
+            "minutesAwake": "",
+            "minutesToFallAsleep": "",
+            "startTime": "2017-03-25T23:58:30.000",
+            "timeInBed": "",
+            "type": "stages"
+        },
+        ""
+    ]
+}

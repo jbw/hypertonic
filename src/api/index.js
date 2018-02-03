@@ -1,12 +1,22 @@
 const moment = require('moment');
 const routes = require('./routes.json');
 const fetch = require('node-fetch');
-
+const appendQuery = require('append-query');
 /**
  *
  *
  * @param {any} token
- * @returns {Promise}
+ * @returns {Function}
+/**
+ * 
+ * 
+ * @param {any} token 
+ * @returns 
+/**
+ * 
+ * 
+ * @param {any} token 
+ * @returns 
  */
 const Hypertonic = (token) => {
 
@@ -33,8 +43,11 @@ const Hypertonic = (token) => {
 
     const _isValidBaseDate = baseDate => routes.dateFormats.basedate.includes(baseDate);
 
-    const getURL = (resourceParts, extension = '.json') => {
-        const route = resourceParts.join('/') + extension;
+    const getURL = (resourceParts, urlParams, extension = '.json') => {
+        let route = resourceParts.join('/') + extension;
+        if (urlParams) {
+            route = appendQuery(route, urlParams);
+        }
         return route;
     };
 
@@ -473,7 +486,7 @@ const Hypertonic = (token) => {
             logId
         ];
 
-        return _fetch(resourceParts, '.tcx');
+        return _fetch(resourceParts, undefined, '.tcx');
     };
 
     /**
@@ -519,7 +532,28 @@ const Hypertonic = (token) => {
     */
     const getBodyWeightLogs = (from, to) => {
 
+        if (to !== undefined) {
+            if (!_isValidDateFormat(from)) {
+                return _throwInvalidParameterException();
+            }
+        }
+
+        const resourceParts = [
+            routes.base,
+            routes.body.route,
+            routes.body.log.route,
+            routes.body.log.type.weight,
+            routes.dateFormats.route.name,
+            from
+        ];
+
+        if (to) {
+            resourceParts.push(to);
+        }
+
+        return _fetch(resourceParts);
     };
+
 
     /**
      * Get Sleep Logs
@@ -545,6 +579,37 @@ const Hypertonic = (token) => {
         return _fetch(resourceParts);
     };
 
+    /**
+     * Get Sleep Logs List
+     * 
+     * The Get Sleep Logs List endpoint returns a list of a user's sleep logs (including naps) before or after a given day with offset, limit, and sort order. 
+     * @returns {Promise}
+     */
+    const getSleepLogsList = (beforeDate, afterDate, sort, offset, limit) => {
+        const resourceParts = [
+            routes.sleep.base,
+            routes.sleep.route,
+            routes.sleep.type.list.name
+        ];
+
+        return _fetch(resourceParts, { beforeDate, afterDate, sort, offset, limit });
+    };
+
+    /**
+     * Get Sleep Goal
+     * 
+     * The Get Sleep Goal endpoint returns a user's current sleep goal using unit in the unit system that corresponds to the Accept-Language header provided in the format requested.
+     * @returns {Promise}
+     */
+    const getSleepGoal = () => {
+        const resourceParts = [
+            routes.base,
+            routes.sleep.route,
+            routes.sleep.type.goal.name
+        ];
+
+        return _fetch(resourceParts);
+    };
 
     const _getActivity = (activity) => {
 
@@ -712,9 +777,9 @@ const Hypertonic = (token) => {
         return _handleFromAndToParameter(from, to) || _fetch(resourceParts);
     };
 
-    const _fetch = (resourceParts, extension = '.json') => {
+    const _fetch = (resourceParts, urlParams, extension = '.json') => {
         const options = _getHeaderOptions(token);
-        const url = getURL(resourceParts, extension);
+        const url = getURL(resourceParts, urlParams, extension);
 
         return fetch(url, options)
             .then(res => {
@@ -722,7 +787,6 @@ const Hypertonic = (token) => {
                 const contentType = res.headers.get('content-type');
 
                 if (res.status >= 200 && res.status < 300) {
-
                     if (contentType.includes('application/json')) {
                         return res.json();
                     }
@@ -776,7 +840,9 @@ const Hypertonic = (token) => {
         getWaterTimeSeries,
         getFoodLogs,
         getWaterLogs,
-        getBodyWeightLogs
+        getBodyWeightLogs,
+        getSleepGoal,
+        getSleepLogsList
 
     };
 };

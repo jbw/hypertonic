@@ -10,11 +10,10 @@ describe('#Activity Logging', () => {
     beforeEach(() => {
 
         const logList = require('./fixtures/activity-log-list.json');
-        const tcx = fs.readFileSync('./test/fixtures/gnr.tcx', 'utf8');
 
         nock(fitbitDomain)
             .get('/1/user/-/activities/9810280066.tcx')
-            .reply(200, tcx);
+            .replyWithFile(200, __dirname + '/fixtures/gnr.tcx', { 'Content-Type': 'application/vnd.garmin.tcx+xml' });
 
         nock(fitbitDomain)
             .get('/1/user/-/activities/list.json')
