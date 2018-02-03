@@ -3,7 +3,7 @@ const oauth2 = require('simple-oauth2');
 const express = require('express');
 const Hypertonic = require('../src/api');
 
-const fitbitConfig = require('../secrets/fitbit.json');
+const fitbitConfig = require('./fitbit.json');
 
 const serverConfig = {
     callbackHost: 'http://localhost:3000',
@@ -20,7 +20,7 @@ const app = express();
 let _token = null;
 
 const _saveToken = (token) => {
-    const savePath = '../secrets/token.json';
+    const savePath = './token.json';
 
     fs.writeFile(savePath, JSON.stringify(token, null, 2), function (err) {
         if (err) console.log(err);

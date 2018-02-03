@@ -60,7 +60,7 @@ describe('#Food Logging', () => {
             .get('/1/user/-/meals.json')
             .reply(200, meals);
         nock(fitbitDomain)
-            .get('/1/user/-/meals/1000.json')
+            .get('/1/user/-/meals/12430.json')
             .reply(200, meal);
 
         nock(fitbitDomain)
@@ -162,7 +162,7 @@ describe('#Food Logging', () => {
     });
 
     it('should get a single meal', (done) => {
-        api.getMeal('1000').then(json => {
+        api.getMeal('12430').then(json => {
             expect(json).to.not.be.undefined;
             done();
         }).catch(err => done(new Error(JSON.stringify(err))));

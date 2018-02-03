@@ -1,7 +1,7 @@
 const moment = require('moment');
 const routes = require('./routes.json');
 const fetch = require('node-fetch');
-
+const appendQuery = require('append-query');
 /**
  *
  *
@@ -43,8 +43,11 @@ const Hypertonic = (token) => {
 
     const _isValidBaseDate = baseDate => routes.dateFormats.basedate.includes(baseDate);
 
-    const getURL = (resourceParts, extension = '.json') => {
-        const route = resourceParts.join('/') + extension;
+    const getURL = (resourceParts, urlParams, extension = '.json') => {
+        let route = resourceParts.join('/') + extension;
+        if (urlParams) {
+            route = appendQuery(route, urlParams);
+        }
         return route;
     };
 
@@ -483,7 +486,7 @@ const Hypertonic = (token) => {
             logId
         ];
 
-        return _fetch(resourceParts, '.tcx');
+        return _fetch(resourceParts, undefined, '.tcx');
     };
 
     /**
@@ -582,14 +585,14 @@ const Hypertonic = (token) => {
      * The Get Sleep Logs List endpoint returns a list of a user's sleep logs (including naps) before or after a given day with offset, limit, and sort order. 
      * @returns {Promise}
      */
-    const getSleepLogsList = () => {
+    const getSleepLogsList = (beforeDate, afterDate, sort, offset, limit) => {
         const resourceParts = [
             routes.sleep.base,
             routes.sleep.route,
             routes.sleep.type.list.name
         ];
 
-        return _fetch(resourceParts);
+        return _fetch(resourceParts, { beforeDate, afterDate, sort, offset, limit });
     };
 
     /**
@@ -774,9 +777,9 @@ const Hypertonic = (token) => {
         return _handleFromAndToParameter(from, to) || _fetch(resourceParts);
     };
 
-    const _fetch = (resourceParts, extension = '.json') => {
+    const _fetch = (resourceParts, urlParams, extension = '.json') => {
         const options = _getHeaderOptions(token);
-        const url = getURL(resourceParts, extension);
+        const url = getURL(resourceParts, urlParams, extension);
 
         return fetch(url, options)
             .then(res => {
@@ -784,7 +787,6 @@ const Hypertonic = (token) => {
                 const contentType = res.headers.get('content-type');
 
                 if (res.status >= 200 && res.status < 300) {
-
                     if (contentType.includes('application/json')) {
                         return res.json();
                     }

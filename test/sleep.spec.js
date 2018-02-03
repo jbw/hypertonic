@@ -5,7 +5,6 @@ const test = require('./common.js');
 const api = test.api;
 const fitbitDomain = test.fitbitDomain;
 
-
 describe('#Sleep', () => {
 
     beforeEach(() => {
@@ -31,7 +30,7 @@ describe('#Sleep', () => {
             .reply(300, sleepNoScope);
 
         nock(fitbitDomain)
-            .get('/1.2/user/-/sleep/list.json')
+            .get('/1.2/user/-/sleep/list.json?beforeDate=2017-03-27&sort=desc&offset=0&limit=1')
             .reply(200, sleepLogList);
 
         nock(fitbitDomain)
@@ -42,7 +41,6 @@ describe('#Sleep', () => {
     after(() => {
         nock.cleanAll();
     });
-
 
     it('should return a sleep goal', (done) => {
         api.getSleepGoal().then(json => {
@@ -75,7 +73,7 @@ describe('#Sleep', () => {
     });
 
     it('should return a sleep log list', (done) => {
-        api.getSleepLogsList().then(json => {
+        api.getSleepLogsList('2017-03-27', undefined, 'desc', 0, 1).then(json => {
             expect(json.sleep).to.not.be.undefined;
             done();
         }).catch(err => {
@@ -83,7 +81,6 @@ describe('#Sleep', () => {
             done(new Error());
         });
     });
-
 
     it('should return a sleep data give a date range', (done) => {
         api.getSleepLogs('2017-01-01', '2017-01-05').then(json => {
@@ -94,7 +91,6 @@ describe('#Sleep', () => {
             done(new Error());
         });
     });
-
 
     it('should handle missing scope error', (done) => {
         api.getSleepLogs('2017-12-12').then(json => {
