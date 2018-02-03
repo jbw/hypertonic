@@ -14,6 +14,7 @@ describe('#Food Logging', () => {
         const waterLog = require('./fixtures/food-water-log.json');
         const waterGoal = require('./fixtures/food-water-goal.json');
         const foodTimeSeries = require('./fixtures/food-time-series.json');
+        const waterTimeSeries = require('./fixtures/water-time-series.json');
         const favorite = require('./fixtures/food-favorite.json');
         const recent = require('./fixtures/food-recent.json');
         const frequent = require('./fixtures/food-frequent.json');
@@ -43,7 +44,7 @@ describe('#Food Logging', () => {
             .reply(200, foodTimeSeries);
         nock(fitbitDomain)
             .get('/1/user/-/foods/log/water/date/2017-01-01/2017-01-20.json')
-            .reply(200, foodTimeSeries);
+            .reply(200, waterTimeSeries);
 
         nock(fitbitDomain)
             .get('/1/user/-/foods/log/favorite.json')
@@ -59,7 +60,7 @@ describe('#Food Logging', () => {
             .get('/1/user/-/meals.json')
             .reply(200, meals);
         nock(fitbitDomain)
-            .get('/1/user/-/meals/1000.json')
+            .get('/1/user/-/meals/12430.json')
             .reply(200, meal);
 
         nock(fitbitDomain)
@@ -111,14 +112,14 @@ describe('#Food Logging', () => {
 
     it('should get food time series', (done) => {
         api.getFoodTimeSeries('today', '7d').then(json => {
-            expect(json).to.not.be.undefined;
+            expect(json['foods-log-caloriesIn']).to.not.be.undefined;
             done();
         }).catch(err => done(new Error(JSON.stringify(err))));
     });
 
     it('should get water time series', (done) => {
         api.getWaterTimeSeries('2017-01-01', '2017-01-20').then(json => {
-            expect(json).to.not.be.undefined;
+            expect(json['foods-log-water']).to.not.be.undefined;
             done();
         }).catch(err => done(new Error(JSON.stringify(err))));
     });
@@ -161,7 +162,7 @@ describe('#Food Logging', () => {
     });
 
     it('should get a single meal', (done) => {
-        api.getMeal('1000').then(json => {
+        api.getMeal('12430').then(json => {
             expect(json).to.not.be.undefined;
             done();
         }).catch(err => done(new Error(JSON.stringify(err))));
@@ -176,7 +177,7 @@ describe('#Food Logging', () => {
 
     it('should get food units', (done) => {
         api.getFoodUnits().then(json => {
-            expect(json).to.not.be.undefined;
+            expect(json).is.an('array');
             done();
         }).catch(err => done(new Error(JSON.stringify(err))));
     });

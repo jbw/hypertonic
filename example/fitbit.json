@@ -12,7 +12,7 @@
         }
     },
     "settings": {
-        "scopes": "activity profile settings social heartrate sleep location weight",
+        "scopes": "activity profile settings social heartrate sleep location weight nutrition",
         "expires_in": 604800
     }
 }
