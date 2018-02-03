@@ -9,21 +9,22 @@ const fitbitDomain = test.fitbitDomain;
 describe('#Sleep', () => {
 
     beforeEach(() => {
-        const getActivitiesResponse = require('./fixtures/sleep.json');
+        const sleepData = require('./fixtures/sleep.json');
+        const sleepGoal = require('./fixtures/sleep-goal.json');
+        const sleepLogList = require('./fixtures/sleep-log-list.json');
+        const sleepNoScope = require('./fixtures/sleep_no_scope.json');
 
         nock(fitbitDomain)
             .get('/1.2/user/-/sleep/date/2017-01-01.json')
-            .reply(200, getActivitiesResponse);
+            .reply(200, sleepData);
 
-            nock(fitbitDomain)
+        nock(fitbitDomain)
             .get('/1.2/user/-/sleep/date/2017-01-01/2017-01-05.json')
-            .reply(200, getActivitiesResponse);
+            .reply(200, sleepData);
 
         nock(fitbitDomain)
             .get('/1.2/user/-/sleep/date/today.json')
-            .reply(200, getActivitiesResponse);
-
-        const sleepNoScope = require('./fixtures/sleep_no_scope.json');
+            .reply(200, sleepData);
 
         nock(fitbitDomain)
             .get('/1.2/user/-/sleep/date/2017-12-12.json')
@@ -31,11 +32,11 @@ describe('#Sleep', () => {
 
         nock(fitbitDomain)
             .get('/1.2/user/-/sleep/list.json')
-            .reply(300, getActivitiesResponse);
+            .reply(200, sleepLogList);
 
         nock(fitbitDomain)
-            .get('/1.2/user/-/sleep/goal.json')
-            .reply(300, getActivitiesResponse);
+            .get('/1/user/-/sleep/goal.json')
+            .reply(200, sleepGoal);
     });
 
     after(() => {
@@ -43,9 +44,9 @@ describe('#Sleep', () => {
     });
 
 
-    it('should return a sleep goals', (done) => {
+    it('should return a sleep goal', (done) => {
         api.getSleepGoal().then(json => {
-            expect(json.sleep).to.not.be.undefined;
+            expect(json.goal).to.not.be.undefined;
             done();
         }).catch(err => {
             console.log(err);

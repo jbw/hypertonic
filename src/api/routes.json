@@ -35,21 +35,20 @@
                 "favorite": {
                     "name": "favorite"
                 },
-                "goals":{
-                    "name":"goal"
+                "goals": {
+                    "name": "goal"
                 }
             }
         },
-        "type":{
-
+        "type": {
             "meals": {
                 "name": "meals"
             },
-            "units":{ 
+            "units": {
                 "name": "units"
             },
-            "locales":{
-                "name":"locales"
+            "locales": {
+                "name": "locales"
             }
         }
     },
@@ -85,7 +84,14 @@
     "sleep": {
         "base": "https://api.fitbit.com/1.2/user/-",
         "route": "sleep",
-        "type": {}
+        "type": {
+            "goal": {
+                "name": "goal"
+            },
+            "list": {
+                "name": "list"
+            }
+        }
     },
     "devices": {
         "name": "devices",

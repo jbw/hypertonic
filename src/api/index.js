@@ -7,6 +7,16 @@ const fetch = require('node-fetch');
  *
  * @param {any} token
  * @returns {Function}
+/**
+ * 
+ * 
+ * @param {any} token 
+ * @returns 
+/**
+ * 
+ * 
+ * @param {any} token 
+ * @returns 
  */
 const Hypertonic = (token) => {
 
@@ -545,6 +555,37 @@ const Hypertonic = (token) => {
         return _fetch(resourceParts);
     };
 
+    /**
+     * Get Sleep Logs List
+     * 
+     * The Get Sleep Logs List endpoint returns a list of a user's sleep logs (including naps) before or after a given day with offset, limit, and sort order. 
+     * @returns {Promise}
+     */
+    const getSleepLogsList = () => {
+        const resourceParts = [
+            routes.sleep.base,
+            routes.sleep.route,
+            routes.sleep.type.list.name
+        ];
+
+        return _fetch(resourceParts);
+    };
+
+    /**
+     * Get Sleep Goal
+     * 
+     * The Get Sleep Goal endpoint returns a user's current sleep goal using unit in the unit system that corresponds to the Accept-Language header provided in the format requested.
+     * @returns {Promise}
+     */
+    const getSleepGoal = () => {
+        const resourceParts = [
+            routes.base,
+            routes.sleep.route,
+            routes.sleep.type.goal.name
+        ];
+
+        return _fetch(resourceParts);
+    };
 
     const _getActivity = (activity) => {
 
@@ -776,7 +817,9 @@ const Hypertonic = (token) => {
         getWaterTimeSeries,
         getFoodLogs,
         getWaterLogs,
-        getBodyWeightLogs
+        getBodyWeightLogs,
+        getSleepGoal,
+        getSleepLogsList
 
     };
 };
