@@ -23,6 +23,9 @@ api.getTimeSeries('calories', 'today', '7d').then(data => console.log(data));
 api.getTimeSeries('steps', 'today', '1m').then(data => console.log(data));
 ```
 
+## API
+
+
 ## How can I get my token?
 
 A working example can be found in the example directory.

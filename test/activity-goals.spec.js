@@ -16,7 +16,7 @@ describe('#Activity Goals', () => {
     });
 
     it('should get activity goals', (done) => {
-         api.getActivityGoals('1d').then(json => {
+        api.getActivityGoals('1d').then(json => {
             expect(json).to.not.be.undefined;
             done();
         }).catch(err => done(new Error(JSON.stringify(err))));

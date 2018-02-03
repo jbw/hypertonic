@@ -30,11 +30,11 @@ describe('#Activity Logging', () => {
 
     });
 
-    // it('should get activity TCX', (done) => {
-    //     api.getActivityTCX('9810280066').then(xml => {
-    //         expect(xml).to.not.be.undefined;
-    //         done();
-    //     }).catch(err => done(new Error(JSON.stringify(err))));
-    // });
+    it('should get activity TCX', (done) => {
+        api.getActivityTCX('9810280066').then(xml => {
+            expect(xml).to.not.be.undefined;
+            done();
+        }).catch(err => done(new Error(JSON.stringify(err))));
+    });
 });
 

@@ -2,7 +2,13 @@ const moment = require('moment');
 const routes = require('./routes.json');
 const fetch = require('node-fetch');
 
-const FitbitApi = (token) => {
+/**
+ * 
+ * 
+ * @param {any} token 
+ * @returns {Promise} 
+ */
+const Hypertonic = (token) => {
 
     if (token === undefined) throw new Error('token is not defined.');
 
@@ -31,7 +37,11 @@ const FitbitApi = (token) => {
         const route = resourceParts.join('/') + extension;
         return route;
     };
-
+    /**
+     * 
+     * 
+     * @returns {Promise} 
+     */
     const getProfile = () => {
         const resourceParts = [
             routes.base,
@@ -40,7 +50,11 @@ const FitbitApi = (token) => {
 
         return _fetch(resourceParts);
     };
-
+    /**
+     * 
+     * 
+     * @returns {Promise} 
+     */
     const getLifetimeStats = () => {
         const resourceParts = [
             routes.base,
@@ -49,7 +63,11 @@ const FitbitApi = (token) => {
 
         return _fetch(resourceParts);
     };
-
+    /**
+     * 
+     * 
+     * @returns {Promise} 
+     */
     const getInvitations = () => {
         const resourceParts = [
             routes.base,
@@ -59,7 +77,11 @@ const FitbitApi = (token) => {
 
         return _fetch(resourceParts);
     };
-
+    /**
+     * 
+     * 
+     * @returns {Promise} 
+     */
     const getBadges = () => {
         const resourceParts = [
             routes.base,
@@ -68,19 +90,36 @@ const FitbitApi = (token) => {
 
         return _fetch(resourceParts);
     };
-
+    /**
+     * 
+     * 
+     * @returns {Promise} 
+     */
     const getFrequentActivities = () => {
         return getActivity(routes.activities.types.frequent.name);
     };
-
+    /**
+     * 
+     * 
+     * @returns {Promise} 
+     */
     const getRecentActivities = () => {
         return getActivity(routes.activities.types.recent.name);
     };
-
+    /**
+     * 
+     * 
+     * @returns {Promise} 
+     */
     const getFavoriteActivities = () => {
         return getActivity(routes.activities.types.favorite.name);
     };
-
+    /**
+     * 
+     * 
+     * @param {any} foodType 
+     * @returns {Promise} 
+     */
     const getFood = (foodType) => {
         const resourceParts = [
             routes.global,
@@ -101,19 +140,35 @@ const FitbitApi = (token) => {
 
         return _fetch(resourceParts);
     };
-
+    /**
+     * 
+     * 
+     * @returns {Promise} 
+     */
     const getFavoriteFoods = () => {
         return _getFoodLogInfo(routes.food.log.type.favorite.name);
     };
-
+    /**
+     * 
+     * 
+     * @returns {Promise} 
+     */
     const getFrequentFoods = () => {
         return _getFoodLogInfo(routes.food.log.type.frequent.name);
     };
-
+    /**
+     * 
+     * 
+     * @returns {Promise} 
+     */
     const getRecentFoods = () => {
         return _getFoodLogInfo(routes.food.log.type.recent.name);
     };
-
+    /**
+     * 
+     * 
+     * @returns {Promise} 
+     */
     const getMeals = () => {
         const resourceParts = [
             routes.base,
@@ -122,7 +177,12 @@ const FitbitApi = (token) => {
 
         return _fetch(resourceParts);
     };
-
+    /**
+     * 
+     * 
+     * @param {any} mealId 
+     * @returns {Promise} 
+     */
     const getMeal = (mealId) => {
         const resourceParts = [
             routes.base,
@@ -132,58 +192,90 @@ const FitbitApi = (token) => {
 
         return _fetch(resourceParts);
     };
-
+    /**
+     * 
+     * 
+     * @returns {Promise} 
+     */
     const getFoodUnits = () => {
         const resourceParts = [
             routes.global,
             routes.food.route,
-            routes.food.type.units.name,
+            routes.food.type.units.name
         ];
 
         return _fetch(resourceParts);
     };
-
+    /**
+     * 
+     * 
+     * @returns {Promise} 
+     */
     const getFoodLocales = () => {
         const resourceParts = [
             routes.global,
             routes.food.route,
-            routes.food.type.locales.name,
+            routes.food.type.locales.name
         ];
 
         return _fetch(resourceParts);
     };
-
+    /**
+     * 
+     * 
+     * @returns {Promise} 
+     */
     const getFoodGoals = () => {
         const resourceParts = [
             routes.base,
             routes.food.route,
             routes.food.log.route,
-            routes.food.log.type.goals.name,
+            routes.food.log.type.goals.name
         ];
 
         return _fetch(resourceParts);
     };
-
+    /**
+     * 
+     * 
+     * @returns {Promise} 
+     */
     const getWaterGoals = () => {
         const resourceParts = [
             routes.base,
             routes.food.route,
             routes.food.log.route,
             routes.food.water,
-            routes.food.log.type.goals.name,
+            routes.food.log.type.goals.name
         ];
 
         return _fetch(resourceParts);
     };
-
+    /**
+     * 
+     * 
+     * @param {any} from 
+     * @param {any} to 
+     * @returns {Promise} 
+     */
     const getFoodTimeSeries = (from, to) => {
         return _getFoodWaterTimeSeries(routes.food.log.route + '/' + routes.food.caloriesIn, from, to);
     };
-
+    /**
+     * 
+     * 
+     * @param {any} from 
+     * @param {any} to 
+     * @returns {Promise} 
+     */
     const getWaterTimeSeries = (from, to) => {
         return _getFoodWaterTimeSeries(routes.food.log.route + '/' + routes.food.water, from, to);
     };
-
+    /**
+     * 
+     * 
+     * @returns {Promise} 
+     */
     const getDevices = () => {
         const resourceParts = [
             routes.base,
@@ -192,7 +284,12 @@ const FitbitApi = (token) => {
 
         return _fetch(resourceParts);
     };
-
+    /**
+     * 
+     * 
+     * @param {any} trackerId 
+     * @returns {Promise} 
+     */
     const getAlarms = (trackerId) => {
         const resourceParts = [
             routes.base,
@@ -204,7 +301,11 @@ const FitbitApi = (token) => {
 
         return _fetch(resourceParts);
     };
-
+    /**
+     * 
+     * 
+     * @returns {Promise} 
+     */
     const getActivityTypes = () => {
         const resourceParts = [
             routes.global,
@@ -214,6 +315,12 @@ const FitbitApi = (token) => {
         return _fetch(resourceParts);
     };
 
+    /**
+     * 
+     * 
+     * @param {any} period 
+     * @returns {Promise} 
+     */
     const getActivityGoals = (period) => {
         const resourceParts = [
             routes.base,
@@ -225,7 +332,12 @@ const FitbitApi = (token) => {
         return _fetch(resourceParts);
 
     };
-
+    /**
+     * 
+     * 
+     * @param {any} activityId 
+     * @returns {Promise} 
+     */
     const getActivityType = (activityId) => {
         const resourceParts = [
             routes.global,
@@ -235,7 +347,12 @@ const FitbitApi = (token) => {
 
         return _fetch(resourceParts);
     };
-
+    /**
+     * 
+     * 
+     * @param {any} bodyMetric 
+     * @returns {Promise} 
+     */
     const getBodyGoal = (bodyMetric) => {
 
         const resourceParts = [
@@ -248,7 +365,12 @@ const FitbitApi = (token) => {
 
         return _fetch(resourceParts);
     };
-
+    /**
+     * 
+     * 
+     * @param {any} friends 
+     * @returns {Promise} 
+     */
     const getFriends = (friends) => {
 
         const resourceParts = [
@@ -262,7 +384,11 @@ const FitbitApi = (token) => {
 
         return _fetch(resourceParts);
     };
-
+    /**
+     * 
+     * 
+     * @returns {Promise} 
+     */
     const getActivityLogsList = () => {
         const resourceParts = [
             routes.base,
@@ -271,7 +397,12 @@ const FitbitApi = (token) => {
         ];
         return _fetch(resourceParts);
     };
-
+    /**
+     * 
+     * 
+     * @param {any} logId 
+     * @returns {Promise} 
+     */
     const getActivityTCX = (logId) => {
         const resourceParts = [
             routes.base,
@@ -281,7 +412,13 @@ const FitbitApi = (token) => {
 
         return _fetch(resourceParts, '.tcx');
     };
-
+    /**
+     * 
+     * 
+     * @param {any} from 
+     * @param {any} to 
+     * @returns {Promise} 
+     */
     const getBodyFatLogs = (from, to) => {
 
         if (to !== undefined) {
@@ -305,7 +442,12 @@ const FitbitApi = (token) => {
 
         return _fetch(resourceParts);
     };
-
+    /**
+     * 
+     * 
+     * @param {any} from 
+     * @returns {Promise} 
+     */
     const getSleepLogs = (from) => {
 
         const resourceParts = [
@@ -317,7 +459,12 @@ const FitbitApi = (token) => {
 
         return _fetch(resourceParts);
     };
-
+    /**
+     * 
+     * 
+     * @param {any} activity 
+     * @returns {Promise} 
+     */
     const getActivity = (activity) => {
 
         const resourceParts = [
@@ -328,7 +475,12 @@ const FitbitApi = (token) => {
 
         return _fetch(resourceParts);
     };
-
+    /**
+     * 
+     * 
+     * @param {any} date 
+     * @returns {Promise} 
+     */
     const getSummary = (date) => {
 
         if (date) {
@@ -346,10 +498,21 @@ const FitbitApi = (token) => {
 
         return _fetch(resourceParts);
     };
-
+    /**
+     * 
+     * 
+     * @param {any} date 
+     * @returns {Promise} 
+     */
     const getWaterLogs = (date) => {
         return _getFoodWaterLog(routes.food.log.route + '/' + routes.food.water, date);
     };
+    /**
+     * 
+     * 
+     * @param {any} date 
+     * @returns {Promise} 
+     */
     const getFoodLogs = (date) => {
         return _getFoodWaterLog(routes.food.log.route, date);
     };
@@ -388,7 +551,14 @@ const FitbitApi = (token) => {
             return _throwInvalidParameterException();
         }
     };
-
+    /**
+     * 
+     * 
+     * @param {any} bodyMetric 
+     * @param {any} from 
+     * @param {any} to 
+     * @returns {Promise} 
+     */
     const getBodyTimeSeries = (bodyMetric, from, to) => {
         from = from || DEFAULT_DATE;
         to = to || DEFAULT_PERIOD;
@@ -406,6 +576,14 @@ const FitbitApi = (token) => {
         return _fetch(resourceParts);
     };
 
+    /**
+     * Activity Time Series
+     * 
+     * @param {any} activity 
+     * @param {any} from 
+     * @param {any} to 
+     * @returns {Promise} Activity time series data.
+     */
     const getTimeSeries = (activity, from, to) => {
         from = from || DEFAULT_DATE;
         to = to || DEFAULT_PERIOD;
@@ -506,4 +684,4 @@ const FitbitApi = (token) => {
     };
 };
 
-module.exports = FitbitApi;
+module.exports = Hypertonic;
