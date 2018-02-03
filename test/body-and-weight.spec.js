@@ -14,6 +14,14 @@ describe('#Body Fat Logs', () => {
             .reply(200, bodyAndWeight);
 
         nock(fitbitDomain)
+            .get('/1/user/-/body/log/weight/date/2017-01-01.json')
+            .reply(200, bodyAndWeight);
+
+        nock(fitbitDomain)
+            .get('/1/user/-/body/log/weight/date/2017-01-01/7d.json')
+            .reply(200, bodyAndWeight);
+
+        nock(fitbitDomain)
             .get('/1/user/-/body/log/fat/date/2017-01-01/7d.json')
             .reply(200, bodyAndWeight);
 
@@ -50,8 +58,18 @@ describe('#Body Fat Logs', () => {
         });
     });
 
-    it('should get body fat logs', (done) => {
-        api.getBodyFatLogs('2017-12-01').then(json => {
+
+    it('should get body weight logs', (done) => {
+        api.getBodyWeightLogs('2017-01-01', '7d').then(json => {
+            expect(json.fat).to.be.an('array');
+            done();
+        }).catch(err => {
+            done(new Error(JSON.stringify(err)));
+        });
+    });
+
+    it('should get body weight logs', (done) => {
+        api.getBodyWeightLogs('2017-12-01').then(json => {
             expect(json.fat).to.be.an('array');
             done();
         }).catch(err => {

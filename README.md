@@ -1,4 +1,4 @@
-# Hypertonic 
+# Hypertonic
 
 Fitbit API Wrapper :running: :tropical_drink:
 
@@ -23,7 +23,7 @@ api.getTimeSeries('calories', 'today', '7d').then(data => console.log(data));
 api.getTimeSeries('steps', 'today', '1m').then(data => console.log(data));
 ```
 
-## API
+## API Reference
 
 
 ## How can I get my token?
@@ -34,11 +34,11 @@ A working example can be found in the example directory.
 First off, to be able to authenticate and get your access token, you will need a <b>client id and secret</b> from [Fitbit](https://dev.fitbit.com/). This example uses `simple-oauth2`. The JSON object below contains the necessary information needed to authenticate.
 
 ``` json
-{ 
+{
     "credentials": {
-        "client": { 
-            "id": "<FROM_FITBIT>",  
-            "secret": "<FROM_FITBIT>" 
+        "client": {
+            "id": "<FROM_FITBIT>",
+            "secret": "<FROM_FITBIT>"
         },
         "auth": {
             "tokenHost": "https://api.fitbit.com",

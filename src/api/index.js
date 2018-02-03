@@ -53,7 +53,9 @@ const Hypertonic = (token) => {
     };
 
     /**
+     * Get Lifetime Stats
      *
+     * The Get Lifetime Stats endpoint retrieves the user's activity statistics in the format requested using units in the unit system which corresponds to the Accept-Language header provided. Activity statistics includes Lifetime and Best achievement values from the My Achievements tile on the website dashboard. Response contains both statistics from the tracker device and total numbers including tracker data and manual activity log entries as seen on the Fitbit website dashboard.
      *
      * @returns {Promise}
      */
@@ -96,7 +98,9 @@ const Hypertonic = (token) => {
     };
 
     /**
+     * Get Frequent Activities
      *
+     * The Get Frequent Activities endpoint retrieves a list of a user's frequent activities in the format requested using units in the unit system which corresponds to the Accept-Language header provided. A frequent activity record contains the distance and duration values recorded the last time the activity was logged. The record retrieved can be used to log the activity via the Log Activity endpoint with the same or adjusted values for distance and duration.
      *
      * @returns {Promise}
      */
@@ -105,7 +109,9 @@ const Hypertonic = (token) => {
     };
 
     /**
+     * Get Recent Activity Types
      *
+     * The Get Recent Activity Types endpoint retrieves a list of a user's recent activities types logged with some details of the last activity log of that type using units in the unit system which corresponds to the Accept-Language header provided. The record retrieved can be used to log the activity via the Log Activity endpoint with the same or adjusted values for distance and duration.
      *
      * @returns {Promise}
      */
@@ -114,7 +120,9 @@ const Hypertonic = (token) => {
     };
 
     /**
+     * Get Favorite Activities
      *
+     * The Get Favorite Activities endpoint returns a list of a user's favorite activities.
      *
      * @returns {Promise}
      */
@@ -322,9 +330,9 @@ const Hypertonic = (token) => {
     };
 
     /**
+     * Activity Types List
      *
-     *
-     *
+     * Get a tree of all valid Fitbit public activities from the activities catalog as well as private custom activities the user created in the format requested. If the activity has levels, also get a list of activity level details.
      * @returns {Promise}
      */
     const getActivityTypes = () => {
@@ -337,8 +345,9 @@ const Hypertonic = (token) => {
     };
 
     /**
+     * Get Activity Goals
      *
-     *
+     * The Get Activity Goals retrieves a user's current daily or weekly activity goals using measurement units as defined in the unit system, which corresponds to the Accept-Language header provided.
      * @param {any} period
      * @returns {Promise}
      */
@@ -355,7 +364,9 @@ const Hypertonic = (token) => {
     };
 
     /**
+     * Get Activity Type
      *
+     * Returns the details of a specific activity in the Fitbit activities database in the format requested. If activity has levels, also returns a list of activity level details.
      *
      * @param {any} activityId
      * @returns {Promise}
@@ -371,7 +382,9 @@ const Hypertonic = (token) => {
     };
 
     /**
+     * Get Body Goals
      *
+     * The Get Body Goals API retrieves a user's current body fat percentage or weight goal using units in the unit systems that corresponds to the Accept-Language header provided in the format requested.
      *
      * @param {any} bodyMetric
      * @returns {Promise}
@@ -447,7 +460,9 @@ const Hypertonic = (token) => {
     };
 
     /**
+     * Get Body Fat Logs
      *
+     * The Get Body Fat Logs API retrieves a list of all user's body fat log entries for a given day in the format requested. Body fat log entries are available only to authorized user. If you need to fetch only the most recent entry, you can use the Get Body Measurements endpoint.
      *
      * @param {any} from
      * @param {any} to
@@ -475,6 +490,16 @@ const Hypertonic = (token) => {
         }
 
         return _fetch(resourceParts);
+    };
+
+    /**
+     *
+     * @param {any} from
+     * @param {any} to
+     * @returns {Promise}
+    */
+    const getBodyWeightLogs = (from, to) => {
+
     };
 
     /**
@@ -596,7 +621,9 @@ const Hypertonic = (token) => {
     };
 
     /**
+     * Get Body Time Series
      *
+     * The Get Body Time Series API returns time series data in the specified range for a given resource in the format requested using units in the unit systems that corresponds to the Accept-Language header provided.
      *
      * @param {any} bodyMetric
      * @param {any} from
@@ -725,7 +752,8 @@ const Hypertonic = (token) => {
         getFoodTimeSeries,
         getWaterTimeSeries,
         getFoodLogs,
-        getWaterLogs
+        getWaterLogs,
+        getBodyWeightLogs
 
     };
 };
