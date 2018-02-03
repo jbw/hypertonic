@@ -529,7 +529,28 @@ const Hypertonic = (token) => {
     */
     const getBodyWeightLogs = (from, to) => {
 
+        if (to !== undefined) {
+            if (!_isValidDateFormat(from)) {
+                return _throwInvalidParameterException();
+            }
+        }
+
+        const resourceParts = [
+            routes.base,
+            routes.body.route,
+            routes.body.log.route,
+            routes.body.log.type.weight,
+            routes.dateFormats.route.name,
+            from
+        ];
+
+        if (to) {
+            resourceParts.push(to);
+        }
+
+        return _fetch(resourceParts);
     };
+
 
     /**
      * Get Sleep Logs

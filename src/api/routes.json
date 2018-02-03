@@ -15,7 +15,8 @@
             "route": "log",
             "type": {
                 "goal": "goal",
-                "fat": "fat"
+                "fat": "fat",
+                "weight": "weight"
             }
         }
     },
