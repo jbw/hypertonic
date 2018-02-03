@@ -6,7 +6,7 @@ const fetch = require('node-fetch');
  *
  *
  * @param {any} token
- * @returns {Promise}
+ * @returns {Function}
  */
 const Hypertonic = (token) => {
 
