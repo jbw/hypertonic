@@ -2,16 +2,14 @@
 
 Fitbit API Wrapper :running: :tropical_drink:
 
-`hypertonic` is a FitBit web api wrapper that only requires the token to get started. 
+`hypertonic` is a Fitbit web api wrapper that only requires your access token to get started. 
 
 
 
 | Branch  | Status                                                                                                                                                                                                                                                                                            |
 | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| master  | [![CircleCI](https://circleci.com/gh/jbw/hypertonic/tree/master.svg?style=shield)](https://circleci.com/gh/jbw/hypertonic/tree/master)  [![Coverage Status](https://coveralls.io/repos/github/jbw/hypertonic/badge.svg?branch=master)](https://coveralls.io/github/jbw/hypertonic?branch=master)  |
+| master  | [![CircleCI](https://circleci.com/gh/jbw/hypertonic/tree/master.svg?style=shield)](https://circleci.com/gh/jbw/hypertonic/tree/master)  [![Coverage Status](https://coveralls.io/repos/github/jbw/hypertonic/badge.svg?branch=master)](https://coveralls.io/github/jbw/hypertonic?branch=master) [![Known Vulnerabilities](https://snyk.io/test/github/jbw/hypertonic/badge.svg)](https://snyk.io/test/github/jbw/hypertonic) |
 | develop | [![CircleCI](https://circleci.com/gh/jbw/hypertonic/tree/develop.svg?style=shield)](https://circleci.com/gh/jbw/hypertonic/tree/master) [![Coverage Status](https://coveralls.io/repos/github/jbw/hypertonic/badge.svg?branch=develop)](https://coveralls.io/github/jbw/hypertonic?branch=master) |
-
-[![Known Vulnerabilities](https://snyk.io/test/github/jbw/hypertonic/badge.svg)](https://snyk.io/test/github/jbw/hypertonic)
 
 
 ## Example
