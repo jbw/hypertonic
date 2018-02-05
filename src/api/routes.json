@@ -18,26 +18,22 @@
                     "weight": "weight"
                 }
             },
-            "bmi": {
-                "name": "bmi"
-            },
-            "fat": {
-                "name": "fat"
-            }
+            "bmi": "bmi",
+            "fat": "fat"
         }
     },
     "food": {
         "route": "foods",
-        "log": {
-            "route": "log",
-            "resource": {
-                "frequent": "frequent",
-                "recent": "recent",
-                "favorite": "favorite",
-                "goal": "goal"
-            }
-        },
         "resource": {
+            "log": {
+                "route": "log",
+                "resource": {
+                    "frequent": "frequent",
+                    "recent": "recent",
+                    "favorite": "favorite",
+                    "goal": "goal"
+                }
+            },
             "water": "water",
             "caloriesIn": "caloriesIn",
             "meals": "meals",
@@ -51,9 +47,7 @@
             "calories": "calories",
             "steps": "steps",
             "distance": "distance",
-            "goals": {
-                "name": "goals"
-            },
+            "goals": "goals",
             "frequent": "frequent",
             "recent": "recent",
             "favorite": "favorite",
@@ -69,7 +63,7 @@
         }
     },
     "devices": {
-        "name": "devices",
+        "route": "devices",
         "resource": {
             "tracker": "tracker",
             "alarms": "alarms"
@@ -89,21 +83,19 @@
                 "daily",
                 "weekly"
             ],
-            "timeseries": {
-                "basedate": [
-                    "today"
-                ],
-                "periods": [
-                    "1d",
-                    "7d",
-                    "30d",
-                    "1w",
-                    "1m",
-                    "3m",
-                    "6m",
-                    "1y"
-                ]
-            },
+            "baseDates": [
+                "today"
+            ],
+            "periods": [
+                "1d",
+                "7d",
+                "30d",
+                "1w",
+                "1m",
+                "3m",
+                "6m",
+                "1y"
+            ],
             "scopes": [
                 "activity",
                 "nutrition",
