@@ -1,136 +1,118 @@
 {
-    "base": "https://api.fitbit.com/1/user/-",
-    "global": "https://api.fitbit.com/1",
+    "userBase": "https://api.fitbit.com/1/user/-",
+    "globalBase": "https://api.fitbit.com/1",
     "user": {
-        "profile": {
-            "route": "profile"
-        },
-        "badges": {
-            "route": "badges"
+        "resource": {
+            "profile": "profile",
+            "badges": "badges"
         }
     },
     "body": {
         "route": "body",
-        "log": {
-            "route": "log",
-            "type": {
-                "goal": "goal",
-                "fat": "fat",
-                "weight": "weight"
+        "resource": {
+            "log": {
+                "route": "log",
+                "resource": {
+                    "goal": "goal",
+                    "fat": "fat",
+                    "weight": "weight"
+                }
+            },
+            "bmi": {
+                "name": "bmi"
+            },
+            "fat": {
+                "name": "fat"
             }
         }
     },
     "food": {
-        "water": "water",
-        "caloriesIn": "caloriesIn",
         "route": "foods",
         "log": {
             "route": "log",
-            "type": {
-                "frequent": {
-                    "name": "frequent"
-                },
-                "recent": {
-                    "name": "recent"
-                },
-                "favorite": {
-                    "name": "favorite"
-                },
-                "goals": {
-                    "name": "goal"
-                }
+            "resource": {
+                "frequent": "frequent",
+                "recent": "recent",
+                "favorite": "favorite",
+                "goal": "goal"
             }
         },
-        "type": {
-            "meals": {
-                "name": "meals"
-            },
-            "units": {
-                "name": "units"
-            },
-            "locales": {
-                "name": "locales"
-            }
+        "resource": {
+            "water": "water",
+            "caloriesIn": "caloriesIn",
+            "meals": "meals",
+            "units": "units",
+            "locales": "locales"
         }
     },
     "activities": {
         "route": "activities",
-        "types": {
-            "calories": {
-                "name": "calories"
-            },
-            "steps": {
-                "name": "steps"
-            },
-            "distance": {
-                "name": "distance"
-            },
+        "resource": {
+            "calories": "calories",
+            "steps": "steps",
+            "distance": "distance",
             "goals": {
                 "name": "goals"
             },
-            "frequent": {
-                "name": "frequent"
-            },
-            "recent": {
-                "name": "recent"
-            },
-            "favorite": {
-                "name": "favorite"
-            },
-            "list": {
-                "name": "list"
-            }
+            "frequent": "frequent",
+            "recent": "recent",
+            "favorite": "favorite",
+            "list": "list"
         }
     },
     "sleep": {
-        "base": "https://api.fitbit.com/1.2/user/-",
+        "userBase": "https://api.fitbit.com/1.2/user/-",
         "route": "sleep",
-        "type": {
-            "goal": {
-                "name": "goal"
-            },
-            "list": {
-                "name": "list"
-            }
+        "resource": {
+            "goal": "goal",
+            "list": "list"
         }
     },
     "devices": {
         "name": "devices",
-        "tracker": {
-            "name": "tracker"
-        },
-        "alarms": {
-            "name": "alarms"
+        "resource": {
+            "tracker": "tracker",
+            "alarms": "alarms"
         }
     },
     "friends": {
         "route": "friends",
-        "type": {
-            "leaderboard": {
-                "name": "leaderboard"
-            },
-            "invitations": {
-                "name": "invitations"
-            }
+        "resource": {
+            "leaderboard": "leaderboard",
+            "invitations": "invitations"
         }
     },
     "dateFormats": {
-        "route": {
-            "name": "date"
-        },
-        "basedate": [
-            "today"
-        ],
-        "sevendays": "7d",
-        "periods": [
-            "1d",
-            "7d",
-            "30d",
-            "1w",
-            "1m",
-            "3m",
-            "6m",
-            "1y"
-        ]
+        "route": "date",
+        "parameters": {
+            "goals": [
+                "daily",
+                "weekly"
+            ],
+            "timeseries": {
+                "basedate": [
+                    "today"
+                ],
+                "periods": [
+                    "1d",
+                    "7d",
+                    "30d",
+                    "1w",
+                    "1m",
+                    "3m",
+                    "6m",
+                    "1y"
+                ]
+            },
+            "scopes": [
+                "activity",
+                "nutrition",
+                "profile",
+                "settings",
+                "sleep",
+                "social",
+                "weight"
+            ]
+        }
     }
 }
