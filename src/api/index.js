@@ -2,16 +2,7 @@ const moment = require('moment');
 const Routes = require('./routes.json');
 const fetch = require('node-fetch');
 const appendQuery = require('append-query');
-/**
- *
- *
- * @param {any} token
- * @returns {Function}
-/**
- *
- *
- * @param {any} token
- * @returns
+
 /**
  *
  *
