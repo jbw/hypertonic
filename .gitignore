@@ -5,6 +5,8 @@ dist/**/*
 examples/dist/**/*
 coverage/
 
+build
+
 secret/
 secrets/
 .secret/
