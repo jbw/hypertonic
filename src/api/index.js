@@ -1,6 +1,7 @@
+require('es6-promise').polyfill();
+require('isomorphic-fetch');
 const moment = require('moment');
 const Routes = require('./routes.json');
-const fetch = require('node-fetch');
 const appendQuery = require('append-query');
 
 /**

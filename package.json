@@ -2,22 +2,25 @@
   "name": "hypertonic",
   "version": "1.0.0",
   "description": "Fitbit API Client",
-  "main": "./src/index.js",
+  "main": "./src/api/index.js",
   "repository": {},
   "author": "jbw",
   "license": "MIT",
   "dependencies": {
     "append-query": "^2.0.1",
-    "express": "^4.15.4",
-    "moment": "^2.20.1",
-    "node-fetch": "^1.7.1",
-    "simple-oauth2": "^1.3.0"
+    "es6-promise": "^4.2.4",
+    "fetch-everywhere": "^1.0.5",
+    "isomorphic-fetch": "^2.2.1",
+    "moment": "^2.20.1"
   },
   "scripts": {
     "start": "node ./src/api/index.js",
     "watch": "nodemon ./src/api/index.js",
     "test": "mocha",
-    "coverage": "nyc --reporter=html --reporter=text-lcov mocha | coveralls"
+    "coverage": "nyc --reporter=html --reporter=text-lcov mocha | coveralls",
+    "build": "webpack",
+    "build:prod": "webpack -p",
+    "publish": "npm run build:prod"
   },
   "nyc": {
     "exclude": [
@@ -26,13 +29,21 @@
     ]
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-es2015": "^6.24.1",
     "chai": "^4.1.0",
     "coveralls": "^3.0.0",
     "eslint": "^4.4.1",
     "eslint-loader": "^1.9.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-mocha": "^4.11.0",
+    "exports-loader": "^0.7.0",
+    "imports-loader": "^0.7.1",
     "istanbul": "^0.4.5",
+    "json-loader": "^0.5.7",
     "mocha": "^3.4.2",
     "mocha-nock-fixtures": "^0.2.0",
     "nock": "^9.1.6",
@@ -40,6 +51,7 @@
     "nyc": "^11.4.1",
     "source-map-loader": "^0.2.1",
     "source-map-support": "^0.4.15",
-    "webpack": "^3.4.1"
+    "webpack": "^3.10.0",
+    "webpack-bundle-analyzer": "^2.10.0"
   }
 }
