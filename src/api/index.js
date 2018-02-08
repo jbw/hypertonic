@@ -4,7 +4,7 @@ const fetch = require('node-fetch');
 const appendQuery = require('append-query');
 
 /**
- *
+ * Fitbit Web API Wrapper
  *
  * @param {any} token
  * @returns
@@ -43,7 +43,7 @@ const Hypertonic = (token) => {
     };
 
     /**
-     *
+     * Get a User Profile data.
      *
      * @returns {Promise}
      */
