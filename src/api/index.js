@@ -490,7 +490,6 @@ const Hypertonic = (token) => {
      * @returns {Promise}
      */
     const getBodyFatLogs = (from, to) => {
-
         if (to !== undefined) {
             if (!_isValidDateFormat(from)) {
                 return _throwInvalidParameterException();
