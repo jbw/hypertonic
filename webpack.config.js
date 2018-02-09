@@ -8,7 +8,6 @@ module.exports = function (env) {
     if (env === 'analyzer') {
         _plugins.push(new BundleAnalyzerPlugin());
     }
-
     return {
         entry: ['./src/api/index.js'],
 
@@ -19,7 +18,6 @@ module.exports = function (env) {
             libraryTarget: 'umd',
             umdNamedDefine: true
         },
-        target: 'node', // need to build
         module: {
             loaders: [
                 {

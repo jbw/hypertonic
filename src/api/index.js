@@ -1,6 +1,4 @@
-require('es6-promise').polyfill();
-require('isomorphic-fetch');
-
+const axios = require('axios');
 const moment = require('moment');
 const Routes = require('./routes.json');
 const appendQuery = require('append-query');
@@ -772,19 +770,19 @@ const Hypertonic = (token) => {
     const _fetch = (resourceParts, urlParams, extension = '.json') => {
         const options = _getHeaderOptions(token);
         const url = getURL(resourceParts, urlParams, extension);
-
-        return fetch(url, options)
+        axios.defaults.headers = options;
+        return axios.get(url)
             .then(res => {
-
-                const contentType = res.headers.get('content-type');
+                //console.log(res);
+                const contentType = res.headers['content-type'];
 
                 if (res.status >= 200 && res.status < 300) {
                     if (contentType.includes('application/json')) {
-                        return res.json();
+                        return res.data;
                     }
 
                     else if (contentType.includes('application/vnd.garmin.tcx+xml')) {
-                        return res.text();
+                        return res.data;
                     }
                 }
 
@@ -793,7 +791,7 @@ const Hypertonic = (token) => {
             }).then(data => {
                 return data;
             })
-            .catch(err => { throw err; });
+            .catch(err => { throw err.response.data; });
     };
 
     return {

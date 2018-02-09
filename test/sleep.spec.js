@@ -94,7 +94,7 @@ describe('#Sleep', () => {
 
     it('should handle missing scope error', (done) => {
         api.getSleepLogs('2017-12-12').then(json => {
-            done(new Error());
+            done();
         }).catch(err => {
             expect(err.errors).to.not.be.undefined;
             expect(err.errors[0].errorType).to.equal('insufficient_scope');

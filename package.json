@@ -8,8 +8,7 @@
   "license": "MIT",
   "dependencies": {
     "append-query": "^2.0.1",
-    "es6-promise": "^4.2.4",
-    "isomorphic-fetch": "^2.2.1",
+    "axios": "^0.17.1",
     "moment": "^2.20.1"
   },
   "scripts": {
