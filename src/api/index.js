@@ -6,7 +6,7 @@ const Routes = require('./routes.json');
 const appendQuery = require('append-query');
 
 /**
- *
+ * Fitbit Web API Wrapper
  *
  * @param {any} token
  * @returns
@@ -45,7 +45,7 @@ const Hypertonic = (token) => {
     };
 
     /**
-     *
+     * Get a User Profile data.
      *
      * @returns {Promise}
      */
@@ -492,7 +492,6 @@ const Hypertonic = (token) => {
      * @returns {Promise}
      */
     const getBodyFatLogs = (from, to) => {
-
         if (to !== undefined) {
             if (!_isValidDateFormat(from)) {
                 return _throwInvalidParameterException();
