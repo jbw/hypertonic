@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
-module.exports = function (env = 'analyzer') {
+module.exports = function (env) {
     const _plugins = [];
 
     if (env === 'analyzer') {
@@ -14,9 +14,12 @@ module.exports = function (env = 'analyzer') {
 
         output: {
             path: path.resolve(__dirname, 'build'),
-            filename: 'hypertonic.js'
+            filename: 'hypertonic.js',
+            library: 'hypertonic',
+            libraryTarget: 'umd',
+            umdNamedDefine: true
         },
-
+        target: 'node', // need to build
         module: {
             loaders: [
                 {
