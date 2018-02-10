@@ -13,6 +13,8 @@ const Hypertonic = (token) => {
 
     if (token === undefined) throw new Error('token is not defined.');
 
+    axios.defaults.headers  = _getHeaderOptions(token);
+
     const DEFAULT_DATE = 'today';
     const DEFAULT_PERIOD = '1d';
     const FITBIT_DATE_FORMAT = 'YYYY-MM-DD';
@@ -768,14 +770,10 @@ const Hypertonic = (token) => {
     };
 
     const _fetch = (resourceParts, urlParams, extension = '.json') => {
-        const options = _getHeaderOptions(token);
         const url = getURL(resourceParts, urlParams, extension);
-        axios.defaults.headers = options;
         return axios.get(url)
             .then(res => {
-                //console.log(res);
                 const contentType = res.headers['content-type'];
-
                 if (res.status >= 200 && res.status < 300) {
                     if (contentType.includes('application/json')) {
                         return res.data;
