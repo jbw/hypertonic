@@ -1,7 +1,7 @@
 const fs = require('fs');
 const oauth2 = require('simple-oauth2');
 const express = require('express');
-const Hypertonic = require('../src/api');
+const Hypertonic = require('../build/hypertonic');
 
 const fitbitConfig = require('./fitbit.json');
 
@@ -49,7 +49,7 @@ app.get(serverConfig.callbackPath, (req, res) => {
 
 app.get('/example', (req, res) => {
 
-    Hypertonic(_token).getActivities().fetch().then(json => {
+    Hypertonic(_token).getActivities().then(json => {
         return res.status(200).json(json);
     });
 });
