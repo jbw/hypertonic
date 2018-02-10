@@ -20,14 +20,14 @@ Fitbit API Wrapper :running: :tropical_drink:
 const Hypertonic = require('hypertonic');
 
 const token = '<YOUR_FITBIT_ACCESS_TOKEN>';
-const hypertonic = `hypertonic` (token);
+const hypertonic = Hypertonic(token);
 
 // Activity Summary data
-api.getSummary('today').then(data => console.log(data));
+hypertonic.getSummary('today').then(data => console.log(data));
 
 // Activity Time Series
-api.getTimeSeries('calories', 'today', '7d').then(data => console.log(data));
-api.getTimeSeries('steps', 'today', '1m').then(data => console.log(data));
+hypertonic.getTimeSeries('calories', 'today', '7d').then(data => console.log(data));
+hypertonic.getTimeSeries('steps', 'today', '1m').then(data => console.log(data));
 ```
 
 ## API Reference
