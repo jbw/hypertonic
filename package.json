@@ -1,7 +1,7 @@
 {
   "name": "hypertonic",
-  "version": "1.0.0",
-  "description": "Fitbit API Client",
+  "version": "1.0.1",
+  "description": "Fitbit API Wrapper",
   "main": "./src/api/index.js",
   "repository": {},
   "author": "jbw",
