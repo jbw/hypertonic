@@ -13,8 +13,6 @@ const Hypertonic = (token) => {
 
     if (token === undefined) throw new Error('token is not defined.');
 
-    axios.defaults.headers  = _getHeaderOptions(token);
-
     const DEFAULT_DATE = 'today';
     const DEFAULT_PERIOD = '1d';
     const FITBIT_DATE_FORMAT = 'YYYY-MM-DD';
@@ -27,6 +25,8 @@ const Hypertonic = (token) => {
             }
         };
     };
+
+    axios.defaults.headers  = _getHeaderOptions(token);
 
     const _getDateNow = offset => moment(new Date()).add(offset, 'days').format(FITBIT_DATE_FORMAT);
 
