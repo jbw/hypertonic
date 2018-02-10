@@ -1,6 +1,6 @@
+const axios = require('axios');
 const moment = require('moment');
 const Routes = require('./routes.json');
-const fetch = require('node-fetch');
 const appendQuery = require('append-query');
 
 /**
@@ -25,6 +25,8 @@ const Hypertonic = (token) => {
             }
         };
     };
+
+    axios.defaults.headers = _getHeaderOptions(token);
 
     const _getDateNow = offset => moment(new Date()).add(offset, 'days').format(FITBIT_DATE_FORMAT);
 
@@ -768,30 +770,11 @@ const Hypertonic = (token) => {
     };
 
     const _fetch = (resourceParts, urlParams, extension = '.json') => {
-        const options = _getHeaderOptions(token);
         const url = getURL(resourceParts, urlParams, extension);
 
-        return fetch(url, options)
-            .then(res => {
-
-                const contentType = res.headers.get('content-type');
-
-                if (res.status >= 200 && res.status < 300) {
-                    if (contentType.includes('application/json')) {
-                        return res.json();
-                    }
-
-                    else if (contentType.includes('application/vnd.garmin.tcx+xml')) {
-                        return res.text();
-                    }
-                }
-
-                return res.json().then(Promise.reject.bind(Promise));
-
-            }).then(data => {
-                return data;
-            })
-            .catch(err => { throw err; });
+        return axios.get(url)
+            .then(res => res.data)
+            .catch(err => { throw err.response.data; });
     };
 
     return {
