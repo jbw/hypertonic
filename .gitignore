@@ -9,6 +9,8 @@ secret/
 secrets/
 .secret/
 
+build/
+
 # Logs
 logs
 *.log
