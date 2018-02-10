@@ -27,7 +27,7 @@ describe('#Sleep', () => {
 
         nock(fitbitDomain)
             .get('/1.2/user/-/sleep/date/2017-12-12.json')
-            .reply(300, sleepNoScope);
+            .reply(400, sleepNoScope);
 
         nock(fitbitDomain)
             .get('/1.2/user/-/sleep/list.json?beforeDate=2017-03-27&sort=desc&offset=0&limit=1')
@@ -93,8 +93,10 @@ describe('#Sleep', () => {
     });
 
     it('should handle missing scope error', (done) => {
+
         api.getSleepLogs('2017-12-12').then(json => {
-            done(new Error());
+
+            done(new Error('missing scope'));
         }).catch(err => {
             expect(err.errors).to.not.be.undefined;
             expect(err.errors[0].errorType).to.equal('insufficient_scope');
