@@ -26,7 +26,7 @@ const Hypertonic = (token) => {
         };
     };
 
-    axios.defaults.headers  = _getHeaderOptions(token);
+    axios.defaults.headers = _getHeaderOptions(token);
 
     const _getDateNow = offset => moment(new Date()).add(offset, 'days').format(FITBIT_DATE_FORMAT);
 
@@ -771,24 +771,9 @@ const Hypertonic = (token) => {
 
     const _fetch = (resourceParts, urlParams, extension = '.json') => {
         const url = getURL(resourceParts, urlParams, extension);
+
         return axios.get(url)
-            .then(res => {
-                const contentType = res.headers['content-type'];
-                if (res.status >= 200 && res.status < 300) {
-                    if (contentType.includes('application/json')) {
-                        return res.data;
-                    }
-
-                    else if (contentType.includes('application/vnd.garmin.tcx+xml')) {
-                        return res.data;
-                    }
-                }
-
-                return res.json().then(Promise.reject.bind(Promise));
-
-            }).then(data => {
-                return data;
-            })
+            .then(res => res.data)
             .catch(err => { throw err.response.data; });
     };
 
