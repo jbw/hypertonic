@@ -3,7 +3,10 @@
   "version": "1.0.1",
   "description": "Fitbit API Wrapper",
   "main": "./src/api/index.js",
-  "repository": {},
+  "repository": "git+https://github.com/jbw/hypertonic.git",
+  "bugs": {
+    "url": "https://github.com/jbw/hypertonic/issues"
+  },
   "author": "jbw",
   "license": "MIT",
   "dependencies": {
