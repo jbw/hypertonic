@@ -38,7 +38,7 @@ describe('#User', () => {
     it('should get badges', (done) => {
         api.getBadges().then(json => {
             expect(json.badges).to.not.be.undefined;
-            done()
+            done();
         }).catch(err => {
             console.log(err);
             done(new Error());

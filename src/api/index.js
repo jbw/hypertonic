@@ -28,7 +28,7 @@ const Hypertonic = (token) => {
 
     axios.defaults.headers = _getHeaderOptions(token);
 
-    const _getDateNow = offset => moment(new Date()).add(offset, 'days').format(FITBIT_DATE_FORMAT);
+    //const _getDateNow = offset => moment(new Date()).add(offset, 'days').format(FITBIT_DATE_FORMAT);
 
     const _isValidDateFormat = dateString => moment(dateString, FITBIT_DATE_FORMAT).isValid();
 
