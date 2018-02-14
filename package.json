@@ -2,6 +2,7 @@
   "name": "hypertonic",
   "version": "1.0.1",
   "description": "Fitbit API Wrapper",
+  "typings": "typings/hypertonic.d.ts",
   "main": "./src/api/index.js",
   "repository": "git+https://github.com/jbw/hypertonic.git",
   "bugs": {
@@ -27,9 +28,10 @@
     "build": "webpack",
     "build:prod": "webpack -p",
     "publish": "npm run build:prod",
-    "tslint": "tslint typings/*.ts"
+    "tslint": "tslint typings/*.ts",
+    "lint": "eslint src",
+    "typescript": "tsc --project ./typings/tests"
   },
-  "typings": "./src/api/index.d.ts",
   "nyc": {
     "exclude": [
       "test/**",

@@ -34,9 +34,10 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       # run tests!
-      - run: yarn run coverage
-      - run: yarn test
-
+      - run: yarn run test
+      - run: yarn coverage
+      - run: yarn run lint && yarn run typescript && yarn run tslint
+      
       - store_artifacts:
             path: ./coverage
             destination: artifact-coverage
