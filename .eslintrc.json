@@ -8,6 +8,7 @@
     ],
     "extends": "eslint:recommended",
     "rules": {
+        "no-unused-vars": "warn",
         "mocha/no-exclusive-tests": "error",
         "no-console": "off",
         "comma-dangle": [
@@ -46,7 +47,7 @@
     },
     "env": {
         "browser": true,
-        "es6":true,
+        "es6": true,
         "node": true
     }
 }
