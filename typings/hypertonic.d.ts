@@ -40,7 +40,7 @@ interface HypertonicFuncsInterface {
     getSleepLogsList(beforeDate: string, afterDate: string, sort: string, limit: string): Promise<any>;
 }
 export interface HypertonicInterface {
-    (token: string): HypertonicFuncsInterface
+    (token: string): HypertonicFuncsInterface;
 }
 declare const hypertonic: HypertonicInterface;
 
