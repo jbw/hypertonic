@@ -24,7 +24,7 @@
     "start": "node ./src/api/index.js",
     "watch": "nodemon ./src/api/index.js",
     "test": "mocha",
-    "coverage": "nyc --reporter=html --reporter=text-lcov mocha | coveralls",
+    "coverage": "nyc report --reporter=html --reporter=text-lcov mocha | coveralls",
     "build": "webpack",
     "build:prod": "webpack -p",
     "publish": "npm run build:prod",

@@ -1,12 +1,14 @@
+import { SleepLogs } from "./sleep";
+import { Friends } from "./friends";
 
 interface HypertonicFuncsInterface {
-    getProfile(): Promise<any>;
+    getProfile(): Promise<{}>;
     getBadges(): Promise<any>;
     getFavoriteActivities(): Promise<any>;
     getFrequentActivities(): Promise<any>;
     getRecentActivities(): Promise<any>;
-    getFriends(friends?: string): Promise<any>;
-    getSleepLogs(from: string, to?: string): Promise<any>;
+    getFriends(friends?: string): Promise<Friends>;
+    getSleepLogs(from: string, to?: string): Promise<SleepLogs>;
     getSummary(date: string): Promise<any>;
     getTimeSeries(activity: string, from: string, to: string): Promise<any>;
     getBodyGoal(bodyMetric: string): Promise<any>;
