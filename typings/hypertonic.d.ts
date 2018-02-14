@@ -1,8 +1,8 @@
 import { SleepLogs } from "./sleep";
 import { Friends } from "./friends";
 
-interface HypertonicFuncsInterface {
-    getProfile(): Promise<{}>;
+export interface HypertonicFuncsInterface {
+    getProfile(): Promise<any>;
     getBadges(): Promise<any>;
     getFavoriteActivities(): Promise<any>;
     getFrequentActivities(): Promise<any>;
@@ -44,6 +44,7 @@ interface HypertonicFuncsInterface {
 export interface HypertonicInterface {
     (token: string): HypertonicFuncsInterface;
 }
+
 declare const hypertonic: HypertonicInterface;
 
 export default hypertonic;

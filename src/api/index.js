@@ -771,7 +771,7 @@ const Hypertonic = (token) => {
 
     const _fetch = (resourceParts, urlParams, extension = '.json') => {
         const url = getURL(resourceParts, urlParams, extension);
-
+        console.log(url);
         return axios.get(url)
             .then(res => res.data)
             .catch(err => { throw err.response.data; });
