@@ -1,6 +1,18 @@
 {
     "compilerOptions": {
-        "target": "es6", /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', or 'ESNEXT'. */
-        "module": "es2015", /* Specify module code generation: 'commonjs', 'amd', 'system', 'umd' or 'es2015'. */
-    }
+        "target": "es6",
+        "module": "es2015",
+        "sourceMap": true,
+        "noImplicitAny": false,
+        "jsx": "react",
+        "declaration": true
+    },
+    "include": [
+        "typings/*.d.ts",
+        "src/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "**/*.spec.ts"
+    ]
 }
