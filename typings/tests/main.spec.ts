@@ -3,7 +3,7 @@ import 'mocha';
 const expect = chai.expect;
 import * as nock from 'nock';
 
-import Hypertonic from '../..';
+import Hypertonic from '../hypertonic';
 import { Friends } from '../friends';
 import { SleepLogs } from '../sleeps';
 

@@ -1,4 +1,4 @@
-import { SleepLogs } from "./sleep";
+import { SleepLogs } from "./sleeps";
 import { Friends } from "./friends";
 
 export interface HypertonicFuncsInterface {
