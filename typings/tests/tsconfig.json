@@ -5,11 +5,13 @@
         "sourceMap": true,
         "noImplicitAny": false,
         "jsx": "react",
-        "declaration": true
+        "declaration": true,
+        "noEmit": true
     },
     "include": [
         "typings/*.d.ts",
-        "src/**/*"
+        "src/**/*",
+        "typings/**/*.ts"
     ],
     "exclude": [
         "node_modules",
