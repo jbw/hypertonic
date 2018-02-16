@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "module": "es2015",
+        "sourceMap": true,
+        "noImplicitAny": false,
+        "jsx": "react",
+        "declaration": true,
+        "noEmit": true
+    },
+    "include": [
+        "typings/*.d.ts",
+        "src/**/*",
+        "typings/**/*.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "**/*.spec.ts"
+    ]
+}
