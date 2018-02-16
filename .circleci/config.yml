@@ -36,7 +36,7 @@ jobs:
       # run tests!
       - run: yarn run test
       - run: yarn coverage
-      - run: yarn run lint && yarn run typescript && yarn run tslint
+      - run: yarn run lint && yarn run typescript && yarn run tslint && yarn run bundlesize
       
       - store_artifacts:
             path: ./coverage
