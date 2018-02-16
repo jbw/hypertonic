@@ -1,13 +1,20 @@
 {
     "compilerOptions": {
-        "target": "es6", /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', or 'ESNEXT'. */
-        "module": "es2015", /* Specify module code generation: 'commonjs', 'amd', 'system', 'umd' or 'es2015'. */
-        "noEmit": true, /* Do not emit outputs. */
-        "strict": true, /* Enable all strict type-checking options. */
-        "skipLibCheck": true,
-        "moduleResolution": "node", /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */
-        "typeRoots": [
-            "./node_modules/@types"
-        ]
-    }
+        "target": "es6",
+        "module": "es2015",
+        "sourceMap": true,
+        "noImplicitAny": false,
+        "jsx": "react",
+        "declaration": true,
+        "noEmit": true
+    },
+    "include": [
+        "typings/*.d.ts",
+        "src/**/*",
+        "typings/**/*.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "**/*.spec.ts"
+    ]
 }
