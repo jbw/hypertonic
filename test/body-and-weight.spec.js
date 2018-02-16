@@ -64,6 +64,15 @@ describe('#Body Fat and Weight Logs', () => {
         });
     });
 
+    it('should throw error when getting body fat logs with invalid "from" parameter', (done) => {
+        api.getBodyFatLogs('invalid', 'today').then(json => {
+            done(new Error('should throw error'));
+        }).catch(err => {
+            expect(err).to.not.be.undefined;
+            done();
+        });
+    });
+
     it('should get body fat logs', (done) => {
         api.getBodyFatLogs('2017-01-01').then(json => {
             expect(json.fat).to.be.an('array');
