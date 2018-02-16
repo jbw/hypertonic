@@ -22,9 +22,35 @@ describe('#Summary', () => {
         nock.cleanAll();
     });
 
-    it('should return a summary of activities', (done) => {
+    it('should return a summary of activities without date', (done) => {
+
+        const summary = api.getSummary();
+
+        summary.then((json) => {
+            expect(json.activities).to.not.equal(undefined);
+            done();
+        }).catch(err => {
+            console.log(err);
+            done(new Error());
+        });
+    });
+
+    it('should return a summary of activities with date name', (done) => {
 
         const summary = api.getSummary('today');
+
+        summary.then((json) => {
+            expect(json.activities).to.not.equal(undefined);
+            done();
+        }).catch(err => {
+            console.log(err);
+            done(new Error());
+        });
+    });
+
+    it('should return a summary of activities with date', (done) => {
+
+        const summary = api.getSummary('2017-01-01');
 
         summary.then((json) => {
             expect(json.activities).to.not.equal(undefined);
