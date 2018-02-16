@@ -1,6 +1,6 @@
 const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
-
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const webpackConfigBase = require('./webpack.config.js');
 
 module.exports = function (env) {
@@ -14,6 +14,7 @@ module.exports = function (env) {
         },
 
         plugins: [
+            new CleanWebpackPlugin(['build']),
 
             new webpack.DefinePlugin({
                 'process.env': {
