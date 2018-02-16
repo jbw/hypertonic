@@ -20,6 +20,23 @@ describe('#Summary', () => {
         nock(fitbitDomain)
             .get('/1/user/-/activities/date/7d.json')
             .reply(200, getActivitiesResponse);
+
+        nock(fitbitDomain)
+            .get('/1/user/-/activities/date/9999-99-99.json')
+            .reply(200, getActivitiesResponse);
+
+        nock(fitbitDomain)
+            .get('/1/user/-/activities/date/99999-99-99.json')
+            .reply(200, getActivitiesResponse);
+
+        nock(fitbitDomain)
+            .get('/1/user/-/activities/date/9999-999-99.json')
+            .reply(200, getActivitiesResponse);
+
+
+        nock(fitbitDomain)
+            .get('/1/user/-/activities/date/9999-99-999.json')
+            .reply(200, getActivitiesResponse);
     });
 
     after(() => {
@@ -64,6 +81,57 @@ describe('#Summary', () => {
             done(new Error());
         });
     });
+
+    it('should throw error with invalid date string parameter', (done) => {
+
+        const summary = api.getSummary('invalid');
+
+        summary.then((json) => {
+            done(new Error('should throw error'));
+        }).catch(err => {
+            expect(err).to.not.equal(undefined);
+            done();
+        });
+    });
+
+    it('should throw error with invalid date string parameter', (done) => {
+
+        const summary = api.getSummary('99999-99-99');
+
+        summary.then((json) => {
+            done(new Error('should throw error'));
+        }).catch(err => {
+            expect(err).to.not.equal(undefined);
+            done();
+        });
+    });
+
+
+    it('should throw error with invalid date string parameter', (done) => {
+
+        const summary = api.getSummary('9999-999-99');
+
+        summary.then((json) => {
+            done(new Error('should throw error'));
+        }).catch(err => {
+            expect(err).to.not.equal(undefined);
+            done();
+        });
+    });
+
+
+    // it('should throw error with out of bounds invalid date string parameter', (done) => {
+
+    //     const summary = api.getSummary('9999-99-99');
+
+    //     summary.then((json) => {
+    //         done(new Error('should throw error'));
+    //     }).catch(err => {
+    //         expect(err).to.not.equal(undefined);
+    //         done();
+    //     });
+    // });
+
 });
 
 
