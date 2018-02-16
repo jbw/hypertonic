@@ -1,6 +1,5 @@
 const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
-const { resolve } = require('path');
 
 const webpackConfigBase = require('./webpack.config.js');
 
@@ -13,6 +12,8 @@ module.exports = function (env) {
         },
 
         plugins: [
+
+            new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
 
             new webpack.DefinePlugin({
                 'process.env': {

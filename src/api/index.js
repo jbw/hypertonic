@@ -1,7 +1,7 @@
 const axios = require('axios');
-const moment = require('moment');
-const Routes = require('./routes.json');
 const appendQuery = require('append-query');
+
+const routes = require('./routes.json');
 
 /**
  * Fitbit Web API Wrapper
@@ -30,11 +30,16 @@ const Hypertonic = (token) => {
 
     //const _getDateNow = offset => moment(new Date()).add(offset, 'days').format(FITBIT_DATE_FORMAT);
 
-    const _isValidDateFormat = dateString => moment(dateString, FITBIT_DATE_FORMAT).isValid();
+    const _isValidDate = date => {
+        const regex = /^\d{4}-\d{2}-\d{2}$/;
+        return date.match(regex) !== null;
+    };
 
-    const _isValidDatePeriod = period => Routes.dateFormats.parameters.periods.includes(period);
+    const _isValidDateFormat = dateString => _isValidDate(dateString, FITBIT_DATE_FORMAT);
 
-    const _isValidBaseDate = baseDate => Routes.dateFormats.parameters.baseDates.includes(baseDate);
+    const _isValidDatePeriod = period => routes.dateFormats.parameters.periods.includes(period);
+
+    const _isValidBaseDate = baseDate => routes.dateFormats.parameters.baseDates.includes(baseDate);
 
     const getURL = (resourceParts, urlParams, extension = '.json') => {
         let route = resourceParts.join('/') + extension;
@@ -51,8 +56,8 @@ const Hypertonic = (token) => {
      */
     const getProfile = () => {
         const resourceParts = [
-            Routes.userBase,
-            Routes.user.resource.profile
+            routes.userBase,
+            routes.user.resource.profile
         ];
 
         return _fetch(resourceParts);
@@ -67,8 +72,8 @@ const Hypertonic = (token) => {
      */
     const getLifetimeStats = () => {
         const resourceParts = [
-            Routes.userBase,
-            Routes.activities.route
+            routes.userBase,
+            routes.activities.route
         ];
 
         return _fetch(resourceParts);
@@ -82,9 +87,9 @@ const Hypertonic = (token) => {
      */
     const getInvitations = () => {
         const resourceParts = [
-            Routes.userBase,
-            Routes.friends.route,
-            Routes.friends.resource.invitations
+            routes.userBase,
+            routes.friends.route,
+            routes.friends.resource.invitations
         ];
 
         return _fetch(resourceParts);
@@ -98,8 +103,8 @@ const Hypertonic = (token) => {
      */
     const getBadges = () => {
         const resourceParts = [
-            Routes.userBase,
-            Routes.user.resource.badges
+            routes.userBase,
+            routes.user.resource.badges
         ];
 
         return _fetch(resourceParts);
@@ -112,7 +117,7 @@ const Hypertonic = (token) => {
      * @returns {Promise}
      */
     const getFrequentActivities = () => {
-        return _getActivity(Routes.activities.resource.frequent);
+        return _getActivity(routes.activities.resource.frequent);
     };
 
     /**
@@ -122,7 +127,7 @@ const Hypertonic = (token) => {
      * @returns {Promise}
      */
     const getRecentActivities = () => {
-        return _getActivity(Routes.activities.resource.recent);
+        return _getActivity(routes.activities.resource.recent);
     };
 
     /**
@@ -132,7 +137,7 @@ const Hypertonic = (token) => {
      * @returns {Promise}
      */
     const getFavoriteActivities = () => {
-        return _getActivity(Routes.activities.resource.favorite);
+        return _getActivity(routes.activities.resource.favorite);
     };
 
     /**
@@ -144,8 +149,8 @@ const Hypertonic = (token) => {
      */
     const getFood = (foodType) => {
         const resourceParts = [
-            Routes.globalBase,
-            Routes.food.route,
+            routes.globalBase,
+            routes.food.route,
             foodType
         ];
 
@@ -154,9 +159,9 @@ const Hypertonic = (token) => {
 
     const _getFoodLogInfo = (foodType) => {
         const resourceParts = [
-            Routes.userBase,
-            Routes.food.route,
-            Routes.food.resource.log.route,
+            routes.userBase,
+            routes.food.route,
+            routes.food.resource.log.route,
             foodType
         ];
 
@@ -170,7 +175,7 @@ const Hypertonic = (token) => {
      * @returns {Promise}
      */
     const getFavoriteFoods = () => {
-        return _getFoodLogInfo(Routes.food.resource.log.resource.favorite);
+        return _getFoodLogInfo(routes.food.resource.log.resource.favorite);
     };
 
     /**
@@ -180,7 +185,7 @@ const Hypertonic = (token) => {
      * @returns {Promise}
      */
     const getFrequentFoods = () => {
-        return _getFoodLogInfo(Routes.food.resource.log.resource.frequent);
+        return _getFoodLogInfo(routes.food.resource.log.resource.frequent);
     };
 
     /**
@@ -190,7 +195,7 @@ const Hypertonic = (token) => {
      * @returns {Promise}
      */
     const getRecentFoods = () => {
-        return _getFoodLogInfo(Routes.food.resource.log.resource.recent);
+        return _getFoodLogInfo(routes.food.resource.log.resource.recent);
     };
 
     /**
@@ -201,8 +206,8 @@ const Hypertonic = (token) => {
      */
     const getMeals = () => {
         const resourceParts = [
-            Routes.userBase,
-            Routes.food.resource.meals
+            routes.userBase,
+            routes.food.resource.meals
         ];
 
         return _fetch(resourceParts);
@@ -217,8 +222,8 @@ const Hypertonic = (token) => {
      */
     const getMeal = (mealId) => {
         const resourceParts = [
-            Routes.userBase,
-            Routes.food.resource.meals,
+            routes.userBase,
+            routes.food.resource.meals,
             mealId
         ];
 
@@ -233,9 +238,9 @@ const Hypertonic = (token) => {
      */
     const getFoodUnits = () => {
         const resourceParts = [
-            Routes.globalBase,
-            Routes.food.route,
-            Routes.food.resource.units
+            routes.globalBase,
+            routes.food.route,
+            routes.food.resource.units
         ];
 
         return _fetch(resourceParts);
@@ -249,9 +254,9 @@ const Hypertonic = (token) => {
      */
     const getFoodLocales = () => {
         const resourceParts = [
-            Routes.globalBase,
-            Routes.food.route,
-            Routes.food.resource.locales
+            routes.globalBase,
+            routes.food.route,
+            routes.food.resource.locales
         ];
 
         return _fetch(resourceParts);
@@ -266,10 +271,10 @@ const Hypertonic = (token) => {
      */
     const getFoodGoals = () => {
         const resourceParts = [
-            Routes.userBase,
-            Routes.food.route,
-            Routes.food.resource.log.route,
-            Routes.food.resource.log.resource.goal
+            routes.userBase,
+            routes.food.route,
+            routes.food.resource.log.route,
+            routes.food.resource.log.resource.goal
         ];
 
         return _fetch(resourceParts);
@@ -283,11 +288,11 @@ const Hypertonic = (token) => {
      */
     const getWaterGoals = () => {
         const resourceParts = [
-            Routes.userBase,
-            Routes.food.route,
-            Routes.food.resource.log.route,
-            Routes.food.resource.water,
-            Routes.food.resource.log.resource.goal
+            routes.userBase,
+            routes.food.route,
+            routes.food.resource.log.route,
+            routes.food.resource.water,
+            routes.food.resource.log.resource.goal
         ];
 
         return _fetch(resourceParts);
@@ -302,7 +307,7 @@ const Hypertonic = (token) => {
      * @returns {Promise}
      */
     const getFoodTimeSeries = (from, to) => {
-        return _getFoodWaterTimeSeries(Routes.food.resource.log.route + '/' + Routes.food.resource.caloriesIn, from, to);
+        return _getFoodWaterTimeSeries(routes.food.resource.log.route + '/' + routes.food.resource.caloriesIn, from, to);
     };
 
     /**
@@ -314,7 +319,7 @@ const Hypertonic = (token) => {
      * @returns {Promise}
      */
     const getWaterTimeSeries = (from, to) => {
-        return _getFoodWaterTimeSeries(Routes.food.resource.log.route + '/' + Routes.food.resource.water, from, to);
+        return _getFoodWaterTimeSeries(routes.food.resource.log.route + '/' + routes.food.resource.water, from, to);
     };
 
     /**
@@ -325,8 +330,8 @@ const Hypertonic = (token) => {
      */
     const getDevices = () => {
         const resourceParts = [
-            Routes.userBase,
-            Routes.devices.route
+            routes.userBase,
+            routes.devices.route
         ];
 
         return _fetch(resourceParts);
@@ -341,11 +346,11 @@ const Hypertonic = (token) => {
      */
     const getAlarms = (trackerId) => {
         const resourceParts = [
-            Routes.userBase,
-            Routes.devices.route,
-            Routes.devices.resource.tracker,
+            routes.userBase,
+            routes.devices.route,
+            routes.devices.resource.tracker,
             trackerId,
-            Routes.devices.resource.alarms
+            routes.devices.resource.alarms
         ];
 
         return _fetch(resourceParts);
@@ -359,8 +364,8 @@ const Hypertonic = (token) => {
      */
     const getActivityTypes = () => {
         const resourceParts = [
-            Routes.globalBase,
-            Routes.activities.route
+            routes.globalBase,
+            routes.activities.route
         ];
 
         return _fetch(resourceParts);
@@ -375,9 +380,9 @@ const Hypertonic = (token) => {
      */
     const getActivityGoals = (period) => {
         const resourceParts = [
-            Routes.userBase,
-            Routes.activities.route,
-            Routes.activities.resource.goals,
+            routes.userBase,
+            routes.activities.route,
+            routes.activities.resource.goals,
             period
         ];
 
@@ -395,8 +400,8 @@ const Hypertonic = (token) => {
      */
     const getActivityType = (activityId) => {
         const resourceParts = [
-            Routes.globalBase,
-            Routes.activities.route,
+            routes.globalBase,
+            routes.activities.route,
             activityId
         ];
 
@@ -414,11 +419,11 @@ const Hypertonic = (token) => {
     const getBodyGoal = (bodyMetric) => {
 
         const resourceParts = [
-            Routes.userBase,
-            Routes.body.route,
-            Routes.body.resource.log.route,
+            routes.userBase,
+            routes.body.route,
+            routes.body.resource.log.route,
             bodyMetric,
-            Routes.body.resource.log.resource.goal
+            routes.body.resource.log.resource.goal
         ];
 
         return _fetch(resourceParts);
@@ -434,8 +439,8 @@ const Hypertonic = (token) => {
     const getFriends = (friends) => {
 
         const resourceParts = [
-            Routes.userBase,
-            Routes.friends.route
+            routes.userBase,
+            routes.friends.route
         ];
 
         if (friends) {
@@ -453,9 +458,9 @@ const Hypertonic = (token) => {
      */
     const getActivityLogsList = () => {
         const resourceParts = [
-            Routes.userBase,
-            Routes.activities.route,
-            Routes.activities.resource.list
+            routes.userBase,
+            routes.activities.route,
+            routes.activities.resource.list
         ];
         return _fetch(resourceParts);
     };
@@ -474,8 +479,8 @@ const Hypertonic = (token) => {
      */
     const getActivityTCX = (logId) => {
         const resourceParts = [
-            Routes.userBase,
-            Routes.activities.route,
+            routes.userBase,
+            routes.activities.route,
             logId
         ];
 
@@ -499,11 +504,11 @@ const Hypertonic = (token) => {
         }
 
         const resourceParts = [
-            Routes.userBase,
-            Routes.body.route,
-            Routes.body.resource.log.route,
-            Routes.body.resource.log.resource.fat,
-            Routes.dateFormats.route,
+            routes.userBase,
+            routes.body.route,
+            routes.body.resource.log.route,
+            routes.body.resource.log.resource.fat,
+            routes.dateFormats.route,
             from
         ];
 
@@ -531,11 +536,11 @@ const Hypertonic = (token) => {
         }
 
         const resourceParts = [
-            Routes.userBase,
-            Routes.body.route,
-            Routes.body.resource.log.route,
-            Routes.body.resource.log.resource.weight,
-            Routes.dateFormats.route,
+            routes.userBase,
+            routes.body.route,
+            routes.body.resource.log.route,
+            routes.body.resource.log.resource.weight,
+            routes.dateFormats.route,
             from
         ];
 
@@ -558,9 +563,9 @@ const Hypertonic = (token) => {
     const getSleepLogs = (from, to) => {
 
         const resourceParts = [
-            Routes.sleep.userBase,
-            Routes.sleep.route,
-            Routes.dateFormats.route,
+            routes.sleep.userBase,
+            routes.sleep.route,
+            routes.dateFormats.route,
             from || DEFAULT_DATE
         ];
 
@@ -579,9 +584,9 @@ const Hypertonic = (token) => {
      */
     const getSleepLogsList = (beforeDate, afterDate, sort, offset, limit) => {
         const resourceParts = [
-            Routes.sleep.userBase,
-            Routes.sleep.route,
-            Routes.sleep.resource.list
+            routes.sleep.userBase,
+            routes.sleep.route,
+            routes.sleep.resource.list
         ];
 
         return _fetch(resourceParts, { beforeDate, afterDate, sort, offset, limit });
@@ -595,9 +600,9 @@ const Hypertonic = (token) => {
      */
     const getSleepGoal = () => {
         const resourceParts = [
-            Routes.userBase,
-            Routes.sleep.route,
-            Routes.sleep.resource.goal
+            routes.userBase,
+            routes.sleep.route,
+            routes.sleep.resource.goal
         ];
 
         return _fetch(resourceParts);
@@ -606,8 +611,8 @@ const Hypertonic = (token) => {
     const _getActivity = (activity) => {
 
         const resourceParts = [
-            Routes.userBase,
-            Routes.activities.route,
+            routes.userBase,
+            routes.activities.route,
             activity
         ];
 
@@ -634,9 +639,9 @@ const Hypertonic = (token) => {
         }
 
         const resourceParts = [
-            Routes.userBase,
-            Routes.activities.route,
-            Routes.dateFormats.route,
+            routes.userBase,
+            routes.activities.route,
+            routes.dateFormats.route,
             date
         ];
 
@@ -651,7 +656,7 @@ const Hypertonic = (token) => {
      * @returns {Promise}
      */
     const getWaterLogs = (date) => {
-        return _getFoodWaterLog(Routes.food.resource.log.route + '/' + Routes.food.resource.water, date);
+        return _getFoodWaterLog(routes.food.resource.log.route + '/' + routes.food.resource.water, date);
     };
 
     /**
@@ -662,7 +667,7 @@ const Hypertonic = (token) => {
      * @returns {Promise}
      */
     const getFoodLogs = (date) => {
-        return _getFoodWaterLog(Routes.food.resource.log.route, date);
+        return _getFoodWaterLog(routes.food.resource.log.route, date);
     };
 
     const _getFoodWaterLog = (type, date) => {
@@ -674,10 +679,10 @@ const Hypertonic = (token) => {
         }
 
         const resourceParts = [
-            Routes.userBase,
-            Routes.food.route,
+            routes.userBase,
+            routes.food.route,
             type,
-            Routes.dateFormats.route,
+            routes.dateFormats.route,
             date
         ];
 
@@ -715,10 +720,10 @@ const Hypertonic = (token) => {
         to = to || DEFAULT_PERIOD;
 
         const resourceParts = [
-            Routes.userBase,
-            Routes.body.route,
+            routes.userBase,
+            routes.body.route,
             bodyMetric,
-            Routes.dateFormats.route,
+            routes.dateFormats.route,
             from,
             to
         ];
@@ -742,10 +747,10 @@ const Hypertonic = (token) => {
         to = to || DEFAULT_PERIOD;
 
         const resourceParts = [
-            Routes.userBase,
-            Routes.activities.route,
+            routes.userBase,
+            routes.activities.route,
             activity,
-            Routes.dateFormats.route,
+            routes.dateFormats.route,
             from,
             to
         ];
@@ -758,10 +763,10 @@ const Hypertonic = (token) => {
         to = to || DEFAULT_PERIOD;
 
         const resourceParts = [
-            Routes.userBase,
-            Routes.food.route,
+            routes.userBase,
+            routes.food.route,
             activity,
-            Routes.dateFormats.route,
+            routes.dateFormats.route,
             from,
             to
         ];

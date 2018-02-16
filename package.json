@@ -12,8 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "append-query": "^2.0.1",
-    "axios": "^0.17.1",
-    "moment": "^2.20.1"
+    "axios": "^0.17.1"
   },
   "keywords": [
     "fitbit",
@@ -27,6 +26,7 @@
     "coverage": "nyc --reporter=html --reporter=text-lcov mocha | coveralls",
     "build": "webpack --env dev --config ./webpack/webpack.config.js",
     "build:prod": "webpack --env prod -p --config ./webpack/webpack.config.prod.js",
+    "build:analyze": "webpack --env prod -p --config ./webpack/webpack.config.analyze.js",
     "publish": "npm run build:prod",
     "tslint": "tslint typings/*.ts",
     "lint": "eslint src",

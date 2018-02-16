@@ -1,6 +1,3 @@
-const path = require('path');
-const webpack = require('webpack');
-const webpackMerge = require('webpack-merge');
 const { resolve } = require('path');
 
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
@@ -15,12 +12,13 @@ module.exports = function (env) {
         entry: ['./src/api/index.js'],
 
         output: {
-            path: path.resolve(__dirname, 'build'),
+            path: resolve(__dirname, '../build'),
             filename: 'hypertonic.js',
             library: 'hypertonic',
             libraryTarget: 'umd',
             umdNamedDefine: true
         },
+
         module: {
             loaders: [
                 {
@@ -33,10 +31,9 @@ module.exports = function (env) {
                 }
             ]
         },
-        stats: {
-            colors: true
-        },
-        devtool: 'source-map',
+
+        devtool: 'eval',
+
         plugins: _plugins
     };
 };
