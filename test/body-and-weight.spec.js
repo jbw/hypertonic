@@ -83,6 +83,15 @@ describe('#Body Fat and Weight Logs', () => {
     });
 
     it('should get body weight logs', (done) => {
+        api.getBodyWeightLogs('2017-01-01', 'invalid').then(json => {
+            expect(json.weight).to.be.an('array');
+            done();
+        }).catch(err => {
+            done(new Error(JSON.stringify(err)));
+        });
+    });
+
+    it('should get body weight logs', (done) => {
         api.getBodyWeightLogs('2017-01-01').then(json => {
             expect(json.weight).to.be.an('array');
             done();
