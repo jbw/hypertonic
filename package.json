@@ -44,7 +44,7 @@
   "bundlesize": [
     {
       "path": "./build/hypertonic.js",
-      "threshold": "16kB"
+      "threshold": "130kB"
     }
   ],
   "devDependencies": {
