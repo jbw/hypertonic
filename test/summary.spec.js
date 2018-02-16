@@ -14,6 +14,10 @@ describe('#Summary', () => {
             .reply(200, getActivitiesResponse);
 
         nock(fitbitDomain)
+            .get('/1/user/-/activities/date/2017-01-01.json')
+            .reply(200, getActivitiesResponse);
+
+        nock(fitbitDomain)
             .get('/1/user/-/activities/date/7d.json')
             .reply(200, getActivitiesResponse);
     });

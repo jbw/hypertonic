@@ -9,7 +9,7 @@ interface HypertonicFuncsInterface {
     getRecentActivities(): Promise<any>;
     getFriends(friends?: string): Promise<Friends>;
     getSleepLogs(from: string, to?: string): Promise<SleepLogs>;
-    getSummary(date: string): Promise<any>;
+    getSummary(date?: string): Promise<any>;
     getTimeSeries(activity: string, from: string, to: string): Promise<any>;
     getBodyGoal(bodyMetric: string): Promise<any>;
     getBodyTimeSeries(bodyMetric: string, from: string, to: string): Promise<any>;
@@ -33,10 +33,10 @@ interface HypertonicFuncsInterface {
     getFoodLocales(): Promise<any>;
     getFoodUnits(): Promise<any>;
     getWaterGoals(): Promise<any>;
-    getFoodTimeSeries(from: string, to: string): Promise<any>;
-    getWaterTimeSeries(from: string, to: string): Promise<any>;
-    getFoodLogs(date: string): Promise<any>;
-    getWaterLogs(date: string): Promise<any>;
+    getFoodTimeSeries(from?: string, to?: string): Promise<any>;
+    getWaterTimeSeries(from?: string, to?: string): Promise<any>;
+    getFoodLogs(date?: string): Promise<any>;
+    getWaterLogs(date?: string): Promise<any>;
     getBodyWeightLogs(from: string, to?: string): Promise<any>;
     getSleepGoal(): Promise<any>;
     getSleepLogsList(beforeDate: string, afterDate: string, sort: string, limit: string): Promise<any>;

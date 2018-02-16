@@ -54,6 +54,7 @@ describe('#Body Fat and Weight Logs', () => {
         });
     });
 
+
     it('should throw error when getting body fat logs with invalid "to" parameter', (done) => {
         api.getBodyFatLogs('2017-99-01', 'invalid').then(json => {
             done(new Error('should throw error'));
@@ -64,7 +65,7 @@ describe('#Body Fat and Weight Logs', () => {
     });
 
     it('should get body fat logs', (done) => {
-        api.getBodyFatLogs('2017-01-01', '7d').then(json => {
+        api.getBodyFatLogs('2017-01-01').then(json => {
             expect(json.fat).to.be.an('array');
             done();
         }).catch(err => {
@@ -72,6 +73,15 @@ describe('#Body Fat and Weight Logs', () => {
         });
     });
 
+
+    it('should get body weight logs', (done) => {
+        api.getBodyWeightLogs('2017-01-01').then(json => {
+            expect(json.weight).to.be.an('array');
+            done();
+        }).catch(err => {
+            done(new Error(JSON.stringify(err)));
+        });
+    });
 
     it('should get body weight logs', (done) => {
         api.getBodyWeightLogs('2017-01-01', '7d').then(json => {
@@ -84,10 +94,11 @@ describe('#Body Fat and Weight Logs', () => {
 
     it('should get body weight logs', (done) => {
         api.getBodyWeightLogs('2017-01-01', 'invalid').then(json => {
-            expect(json.weight).to.be.an('array');
+            done(new Error('should throw error'));
             done();
         }).catch(err => {
-            done(new Error(JSON.stringify(err)));
+            expect(err).to.not.be.undefined;
+            done();
         });
     });
 

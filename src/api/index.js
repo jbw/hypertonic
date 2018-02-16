@@ -628,6 +628,8 @@ const Hypertonic = (token) => {
      */
     const getSummary = (date) => {
 
+        date = date || DEFAULT_DATE;
+
         if (date) {
             if (!(_isValidDateFormat(date) || _isValidBaseDate(date))) {
                 return _throwInvalidParameterException();
