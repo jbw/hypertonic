@@ -25,8 +25,8 @@
     "watch": "nodemon ./src/api/index.js",
     "test": "mocha",
     "coverage": "nyc --reporter=html --reporter=text-lcov mocha | coveralls",
-    "build": "webpack",
-    "build:prod": "webpack -p",
+    "build": "webpack --env dev --config ./webpack/webpack.config.js",
+    "build:prod": "webpack --env prod -p --config ./webpack/webpack.config.prod.js",
     "publish": "npm run build:prod",
     "tslint": "tslint typings/*.ts",
     "lint": "eslint src",
@@ -78,6 +78,7 @@
     "tslint": "^5.9.1",
     "typescript": "^2.7.1",
     "webpack": "^3.10.0",
-    "webpack-bundle-analyzer": "^2.10.0"
+    "webpack-bundle-analyzer": "^2.10.0",
+    "webpack-merge": "^4.1.1"
   }
 }
