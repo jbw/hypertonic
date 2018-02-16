@@ -1,6 +1,5 @@
 const axios = require('axios');
 const appendQuery = require('append-query');
-
 const routes = require('./routes.json');
 
 /**
@@ -66,8 +65,8 @@ const Hypertonic = (token) => {
     /**
      * Get Lifetime Stats
      *
-     * The Get Lifetime Stats endpoint retrieves the user's activity statistics in the format requested using units in the unit system which corresponds to the Accept-Language header provided. Activity statistics includes Lifetime and Best achievement values from the My Achievements tile on the website dashboard. Response contains both statistics from the tracker device and total numbers including tracker data and manual activity log entries as seen on the Fitbit website dashboard.
-     *
+     * The Get Lifetime Stats endpoint retrieves the user's activity statistics.
+     * 
      * @returns {Promise}
      */
     const getLifetimeStats = () => {
@@ -82,7 +81,7 @@ const Hypertonic = (token) => {
     /**
      * Get Friend Invitations
      *
-     * The Get Friend Invitations endpoint returns a list of invitations to become friends with a user in the format requested.
+     * The Get Friend Invitations endpoint returns a list of invitations to become friends.
      * @returns {Promise}
      */
     const getInvitations = () => {
@@ -98,7 +97,8 @@ const Hypertonic = (token) => {
     /**
      * Get Badges
      *
-     * The Get Badges endpoint retrieves user's badges in the format requested. Response includes all badges for the user as seen on the Fitbit website badge locker (both activity and weight related). Fitbit returns weight and distance badges based on the user's unit profile preference as on the website.
+     * The Get Badges endpoint retrieves user's badges in the format requested. 
+     * 
      * @returns {Promise}
      */
     const getBadges = () => {
@@ -113,7 +113,8 @@ const Hypertonic = (token) => {
     /**
      * Get Frequent Activities
      *
-     * The Get Frequent Activities endpoint retrieves a list of a user's frequent activities in the format requested using units in the unit system which corresponds to the Accept-Language header provided. A frequent activity record contains the distance and duration values recorded the last time the activity was logged. The record retrieved can be used to log the activity via the Log Activity endpoint with the same or adjusted values for distance and duration.
+     * The Get Frequent Activities endpoint retrieves a list of a user's frequent activities. 
+     * 
      * @returns {Promise}
      */
     const getFrequentActivities = () => {
@@ -123,7 +124,8 @@ const Hypertonic = (token) => {
     /**
      * Get Recent Activity Types
      *
-     * The Get Recent Activity Types endpoint retrieves a list of a user's recent activities types logged with some details of the last activity log of that type using units in the unit system which corresponds to the Accept-Language header provided. The record retrieved can be used to log the activity via the Log Activity endpoint with the same or adjusted values for distance and duration.
+     * The Get Recent Activity Types endpoint retrieves a list of a user's recent activities types logged with some details of the last activity log of that type.
+     * 
      * @returns {Promise}
      */
     const getRecentActivities = () => {
@@ -301,7 +303,7 @@ const Hypertonic = (token) => {
     /**
      * Get Food Time Series
      *
-     * The Get Food or Water Time Series endpoint returns time series data in the specified range for a given resource in the format requested using units in the unit systems that corresponds to the Accept-Language header provided.
+     * The Get Food or Water Time Series endpoint returns time series data in the specified range.
      * @param {any} from
      * @param {any} to
      * @returns {Promise}
@@ -313,7 +315,7 @@ const Hypertonic = (token) => {
     /**
      * Get Water Time Series
      *
-     * The Get Food or Water Time Series endpoint returns time series data in the specified range for a given resource in the format requested using units in the unit systems that corresponds to the Accept-Language header provided.
+     * The Get Food or Water Time Series endpoint returns time series data in the specified range.
      * @param {any} from
      * @param {any} to
      * @returns {Promise}
@@ -359,7 +361,7 @@ const Hypertonic = (token) => {
     /**
      * Activity Types List
      *
-     * Get a tree of all valid Fitbit public activities from the activities catalog as well as private custom activities the user created in the format requested. If the activity has levels, also get a list of activity level details.
+     * Get a tree of all valid Fitbit public activities from the activities catalog as well as private custom activities the user created in the format requested.
      * @returns {Promise}
      */
     const getActivityTypes = () => {
@@ -374,7 +376,7 @@ const Hypertonic = (token) => {
     /**
      * Get Activity Goals
      *
-     * The Get Activity Goals retrieves a user's current daily or weekly activity goals using measurement units as defined in the unit system, which corresponds to the Accept-Language header provided.
+     * The Get Activity Goals retrieves a user's current daily or weekly activity goals.
      * @param {any} period
      * @returns {Promise}
      */
@@ -393,7 +395,7 @@ const Hypertonic = (token) => {
     /**
      * Get Activity Type
      *
-     * Returns the details of a specific activity in the Fitbit activities database in the format requested. If activity has levels, also returns a list of activity level details.
+     * Returns the details of a specific activity in the Fitbit activities database in the format requested.
      *
      * @param {any} activityId
      * @returns {Promise}
@@ -411,7 +413,7 @@ const Hypertonic = (token) => {
     /**
      * Get Body Goals
      *
-     * The Get Body Goals API retrieves a user's current body fat percentage or weight goal using units in the unit systems that corresponds to the Accept-Language header provided in the format requested.
+     * The Get Body Goals API retrieves a user's current body fat percentage or weight goal.
      *
      * @param {any} bodyMetric
      * @returns {Promise}
@@ -432,7 +434,7 @@ const Hypertonic = (token) => {
     /**
      * Get Friends
      *
-     * The Get Friends endpoint returns data of a user's friends in the format requested using units in the unit system which corresponds to the Accept-Language header provided.
+     * The Get Friends endpoint returns data of a user's friends.
      * @param {any} friends e.g. 'leaderboard'
      * @returns {Promise}
      */
@@ -453,7 +455,7 @@ const Hypertonic = (token) => {
     /**
      * Get Activity Logs List
      *
-     * The Get Activity Logs List endpoint retrieves a list of a user's activity log entries before or after a given day with offset and limit using units in the unit system which corresponds to the Accept-Language header provided.
+     * The Get Activity Logs List endpoint retrieves a list of a user's activity log entries before or after a given day with offset and limit.
      * @returns {Promise}
      */
     const getActivityLogsList = () => {
@@ -467,13 +469,9 @@ const Hypertonic = (token) => {
 
     /**
      * Get Activity TCX
-     *
-     * Note: Since this is a beta feature, Fitbit may need to make backwards incompatible changes with less than 30 days notice.
-     *
+     *  
      * The Get Activity TCX endpoint retrieves the details of a user's location and heart rate data during a logged exercise activity.
-     *
-     * The Training Center XML (TCX) is a data exchange format that contains GPS, heart rate, and lap data, when it is available for the activity. The TCX MIME type is application/vnd.garmin.tcx+xml.
-     *
+     *     
      * @param {any} logId
      * @returns {Promise}
      */
@@ -490,7 +488,7 @@ const Hypertonic = (token) => {
     /**
      * Get Body Fat Logs
      *
-     * The Get Body Fat Logs API retrieves a list of all user's body fat log entries for a given day in the format requested. Body fat log entries are available only to authorized user. If you need to fetch only the most recent entry, you can use the Get Body Measurements endpoint.
+     * The Get Body Fat Logs API retrieves a list of all user's body fat log entries for a given day in the format requested.
      *
      * @param {any} from
      * @param {any} to
@@ -522,7 +520,8 @@ const Hypertonic = (token) => {
     /**
      * Get Weight Logs
      *
-     * The Get Weight Logs API retrieves a list of all user's body weight log entries for a given day using units in the unit systems which corresponds to the Accept-Language header provided. Body weight log entries are available only to authorized user. Body weight log entries in response are sorted exactly the same as they are presented on the Fitbit website.
+     * The Get Weight Logs API retrieves a list of all user's body weight log entries for a given day.
+     * Body weight log entries are available only to authorized user. Body weight log entries in response are sorted exactly the same as they are presented on the Fitbit website.
      * @param {any} from
      * @param {any} to
      * @returns {Promise}
@@ -595,7 +594,7 @@ const Hypertonic = (token) => {
     /**
      * Get Sleep Goal
      *
-     * The Get Sleep Goal endpoint returns a user's current sleep goal using unit in the unit system that corresponds to the Accept-Language header provided in the format requested.
+     * The Get Sleep Goal endpoint returns a user's current sleep goal using unit.
      * @returns {Promise}
      */
     const getSleepGoal = () => {
@@ -622,10 +621,7 @@ const Hypertonic = (token) => {
     /**
      * Get Daily Activity Summary
      *
-     * The Get Daily Activity Summary endpoint retrieves a summary and
-     * list of a user's activities and activity log entries for a given
-     * day in the format requested using units in the unit system which
-     * corresponds to the Accept-Language header provided.
+     * The Get Daily Activity Summary endpoint retrieves a summary and list of a user's activities and activity log entries for a given day.
      *
      * @param {any} date
      * @returns {Promise}
@@ -651,7 +647,8 @@ const Hypertonic = (token) => {
     /**
      * Get Water Logs
      *
-     * The Get Water Logs endpoint retrieves a summary and list of a user's water log entries for a given day in the format requested using units in the unit system that corresponds to the Accept-Language header provided. Water log entries are available only to an authorized user.
+     * The Get Water Logs endpoint retrieves a summary and list of a user's water log entries for a given day.
+     * 
      * @param {any} date
      * @returns {Promise}
      */
@@ -662,7 +659,7 @@ const Hypertonic = (token) => {
     /**
      * Get Food Logs
      *
-     * The Get Food Logs endpoint returns a summary and list of a user's food log entries for a given day in the format requested.
+     * The Get Food Logs endpoint returns a summary and list of a user's food log entries for a given day.
      * @param {any} date
      * @returns {Promise}
      */
@@ -708,7 +705,7 @@ const Hypertonic = (token) => {
     /**
      * Get Body Time Series
      *
-     * The Get Body Time Series API returns time series data in the specified range for a given resource in the format requested using units in the unit systems that corresponds to the Accept-Language header provided.
+     * The Get Body Time Series API returns time series data in the specified range.
      *
      * @param {any} bodyMetric
      * @param {any} from
@@ -735,7 +732,7 @@ const Hypertonic = (token) => {
     /**
      * Get Activity Time Series
      *
-     * The Get Activity Time Series endpoint returns time series data in the specified range for a given resource in the format requested using units in the unit system that corresponds to the Accept-Language header provided.
+     * The Get Activity Time Series endpoint returns time series data in the specified range.
      *
      * @param {any} activity name of activity e.g. steps, heartrate
      * @param {any} from from date

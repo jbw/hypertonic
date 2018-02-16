@@ -7,6 +7,8 @@ module.exports = function (env) {
 
     return webpackMerge(webpackConfigBase(env), {
 
+        devtool: 'cheap-module-source-map',
+
         performance: {
             hints: 'warning'
         },
@@ -34,8 +36,9 @@ module.exports = function (env) {
                     join_vars: true
                 },
                 output: {
-                    comments: false // allow comments in debug mode
-                }
+                    comments: false
+                },
+                sourceMap: true
             })
         ]
     });
