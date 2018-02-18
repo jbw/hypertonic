@@ -630,10 +630,8 @@ const Hypertonic = (token) => {
 
         date = date || DEFAULT_DATE;
 
-        if (date) {
-            if (!(_isValidDateFormat(date) || _isValidBaseDate(date))) {
-                return _throwInvalidParameterException();
-            }
+        if (!(_isValidDateFormat(date) || _isValidBaseDate(date))) {
+            return _throwInvalidParameterException();
         }
 
         const resourceParts = [

@@ -8,10 +8,10 @@ Fitbit API Wrapper :running: :tropical_drink:
 
 
 
-| Branch  | Status                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| master  | [![CircleCI](https://circleci.com/gh/jbw/hypertonic/tree/master.svg?style=shield)](https://circleci.com/gh/jbw/hypertonic/tree/master)  [![Coverage Status](https://coveralls.io/repos/github/jbw/hypertonic/badge.svg?branch=master)](https://coveralls.io/github/jbw/hypertonic?branch=master) [![Known Vulnerabilities](https://snyk.io/test/github/jbw/hypertonic/badge.svg)](https://snyk.io/test/github/jbw/hypertonic) |
-| develop | [![CircleCI](https://circleci.com/gh/jbw/hypertonic/tree/develop.svg?style=shield)](https://circleci.com/gh/jbw/hypertonic/tree/master) [![Coverage Status](https://coveralls.io/repos/github/jbw/hypertonic/badge.svg?branch=develop)](https://coveralls.io/github/jbw/hypertonic?branch=master)                                                                                                                             |
+| Branch  | Status                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| master  | [![CircleCI](https://circleci.com/gh/jbw/hypertonic/tree/master.svg?style=shield)](https://circleci.com/gh/jbw/hypertonic/tree/master)  [![Coverage Status](https://coveralls.io/repos/github/jbw/hypertonic/badge.svg?branch=master)](https://coveralls.io/github/jbw/hypertonic?branch=master) [![Known Vulnerabilities](https://snyk.io/test/github/jbw/hypertonic/badge.svg)](https://snyk.io/test/github/jbw/hypertonic) [![Bundle size](http://img.badgesize.io/jbw/hypertonic/master/src/api/index.js?compression=gzip)](http://img.badgesize.io/jbw/hypertonic/master/src/api/index.js?compression=gzip) |
+| develop | [![CircleCI](https://circleci.com/gh/jbw/hypertonic/tree/develop.svg?style=shield)](https://circleci.com/gh/jbw/hypertonic/tree/master) [![Coverage Status](https://coveralls.io/repos/github/jbw/hypertonic/badge.svg?branch=develop)](https://coveralls.io/github/jbw/hypertonic?branch=master)                                                                                                                                                                                                                                                                                                                |
 
 
 ## Example
@@ -230,10 +230,10 @@ The Get Food or Water Time Series endpoint returns time series data in the speci
 
 **Kind**: inner method of [<code>Hypertonic</code>](#Hypertonic)
 
-| Param | Type                                                             |
-| ------------- | -------------------------------------------------------------------- |
-| from      | <code>any</code> |
-| to                | <code>any</code> |
+| Param | Type             |
+| ----- | ---------------- |
+| from  | <code>any</code> |
+| to    | <code>any</code> |
 
 <a name="Hypertonic..getWaterTimeSeries"></a>
 
@@ -244,10 +244,10 @@ The Get Food or Water Time Series endpoint returns time series data in the speci
 
 **Kind**: inner method of [<code>Hypertonic</code>](#Hypertonic)
 
-| Param | Type |
-| --- | --- |
-| from | <code>any</code> |
-| to | <code>any</code> |
+| Param | Type             |
+| ----- | ---------------- |
+| from  | <code>any</code> |
+| to    | <code>any</code> |
 
 <a name="Hypertonic..getDevices"></a>
 
@@ -364,10 +364,10 @@ The Get Body Fat Logs API retrieves a list of all user's body fat log entries fo
 
 **Kind**: inner method of [<code>Hypertonic</code>](#Hypertonic)
 
-| Param | Type |
-| --- | --- |
-| from | <code>any</code> |
-| to | <code>any</code> |
+| Param | Type             |
+| ----- | ---------------- |
+| from  | <code>any</code> |
+| to    | <code>any</code> |
 
 <a name="Hypertonic..getBodyWeightLogs"></a>
 
@@ -378,10 +378,10 @@ The Get Weight Logs API retrieves a list of all user's body weight log entries f
 
 **Kind**: inner method of [<code>Hypertonic</code>](#Hypertonic)
 
-| Param | Type |
-| --- | --- |
-| from | <code>any</code> |
-| to | <code>any</code> |
+| Param | Type                         |
+| ------- | ----------------------------- |
+| from   | <code>any</code> |
+| to       | <code>any</code> |
 
 <a name="Hypertonic..getSleepLogs"></a>
 
@@ -409,9 +409,9 @@ corresponds to the Accept-Language header provided.
 
 **Kind**: inner method of [<code>Hypertonic</code>](#Hypertonic)
 
-| Param | Type                                     |
-| --------- | ------------------------------------------ |
-| date    | <code>any</code> |
+| Param | Type             |
+| ----- | ---------------- |
+| date  | <code>any</code> |
 
 <a name="Hypertonic..getWaterLogs"></a>
 
@@ -422,9 +422,9 @@ The Get Water Logs endpoint retrieves a summary and list of a user's water log e
 
 **Kind**: inner method of [<code>Hypertonic</code>](#Hypertonic)
 
-| Param | Type |
-| --- | --- |
-| date | <code>any</code> |
+| Param | Type             |
+| ----- | ---------------- |
+| date  | <code>any</code> |
 
 <a name="Hypertonic..getFoodLogs"></a>
 
@@ -435,9 +435,9 @@ The Get Food Logs endpoint returns a summary and list of a user's food log entri
 
 **Kind**: inner method of [<code>Hypertonic</code>](#Hypertonic)
 
-| Param | Type |
-| --- | --- |
-| date | <code>any</code> |
+| Param | Type             |
+| ----- | ---------------- |
+| date  | <code>any</code> |
 
 <a name="Hypertonic..getBodyTimeSeries"></a>
 
