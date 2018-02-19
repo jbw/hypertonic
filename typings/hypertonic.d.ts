@@ -41,10 +41,10 @@ interface HypertonicFuncsInterface {
     getBodyWeightLogs(from: string, to?: string): Promise<any>;
     getSleepGoal(): Promise<any>;
     getSleepLogsList(beforeDate: string, afterDate: string, sort: string, limit: string): Promise<any>;
-}
+};
 interface HypertonicInterface {
     (token: string): HypertonicFuncsInterface;
-}
+};
 
 
 declare const hypertonic: HypertonicInterface;

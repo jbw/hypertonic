@@ -17,7 +17,7 @@ export interface Friend {
         strideLengthWalking: number;
         timezone: string;
         weight: number;
-    }
+    };
 }
 
 export interface Friends {

@@ -2,19 +2,12 @@
     "compilerOptions": {
         "target": "es6",
         "module": "es2015",
-        "sourceMap": true,
-        "noImplicitAny": false,
-        "jsx": "react",
-        "declaration": true,
-        "noEmit": true
+        "noEmit": true,
+        "strict": true,
+        "skipLibCheck": true,
+        "moduleResolution": "node",
     },
-    "include": [
-        "typings/*.d.ts",
-        "src/**/*",
-        "typings/**/*.ts"
+    "typeRoots": [
+        "./node_modules/@types"
     ],
-    "exclude": [
-        "node_modules",
-        "**/*.spec.ts"
-    ]
 }
