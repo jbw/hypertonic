@@ -45,6 +45,7 @@ describe('#Body Fat and Weight Logs', () => {
     });
 
     it('should get body fat logs', (done) => {
+
         api.getBodyFatLogs('2017-01-01').then(json => {
             expect(json.fat).to.be.an('array');
             done();

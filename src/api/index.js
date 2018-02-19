@@ -1,5 +1,7 @@
-const axios = require('axios');
-const appendQuery = require('append-query');
+const data = require('./data');
+const fetch = data.fetch;
+const setHeaderOptions = data.setHeaderOptions;
+const error = require('./error');
 const routes = require('./routes.json');
 
 
@@ -9,73 +11,87 @@ const routes = require('./routes.json');
  * @param {any} token
  * @returns
  */
-
-
-
-
-    const fetch = (resourceParts, urlParams, extension = '.json') => {
-        const url = getURL(resourceParts, urlParams, extension);
-
-        return axios.get(url)
-            .then(res => res.data)
-            .catch(err => { throw err.response.data; });
-    };
-
-    const getHeaderOptions = (token, locale) => {
-
-        return {
-            headers: {
-                'Authorization': 'Bearer ' + token,
-                'Accept-Language': locale
-            }
-        };
-    };
-
-
-const getURL = (resourceParts, urlParams, extension = '.json') => {
-    let route = resourceParts.join('/') + extension;
-    if (urlParams) {
-        route = appendQuery(route, urlParams);
-    }
-    return route;
-};
-
-const DEFAULT_DATE = 'today';
-const DEFAULT_PERIOD = '1d';
-const FITBIT_DATE_FORMAT = 'YYYY-MM-DD';
-
-const isValidDate = date => {
-    const regex = /^\d{4}-\d{2}-\d{2}$/;
-    return date.match(regex) !== null;
-};
-
-const isValidDateFormat = dateString => isValidDate(dateString, FITBIT_DATE_FORMAT);
-
-const isValidDatePeriod = period => routes.dateFormats.parameters.periods.includes(period);
-
-const isValidBaseDate = baseDate => routes.dateFormats.parameters.baseDates.includes(baseDate);
-
-const isFromParamterValid = (from) => isValidBaseDate(from) || isValidDateFormat(from);
-const isToParamterValid = (to) => isValidDatePeriod(to) || isValidDateFormat(to);
-const isFromAndToParamtersValid = (from, to) => isFromParamterValid(from) && isToParamterValid(to);
-
-const throwInvalidParameterException = () => {
-    return new Promise(function () {
-        throw new Error('Functions parameters invalid');
-    });
-};
-
-const handleFromAndToParameter = (from, to) => {
-    if (!isFromAndToParamtersValid(from, to)) {
-        return throwInvalidParameterException();
-    }
-};
-
-const Hypertonic = (token) => {
-
+const api = (token) => {
 
     if (token === undefined) throw new Error('token is not defined.');
-    axios.default.headers = getHeaderOptions(token);
+    setHeaderOptions(token);
+
+    const DEFAULT_DATE = 'today';
+    const DEFAULT_PERIOD = '1d';
+    const FITBIT_DATE_FORMAT = 'YYYY-MM-DD';
+
+    const isValidDate = date => {
+        const regex = /^\d{4}-\d{2}-\d{2}$/;
+        return date.match(regex) !== null;
+    };
+
+    const isValidDateFormat = dateString => isValidDate(dateString, FITBIT_DATE_FORMAT);
+    const isValidDatePeriod = period => routes.dateFormats.parameters.periods.includes(period);
+    const isValidBaseDate = baseDate => routes.dateFormats.parameters.baseDates.includes(baseDate);
+    const isFromParamterValid = (from) => isValidBaseDate(from) || isValidDateFormat(from);
+    const isToParamterValid = (to) => isValidDatePeriod(to) || isValidDateFormat(to);
+    const isFromAndToParamtersValid = (from, to) => isFromParamterValid(from) && isToParamterValid(to);
+
+    const handleFromAndToParameter = (from, to) => {
+        if (!isFromAndToParamtersValid(from, to)) {
+            return error.throwInvalidParameterException();
+        }
+    };
+
+    const _getActivity = (activity) => {
+
+        const resourceParts = [
+            routes.userBase,
+            routes.activities.route,
+            activity
+        ];
+
+        return fetch(resourceParts);
+    };
+
+    const _getFoodWaterLog = (type, date) => {
+
+        if (date) {
+            if (!(isValidDateFormat(date) || isValidBaseDate(date))) {
+                return error.throwInvalidParameterException();
+            }
+        }
+
+        const resourceParts = [
+            routes.userBase,
+            routes.food.route,
+            type,
+            routes.dateFormats.route,
+            date
+        ];
+
+        return fetch(resourceParts);
+    };
+
+    const _getFoodLogInfo = (foodType) => {
+        const resourceParts = [
+            routes.userBase,
+            routes.food.route,
+            routes.food.resource.log.route,
+            foodType
+        ];
+
+        return fetch(resourceParts);
+    };
+
+    const _getFoodWaterTimeSeries = (activity, from = DEFAULT_DATE, to = DEFAULT_PERIOD) => {
+
+        const resourceParts = [
+            routes.userBase,
+            routes.food.route,
+            activity,
+            routes.dateFormats.route,
+            from,
+            to
+        ];
+
+        return handleFromAndToParameter(from, to) || fetch(resourceParts);
+    };
 
     /**
     * Get a User Profile data.
@@ -182,17 +198,6 @@ const Hypertonic = (token) => {
         const resourceParts = [
             routes.globalBase,
             routes.food.route,
-            foodType
-        ];
-
-        return fetch(resourceParts);
-    };
-
-    const _getFoodLogInfo = (foodType) => {
-        const resourceParts = [
-            routes.userBase,
-            routes.food.route,
-            routes.food.resource.log.route,
             foodType
         ];
 
@@ -493,6 +498,7 @@ const Hypertonic = (token) => {
             routes.activities.route,
             routes.activities.resource.list
         ];
+
         return fetch(resourceParts);
     };
 
@@ -524,9 +530,10 @@ const Hypertonic = (token) => {
      * @returns {Promise}
      */
     const getBodyFatLogs = (from, to) => {
+
         if (to !== undefined) {
             if (!isValidDateFormat(from)) {
-                return throwInvalidParameterException();
+                return error.throwInvalidParameterException();
             }
         }
 
@@ -559,7 +566,7 @@ const Hypertonic = (token) => {
 
         if (to !== undefined) {
             if (!isValidDateFormat(from)) {
-                return throwInvalidParameterException();
+                return error.throwInvalidParameterException();
             }
         }
 
@@ -588,13 +595,13 @@ const Hypertonic = (token) => {
      * @param {any} to
      * @returns {Promise}
      */
-    const getSleepLogs = (from, to) => {
+    const getSleepLogs = (from = DEFAULT_DATE, to) => {
 
         const resourceParts = [
             routes.sleep.userBase,
             routes.sleep.route,
             routes.dateFormats.route,
-            from || DEFAULT_DATE
+            from
         ];
 
         if (to) {
@@ -636,16 +643,6 @@ const Hypertonic = (token) => {
         return fetch(resourceParts);
     };
 
-    const _getActivity = (activity) => {
-
-        const resourceParts = [
-            routes.userBase,
-            routes.activities.route,
-            activity
-        ];
-
-        return fetch(resourceParts);
-    };
 
     /**
      * Get Daily Activity Summary
@@ -655,12 +652,10 @@ const Hypertonic = (token) => {
      * @param {any} date
      * @returns {Promise}
      */
-    const getSummary = (date) => {
-
-        date = date || DEFAULT_DATE;
+    const getSummary = (date = DEFAULT_DATE) => {
 
         if (!(isValidDateFormat(date) || isValidBaseDate(date))) {
-            return throwInvalidParameterException();
+            return error.throwInvalidParameterException();
         }
 
         const resourceParts = [
@@ -696,28 +691,6 @@ const Hypertonic = (token) => {
         return _getFoodWaterLog(routes.food.resource.log.route, date);
     };
 
-    const _getFoodWaterLog = (type, date) => {
-
-        if (date) {
-            if (!(isValidDateFormat(date) || isValidBaseDate(date))) {
-                return throwInvalidParameterException();
-            }
-        }
-
-        const resourceParts = [
-            routes.userBase,
-            routes.food.route,
-            type,
-            routes.dateFormats.route,
-            date
-        ];
-
-        return fetch(resourceParts);
-    };
-
-
-
-
     /**
      * Get Body Time Series
      *
@@ -728,9 +701,9 @@ const Hypertonic = (token) => {
      * @param {any} to
      * @returns {Promise}
      */
-    const getBodyTimeSeries = (bodyMetric, from, to) => {
-        from = from || DEFAULT_DATE;
-        to = to || DEFAULT_PERIOD;
+    const getBodyTimeSeries = (bodyMetric, from = DEFAULT_DATE, to = DEFAULT_PERIOD) => {
+
+        handleFromAndToParameter(from, to);
 
         const resourceParts = [
             routes.userBase,
@@ -741,7 +714,6 @@ const Hypertonic = (token) => {
             to
         ];
 
-        handleFromAndToParameter(from, to);
         return fetch(resourceParts);
     };
 
@@ -755,29 +727,11 @@ const Hypertonic = (token) => {
      * @param {any} to to date
      * @returns {Promise} Activity time series data.
      */
-    const getTimeSeries = (activity, from, to) => {
-        from = from || DEFAULT_DATE;
-        to = to || DEFAULT_PERIOD;
+    const getTimeSeries = (activity, from = DEFAULT_DATE, to = DEFAULT_PERIOD) => {
 
         const resourceParts = [
             routes.userBase,
             routes.activities.route,
-            activity,
-            routes.dateFormats.route,
-            from,
-            to
-        ];
-
-        return handleFromAndToParameter(from, to) || fetch(resourceParts);
-    };
-
-    const _getFoodWaterTimeSeries = (activity, from, to) => {
-        from = from || DEFAULT_DATE;
-        to = to || DEFAULT_PERIOD;
-
-        const resourceParts = [
-            routes.userBase,
-            routes.food.route,
             activity,
             routes.dateFormats.route,
             from,
@@ -830,5 +784,4 @@ const Hypertonic = (token) => {
     };
 };
 
-
-module.exports = Hypertonic;
+module.exports = api;
