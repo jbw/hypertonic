@@ -2,21 +2,27 @@ const axios = require('axios');
 const appendQuery = require('append-query');
 const routes = require('./routes.json');
 
+
 /**
  * Fitbit Web API Wrapper
  *
  * @param {any} token
  * @returns
  */
-const Hypertonic = (token) => {
 
-    if (token === undefined) throw new Error('token is not defined.');
 
-    const DEFAULT_DATE = 'today';
-    const DEFAULT_PERIOD = '1d';
-    const FITBIT_DATE_FORMAT = 'YYYY-MM-DD';
 
-    const _getHeaderOptions = (token, locale) => {
+
+    const fetch = (resourceParts, urlParams, extension = '.json') => {
+        const url = getURL(resourceParts, urlParams, extension);
+
+        return axios.get(url)
+            .then(res => res.data)
+            .catch(err => { throw err.response.data; });
+    };
+
+    const getHeaderOptions = (token, locale) => {
+
         return {
             headers: {
                 'Authorization': 'Bearer ' + token,
@@ -25,48 +31,71 @@ const Hypertonic = (token) => {
         };
     };
 
-    axios.defaults.headers = _getHeaderOptions(token);
 
-    //const _getDateNow = offset => moment(new Date()).add(offset, 'days').format(FITBIT_DATE_FORMAT);
+const getURL = (resourceParts, urlParams, extension = '.json') => {
+    let route = resourceParts.join('/') + extension;
+    if (urlParams) {
+        route = appendQuery(route, urlParams);
+    }
+    return route;
+};
 
-    const _isValidDate = date => {
-        const regex = /^\d{4}-\d{2}-\d{2}$/;
-        return date.match(regex) !== null;
-    };
+const DEFAULT_DATE = 'today';
+const DEFAULT_PERIOD = '1d';
+const FITBIT_DATE_FORMAT = 'YYYY-MM-DD';
 
-    const _isValidDateFormat = dateString => _isValidDate(dateString, FITBIT_DATE_FORMAT);
+const isValidDate = date => {
+    const regex = /^\d{4}-\d{2}-\d{2}$/;
+    return date.match(regex) !== null;
+};
 
-    const _isValidDatePeriod = period => routes.dateFormats.parameters.periods.includes(period);
+const isValidDateFormat = dateString => isValidDate(dateString, FITBIT_DATE_FORMAT);
 
-    const _isValidBaseDate = baseDate => routes.dateFormats.parameters.baseDates.includes(baseDate);
+const isValidDatePeriod = period => routes.dateFormats.parameters.periods.includes(period);
 
-    const getURL = (resourceParts, urlParams, extension = '.json') => {
-        let route = resourceParts.join('/') + extension;
-        if (urlParams) {
-            route = appendQuery(route, urlParams);
-        }
-        return route;
-    };
+const isValidBaseDate = baseDate => routes.dateFormats.parameters.baseDates.includes(baseDate);
+
+const isFromParamterValid = (from) => isValidBaseDate(from) || isValidDateFormat(from);
+const isToParamterValid = (to) => isValidDatePeriod(to) || isValidDateFormat(to);
+const isFromAndToParamtersValid = (from, to) => isFromParamterValid(from) && isToParamterValid(to);
+
+const throwInvalidParameterException = () => {
+    return new Promise(function () {
+        throw new Error('Functions parameters invalid');
+    });
+};
+
+const handleFromAndToParameter = (from, to) => {
+    if (!isFromAndToParamtersValid(from, to)) {
+        return throwInvalidParameterException();
+    }
+};
+
+const Hypertonic = (token) => {
+
+
+    if (token === undefined) throw new Error('token is not defined.');
+    axios.default.headers = getHeaderOptions(token);
 
     /**
-     * Get a User Profile data.
-     *
-     * @returns {Promise}
-     */
+    * Get a User Profile data.
+    *
+    * @returns {Promise}
+    */
     const getProfile = () => {
         const resourceParts = [
             routes.userBase,
             routes.user.resource.profile
         ];
 
-        return _fetch(resourceParts);
+        return fetch(resourceParts);
     };
 
     /**
      * Get Lifetime Stats
      *
      * The Get Lifetime Stats endpoint retrieves the user's activity statistics.
-     * 
+     *
      * @returns {Promise}
      */
     const getLifetimeStats = () => {
@@ -75,7 +104,7 @@ const Hypertonic = (token) => {
             routes.activities.route
         ];
 
-        return _fetch(resourceParts);
+        return fetch(resourceParts);
     };
 
     /**
@@ -91,14 +120,14 @@ const Hypertonic = (token) => {
             routes.friends.resource.invitations
         ];
 
-        return _fetch(resourceParts);
+        return fetch(resourceParts);
     };
 
     /**
      * Get Badges
      *
-     * The Get Badges endpoint retrieves user's badges in the format requested. 
-     * 
+     * The Get Badges endpoint retrieves user's badges in the format requested.
+     *
      * @returns {Promise}
      */
     const getBadges = () => {
@@ -107,14 +136,14 @@ const Hypertonic = (token) => {
             routes.user.resource.badges
         ];
 
-        return _fetch(resourceParts);
+        return fetch(resourceParts);
     };
 
     /**
      * Get Frequent Activities
      *
-     * The Get Frequent Activities endpoint retrieves a list of a user's frequent activities. 
-     * 
+     * The Get Frequent Activities endpoint retrieves a list of a user's frequent activities.
+     *
      * @returns {Promise}
      */
     const getFrequentActivities = () => {
@@ -125,7 +154,7 @@ const Hypertonic = (token) => {
      * Get Recent Activity Types
      *
      * The Get Recent Activity Types endpoint retrieves a list of a user's recent activities types logged with some details of the last activity log of that type.
-     * 
+     *
      * @returns {Promise}
      */
     const getRecentActivities = () => {
@@ -156,7 +185,7 @@ const Hypertonic = (token) => {
             foodType
         ];
 
-        return _fetch(resourceParts);
+        return fetch(resourceParts);
     };
 
     const _getFoodLogInfo = (foodType) => {
@@ -167,7 +196,7 @@ const Hypertonic = (token) => {
             foodType
         ];
 
-        return _fetch(resourceParts);
+        return fetch(resourceParts);
     };
 
     /**
@@ -212,7 +241,7 @@ const Hypertonic = (token) => {
             routes.food.resource.meals
         ];
 
-        return _fetch(resourceParts);
+        return fetch(resourceParts);
     };
 
     /**
@@ -229,7 +258,7 @@ const Hypertonic = (token) => {
             mealId
         ];
 
-        return _fetch(resourceParts);
+        return fetch(resourceParts);
     };
 
     /**
@@ -245,7 +274,7 @@ const Hypertonic = (token) => {
             routes.food.resource.units
         ];
 
-        return _fetch(resourceParts);
+        return fetch(resourceParts);
     };
 
     /**
@@ -261,7 +290,7 @@ const Hypertonic = (token) => {
             routes.food.resource.locales
         ];
 
-        return _fetch(resourceParts);
+        return fetch(resourceParts);
     };
 
     /**
@@ -279,7 +308,7 @@ const Hypertonic = (token) => {
             routes.food.resource.log.resource.goal
         ];
 
-        return _fetch(resourceParts);
+        return fetch(resourceParts);
     };
 
     /**
@@ -297,7 +326,7 @@ const Hypertonic = (token) => {
             routes.food.resource.log.resource.goal
         ];
 
-        return _fetch(resourceParts);
+        return fetch(resourceParts);
     };
 
     /**
@@ -336,7 +365,7 @@ const Hypertonic = (token) => {
             routes.devices.route
         ];
 
-        return _fetch(resourceParts);
+        return fetch(resourceParts);
     };
 
     /**
@@ -355,7 +384,7 @@ const Hypertonic = (token) => {
             routes.devices.resource.alarms
         ];
 
-        return _fetch(resourceParts);
+        return fetch(resourceParts);
     };
 
     /**
@@ -370,7 +399,7 @@ const Hypertonic = (token) => {
             routes.activities.route
         ];
 
-        return _fetch(resourceParts);
+        return fetch(resourceParts);
     };
 
     /**
@@ -388,7 +417,7 @@ const Hypertonic = (token) => {
             period
         ];
 
-        return _fetch(resourceParts);
+        return fetch(resourceParts);
 
     };
 
@@ -407,7 +436,7 @@ const Hypertonic = (token) => {
             activityId
         ];
 
-        return _fetch(resourceParts);
+        return fetch(resourceParts);
     };
 
     /**
@@ -428,7 +457,7 @@ const Hypertonic = (token) => {
             routes.body.resource.log.resource.goal
         ];
 
-        return _fetch(resourceParts);
+        return fetch(resourceParts);
     };
 
     /**
@@ -449,7 +478,7 @@ const Hypertonic = (token) => {
             resourceParts.push(friends);
         }
 
-        return _fetch(resourceParts);
+        return fetch(resourceParts);
     };
 
     /**
@@ -464,14 +493,14 @@ const Hypertonic = (token) => {
             routes.activities.route,
             routes.activities.resource.list
         ];
-        return _fetch(resourceParts);
+        return fetch(resourceParts);
     };
 
     /**
      * Get Activity TCX
-     *  
+     *
      * The Get Activity TCX endpoint retrieves the details of a user's location and heart rate data during a logged exercise activity.
-     *     
+     *
      * @param {any} logId
      * @returns {Promise}
      */
@@ -482,7 +511,7 @@ const Hypertonic = (token) => {
             logId
         ];
 
-        return _fetch(resourceParts, undefined, '.tcx');
+        return fetch(resourceParts, undefined, '.tcx');
     };
 
     /**
@@ -496,8 +525,8 @@ const Hypertonic = (token) => {
      */
     const getBodyFatLogs = (from, to) => {
         if (to !== undefined) {
-            if (!_isValidDateFormat(from)) {
-                return _throwInvalidParameterException();
+            if (!isValidDateFormat(from)) {
+                return throwInvalidParameterException();
             }
         }
 
@@ -514,7 +543,7 @@ const Hypertonic = (token) => {
             resourceParts.push(to);
         }
 
-        return _fetch(resourceParts);
+        return fetch(resourceParts);
     };
 
     /**
@@ -529,8 +558,8 @@ const Hypertonic = (token) => {
     const getBodyWeightLogs = (from, to) => {
 
         if (to !== undefined) {
-            if (!_isValidDateFormat(from)) {
-                return _throwInvalidParameterException();
+            if (!isValidDateFormat(from)) {
+                return throwInvalidParameterException();
             }
         }
 
@@ -547,7 +576,7 @@ const Hypertonic = (token) => {
             resourceParts.push(to);
         }
 
-        return _fetch(resourceParts);
+        return fetch(resourceParts);
     };
 
 
@@ -572,7 +601,7 @@ const Hypertonic = (token) => {
             resourceParts.push(to);
         }
 
-        return _fetch(resourceParts);
+        return fetch(resourceParts);
     };
 
     /**
@@ -588,7 +617,7 @@ const Hypertonic = (token) => {
             routes.sleep.resource.list
         ];
 
-        return _fetch(resourceParts, { beforeDate, afterDate, sort, offset, limit });
+        return fetch(resourceParts, { beforeDate, afterDate, sort, offset, limit });
     };
 
     /**
@@ -604,7 +633,7 @@ const Hypertonic = (token) => {
             routes.sleep.resource.goal
         ];
 
-        return _fetch(resourceParts);
+        return fetch(resourceParts);
     };
 
     const _getActivity = (activity) => {
@@ -615,7 +644,7 @@ const Hypertonic = (token) => {
             activity
         ];
 
-        return _fetch(resourceParts);
+        return fetch(resourceParts);
     };
 
     /**
@@ -630,8 +659,8 @@ const Hypertonic = (token) => {
 
         date = date || DEFAULT_DATE;
 
-        if (!(_isValidDateFormat(date) || _isValidBaseDate(date))) {
-            return _throwInvalidParameterException();
+        if (!(isValidDateFormat(date) || isValidBaseDate(date))) {
+            return throwInvalidParameterException();
         }
 
         const resourceParts = [
@@ -641,14 +670,14 @@ const Hypertonic = (token) => {
             date
         ];
 
-        return _fetch(resourceParts);
+        return fetch(resourceParts);
     };
 
     /**
      * Get Water Logs
      *
      * The Get Water Logs endpoint retrieves a summary and list of a user's water log entries for a given day.
-     * 
+     *
      * @param {any} date
      * @returns {Promise}
      */
@@ -670,8 +699,8 @@ const Hypertonic = (token) => {
     const _getFoodWaterLog = (type, date) => {
 
         if (date) {
-            if (!(_isValidDateFormat(date) || _isValidBaseDate(date))) {
-                return _throwInvalidParameterException();
+            if (!(isValidDateFormat(date) || isValidBaseDate(date))) {
+                return throwInvalidParameterException();
             }
         }
 
@@ -683,24 +712,11 @@ const Hypertonic = (token) => {
             date
         ];
 
-        return _fetch(resourceParts);
+        return fetch(resourceParts);
     };
 
-    const _isFromParamterValid = (from) => _isValidBaseDate(from) || _isValidDateFormat(from);
-    const _isToParamterValid = (to) => _isValidDatePeriod(to) || _isValidDateFormat(to);
-    const _isFromAndToParamtersValid = (from, to) => _isFromParamterValid(from) && _isToParamterValid(to);
 
-    const _throwInvalidParameterException = () => {
-        return new Promise(function () {
-            throw new Error('Functions parameters invalid');
-        });
-    };
 
-    const _handleFromAndToParameter = (from, to) => {
-        if (!_isFromAndToParamtersValid(from, to)) {
-            return _throwInvalidParameterException();
-        }
-    };
 
     /**
      * Get Body Time Series
@@ -725,8 +741,8 @@ const Hypertonic = (token) => {
             to
         ];
 
-        _handleFromAndToParameter(from, to);
-        return _fetch(resourceParts);
+        handleFromAndToParameter(from, to);
+        return fetch(resourceParts);
     };
 
     /**
@@ -752,7 +768,7 @@ const Hypertonic = (token) => {
             to
         ];
 
-        return _handleFromAndToParameter(from, to) || _fetch(resourceParts);
+        return handleFromAndToParameter(from, to) || fetch(resourceParts);
     };
 
     const _getFoodWaterTimeSeries = (activity, from, to) => {
@@ -768,15 +784,7 @@ const Hypertonic = (token) => {
             to
         ];
 
-        return _handleFromAndToParameter(from, to) || _fetch(resourceParts);
-    };
-
-    const _fetch = (resourceParts, urlParams, extension = '.json') => {
-        const url = getURL(resourceParts, urlParams, extension);
-
-        return axios.get(url)
-            .then(res => res.data)
-            .catch(err => { throw err.response.data; });
+        return handleFromAndToParameter(from, to) || fetch(resourceParts);
     };
 
     return {
@@ -821,5 +829,6 @@ const Hypertonic = (token) => {
 
     };
 };
+
 
 module.exports = Hypertonic;
