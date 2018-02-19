@@ -1,8 +1,9 @@
-import { SleepLogs } from "./sleeps";
-import { Friends } from "./friends";
+import { SleepLogs } from './sleeps';
+import { Friends, User } from './friends';
+import { User } from './user';
 
 interface HypertonicFuncsInterface {
-    getProfile(): Promise<any>;
+    getProfile(): Promise<User>;
     getBadges(): Promise<any>;
     getFavoriteActivities(): Promise<any>;
     getFrequentActivities(): Promise<any>;
