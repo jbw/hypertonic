@@ -18,14 +18,10 @@ const Hypertonic = (token) => {
 
     const _getHeaderOptions = (token, locale) => {
         return {
-            headers: {
-                'Authorization': 'Bearer ' + token,
-                'Accept-Language': locale
-            }
+            'Authorization': 'Bearer ' + token,
+            'Accept-Language': locale || 'en_GB'
         };
     };
-
-    axios.defaults.headers = _getHeaderOptions(token);
 
     //const _getDateNow = offset => moment(new Date()).add(offset, 'days').format(FITBIT_DATE_FORMAT);
 
@@ -66,7 +62,7 @@ const Hypertonic = (token) => {
      * Get Lifetime Stats
      *
      * The Get Lifetime Stats endpoint retrieves the user's activity statistics.
-     * 
+     *
      * @returns {Promise}
      */
     const getLifetimeStats = () => {
@@ -97,8 +93,8 @@ const Hypertonic = (token) => {
     /**
      * Get Badges
      *
-     * The Get Badges endpoint retrieves user's badges in the format requested. 
-     * 
+     * The Get Badges endpoint retrieves user's badges in the format requested.
+     *
      * @returns {Promise}
      */
     const getBadges = () => {
@@ -113,8 +109,8 @@ const Hypertonic = (token) => {
     /**
      * Get Frequent Activities
      *
-     * The Get Frequent Activities endpoint retrieves a list of a user's frequent activities. 
-     * 
+     * The Get Frequent Activities endpoint retrieves a list of a user's frequent activities.
+     *
      * @returns {Promise}
      */
     const getFrequentActivities = () => {
@@ -125,7 +121,7 @@ const Hypertonic = (token) => {
      * Get Recent Activity Types
      *
      * The Get Recent Activity Types endpoint retrieves a list of a user's recent activities types logged with some details of the last activity log of that type.
-     * 
+     *
      * @returns {Promise}
      */
     const getRecentActivities = () => {
@@ -469,9 +465,9 @@ const Hypertonic = (token) => {
 
     /**
      * Get Activity TCX
-     *  
+     *
      * The Get Activity TCX endpoint retrieves the details of a user's location and heart rate data during a logged exercise activity.
-     *     
+     *
      * @param {any} logId
      * @returns {Promise}
      */
@@ -648,7 +644,7 @@ const Hypertonic = (token) => {
      * Get Water Logs
      *
      * The Get Water Logs endpoint retrieves a summary and list of a user's water log entries for a given day.
-     * 
+     *
      * @param {any} date
      * @returns {Promise}
      */
@@ -773,6 +769,10 @@ const Hypertonic = (token) => {
 
     const _fetch = (resourceParts, urlParams, extension = '.json') => {
         const url = getURL(resourceParts, urlParams, extension);
+
+        const headers = _getHeaderOptions(token);
+        axios.defaults.headers.common['Authorization'] = headers.Authorization;
+        axios.defaults.headers.common['Accept-Language'] = headers['Accept-Language'];
 
         return axios.get(url)
             .then(res => res.data)
