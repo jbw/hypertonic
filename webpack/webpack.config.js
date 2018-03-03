@@ -10,7 +10,7 @@ module.exports = function (env) {
     }
     return {
         entry: ['./src/api/index.js'],
-
+        target: 'node',
         output: {
             path: resolve(__dirname, '../build'),
             filename: 'hypertonic.js',
