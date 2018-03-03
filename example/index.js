@@ -12,8 +12,8 @@ const serverConfig = {
     authPath: '/'
 };
 
-const auth = oauth2.create(fitbitConfig.credentials);
-const authUrl = auth.authorizationCode.authorizeURL({ scope: fitbitConfig.settings.scopes });
+const auth = oauth2.create(fitbitConfig.fitbit);
+const authUrl = auth.authorizationCode.authorizeURL({ scope: fitbitConfig.config.scopes });
 
 const app = express();
 
@@ -32,7 +32,7 @@ app.get(serverConfig.callbackPath, (req, res) => {
 
     const tokenConfig = {
         code: req.query.code,
-        expires_in: fitbitConfig.settings.expires_in
+        expires_in: fitbitConfig.config.expires_in
     };
 
     auth.authorizationCode.getToken(tokenConfig, (err, result) => {
@@ -49,9 +49,9 @@ app.get(serverConfig.callbackPath, (req, res) => {
 
 app.get('/example', (req, res) => {
 
-    Hypertonic(_token).getActivities().then(json => {
+    Hypertonic(_token).getSummary('today').then(json => {
         return res.status(200).json(json);
-    });
+    }).catch(err => res.status(200).json(err));
 });
 
 app.get(serverConfig.refreshPath, (req, res) => {

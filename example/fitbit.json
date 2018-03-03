@@ -1,8 +1,8 @@
 {
-    "credentials": {
+    "fitbit": {
         "client": {
-            "id": "<REAPLCE_WITH_CLIENT_ID>",
-            "secret": "<REPLACE_WITH_SECRET>"
+            "id": "",
+            "secret": ""
         },
         "auth": {
             "tokenHost": "https://api.fitbit.com",
@@ -11,8 +11,8 @@
             "authorizePath": "/oauth2/authorize"
         }
     },
-    "settings": {
-        "scopes": "activity profile settings social heartrate sleep location weight nutrition",
+    "config": {
+        "scopes": "activity profile settings social heartrate sleep",
         "expires_in": 604800
     }
 }

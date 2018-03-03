@@ -98,6 +98,7 @@ describe('#Sleep', () => {
 
             done(new Error('missing scope'));
         }).catch(err => {
+            console.log(err);
             expect(err.errors).to.not.be.undefined;
             expect(err.errors[0].errorType).to.equal('insufficient_scope');
             done();
