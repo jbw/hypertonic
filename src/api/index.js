@@ -799,7 +799,7 @@ const Hypertonic = (token) => {
 
         return axios.get(url)
             .then(res => res.data)
-            .catch(err => { console.log(err); throw err.response.data; });
+            .catch(err => { throw err.response.data; });
     };
 
     return {
