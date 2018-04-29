@@ -733,23 +733,46 @@ const Hypertonic = (token) => {
      * @param {any} activity name of activity e.g. steps, heartrate
      * @param {any} from from date
      * @param {any} to to date
+     * @param {any} detailLevel
      * @returns {Promise} Activity time series data.
      */
-    const getTimeSeries = (activity, from, to) => {
+    const getTimeSeries = (activity, from, to, detailLevel, startTime, endTime) => {
         from = from || DEFAULT_DATE;
         to = to || DEFAULT_PERIOD;
 
-        const resourceParts = [
-            routes.userBase,
-            routes.activities.route,
-            activity,
-            routes.dateFormats.route,
-            from,
-            to
-        ];
+        const resourceParts = [];
+        if (activity === 'heart' && detailLevel) {
+            // Intraday time series
+            resourceParts.push(
+                routes.userBase,
+                routes.activities.route,
+                activity,
+                routes.dateFormats.route,
+                from,
+                to,
+                detailLevel
+            );
+
+            if (startTime !== undefined && endTime !== undefined) {
+                resourceParts.push('time', startTime, endTime);
+            }
+
+
+        } else {
+            resourceParts.push(
+                routes.userBase,
+                routes.activities.route,
+                activity,
+                routes.dateFormats.route,
+                from,
+                to
+            );
+        }
+
 
         return _handleFromAndToParameter(from, to) || _fetch(resourceParts);
     };
+
 
     const _getFoodWaterTimeSeries = (activity, from, to) => {
         from = from || DEFAULT_DATE;

@@ -10,6 +10,7 @@ describe('#Heart Rate', () => {
 
     beforeEach(() => {
         const getActivitiesResponse = require('./fixtures/heart_rate.json');
+        const intraday = require('./fixtures/intraday.json');
 
         nock(fitbitDomain)
             .get('/1/user/-/activities/heart/date/today/1d.json')
@@ -22,6 +23,22 @@ describe('#Heart Rate', () => {
         nock(fitbitDomain)
             .get('/1/user/-/activities/heart/date/today.json')
             .reply(200, getActivitiesResponse);
+
+        nock(fitbitDomain)
+            .get('/1/user/-/activities/heart/date/2017-03-01/1d/1sec.json')
+            .reply(200, intraday);
+
+        nock(fitbitDomain)
+            .get('/1/user/-/activities/heart/date/2017-03-01/1d/1sec/time/00:00/00:01.json')
+            .reply(200, intraday);
+
+        nock(fitbitDomain)
+            .get('/1/user/-/activities/heart/date/today/1d/1sec.json')
+            .reply(200, intraday);
+
+        nock(fitbitDomain)
+            .get('/1/user/-/activities/heart/date/today/1d/1sec/time/00:00/00:01.json')
+            .reply(200, intraday);
 
     });
 
@@ -38,4 +55,53 @@ describe('#Heart Rate', () => {
             done(new Error());
         });
     });
+
+    it('should return intraday heart rate data (detail)', (done) => {
+        api.getTimeSeries('heart', 'today', '1d', '1sec').then(json => {
+            expect(json['activities-heart-intraday']).to.not.be.undefined;
+            expect(json['activities-heart-intraday'].datasetType).to.equal('second');
+            expect(json['activities-heart-intraday'].datasetInterval).to.equal(1);
+            done();
+        }).catch(err => {
+            console.log(err);
+            done(new Error());
+        });
+    });
+
+    it('should return intraday heart rate data (date and detail)', (done) => {
+        api.getTimeSeries('heart', '2017-03-01', '1d', '1sec').then(json => {
+            expect(json['activities-heart-intraday']).to.not.be.undefined;
+            expect(json['activities-heart-intraday'].datasetType).to.equal('second');
+            expect(json['activities-heart-intraday'].datasetInterval).to.equal(1);
+            done();
+        }).catch(err => {
+            console.log(err);
+            done(new Error());
+        });
+    });
+
+    it('should return intraday heart rate data (date, detail and time)', (done) => {
+        api.getTimeSeries('heart', 'today', '1d', '1sec', '00:00', '00:01').then(json => {
+            expect(json['activities-heart-intraday']).to.not.be.undefined;
+            expect(json['activities-heart-intraday'].datasetType).to.equal('second');
+            expect(json['activities-heart-intraday'].datasetInterval).to.equal(1);
+            done();
+        }).catch(err => {
+            console.log(err);
+            done(new Error());
+        });
+    });
+
+    it('should return intraday heart rate data (detail and time)', (done) => {
+        api.getTimeSeries('heart', '2017-03-01', '1d', '1sec', '00:00', '00:01').then(json => {
+            expect(json['activities-heart-intraday']).to.not.be.undefined;
+            expect(json['activities-heart-intraday'].datasetType).to.equal('second');
+            expect(json['activities-heart-intraday'].datasetInterval).to.equal(1);
+            done();
+        }).catch(err => {
+            console.log(err);
+            done(new Error());
+        });
+    });
+
 });
