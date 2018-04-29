@@ -748,6 +748,7 @@ const Hypertonic = (token) => {
                 routes.activities.route,
                 activity,
                 routes.dateFormats.route,
+                from,
                 to,
                 detailLevel
             );
@@ -798,7 +799,7 @@ const Hypertonic = (token) => {
 
         return axios.get(url)
             .then(res => res.data)
-            .catch(err => { throw err.response.data; });
+            .catch(err => { console.log(err); throw err.response.data; });
     };
 
     return {
