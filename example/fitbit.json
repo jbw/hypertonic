@@ -1,5 +1,5 @@
 {
-    "fitbit": {
+    "credentials": {
         "client": {
             "id": "",
             "secret": ""
@@ -11,7 +11,7 @@
             "authorizePath": "/oauth2/authorize"
         }
     },
-    "config": {
+    "settings": {
         "scopes": "activity profile settings social heartrate sleep location weight nutrition",
         "expires_in": 604800
     }
