@@ -30,6 +30,66 @@ hypertonic.getTimeSeries('calories', 'today', '7d').then(data => console.log(dat
 hypertonic.getTimeSeries('steps', 'today', '1m').then(data => console.log(data));
 ```
 
+## How can I get my token?
+
+A working example can be found in the example directory.
+### OAuth 2
+
+First off, to be able to authenticate and get your access token, you will need a <b>client id and secret</b> from [Fitbit](https://dev.fitbit.com/). This example uses `simple-oauth2`. The JSON object below contains the necessary information needed to authenticate.
+
+``` json
+{
+    "credentials": {
+        "client": {
+            "id": "<FROM_FITBIT>",
+            "secret": "<FROM_FITBIT>"
+        },
+        "auth": {
+            "tokenHost": "https://api.fitbit.com",
+            "tokenPath": "/oauth2/token",
+            "authorizeHost": "https://www.fitbit.com",
+            "authorizePath": "/oauth2/authorize"
+        }
+    },
+    "settings": {
+        "scopes": "activity profile settings social heartrate sleep",
+        "expires_in": 604800
+    }
+}
+```
+
+| Option        | Description                                                                      |
+| ------------- | -------------------------------------------------------------------------------- |
+| client id     | Identifier for your application given by the OAuth server.                       |
+| client secret | Only known to the application and the authorisation server.                      |
+| scopes        | Specify API access granted to the user. Must be a <i>space delimited string</i>. |
+
+
+
+``` javascript
+const auth = oauth2.create(fitbit.credentials);
+const authUrl = auth.authorizationCode
+                        .authorizeURL({ scope: fitbit.settings.scopes });
+```
+
+### Fitbit Token Object
+
+Once you authenticate with Fitbit you will receive an object which looks like the below code snippet. `hypertonic`  accepts the access_token value (e.g. `new `hypertonic` (token.access_token)`).
+
+```json
+{
+    "token": {
+        "access_token": "",
+        "expires_in": 604800,
+        "refresh_token": "",
+        "scope": "",
+        "token_type": "Bearer",
+        "user_id": "",
+        "expires_at": ""
+    }
+}
+```
+
 ## API Reference
 
 <a name="Hypertonic"></a>
@@ -41,43 +101,49 @@ hypertonic.getTimeSeries('steps', 'today', '1m').then(data => console.log(data))
 | token | <code>any</code> |
 
 
-* [Hypertonic(token)](#Hypertonic) ⇒ <code>Function</code>
-    * [~getProfile()](#Hypertonic..getProfile) ⇒ <code>Promise</code>
-    * [~getLifetimeStats()](#Hypertonic..getLifetimeStats) ⇒ <code>Promise</code>
-    * [~getInvitations()](#Hypertonic..getInvitations) ⇒ <code>Promise</code>
-    * [~getBadges()](#Hypertonic..getBadges) ⇒ <code>Promise</code>
-    * [~getFrequentActivities()](#Hypertonic..getFrequentActivities) ⇒ <code>Promise</code>
-    * [~getRecentActivities()](#Hypertonic..getRecentActivities) ⇒ <code>Promise</code>
-    * [~getFavoriteActivities()](#Hypertonic..getFavoriteActivities) ⇒ <code>Promise</code>
-    * [~getFood(foodType)](#Hypertonic..getFood) ⇒ <code>Promise</code>
-    * [~getFavoriteFoods()](#Hypertonic..getFavoriteFoods) ⇒ <code>Promise</code>
-    * [~getFrequentFoods()](#Hypertonic..getFrequentFoods) ⇒ <code>Promise</code>
-    * [~getRecentFoods()](#Hypertonic..getRecentFoods) ⇒ <code>Promise</code>
-    * [~getMeals()](#Hypertonic..getMeals) ⇒ <code>Promise</code>
-    * [~getMeal(mealId)](#Hypertonic..getMeal) ⇒ <code>Promise</code>
-    * [~getFoodUnits()](#Hypertonic..getFoodUnits) ⇒ <code>Promise</code>
-    * [~getFoodLocales()](#Hypertonic..getFoodLocales) ⇒ <code>Promise</code>
-    * [~getFoodGoals()](#Hypertonic..getFoodGoals) ⇒ <code>Promise</code>
-    * [~getWaterGoals()](#Hypertonic..getWaterGoals) ⇒ <code>Promise</code>
-    * [~getFoodTimeSeries(from, to)](#Hypertonic..getFoodTimeSeries) ⇒ <code>Promise</code>
-    * [~getWaterTimeSeries(from, to)](#Hypertonic..getWaterTimeSeries) ⇒ <code>Promise</code>
-    * [~getDevices()](#Hypertonic..getDevices) ⇒ <code>Promise</code>
-    * [~getAlarms(trackerId)](#Hypertonic..getAlarms) ⇒ <code>Promise</code>
-    * [~getActivityTypes()](#Hypertonic..getActivityTypes) ⇒ <code>Promise</code>
-    * [~getActivityGoals(period)](#Hypertonic..getActivityGoals) ⇒ <code>Promise</code>
-    * [~getActivityType(activityId)](#Hypertonic..getActivityType) ⇒ <code>Promise</code>
-    * [~getBodyGoal(bodyMetric)](#Hypertonic..getBodyGoal) ⇒ <code>Promise</code>
-    * [~getFriends(friends)](#Hypertonic..getFriends) ⇒ <code>Promise</code>
-    * [~getActivityLogsList()](#Hypertonic..getActivityLogsList) ⇒ <code>Promise</code>
-    * [~getActivityTCX(logId)](#Hypertonic..getActivityTCX) ⇒ <code>Promise</code>
-    * [~getBodyFatLogs(from, to)](#Hypertonic..getBodyFatLogs) ⇒ <code>Promise</code>
-    * [~getBodyWeightLogs(from, to)](#Hypertonic..getBodyWeightLogs) ⇒ <code>Promise</code>
-    * [~getSleepLogs(from, to)](#Hypertonic..getSleepLogs) ⇒ <code>Promise</code>
-    * [~getSummary(date)](#Hypertonic..getSummary) ⇒ <code>Promise</code>
-    * [~getWaterLogs(date)](#Hypertonic..getWaterLogs) ⇒ <code>Promise</code>
-    * [~getFoodLogs(date)](#Hypertonic..getFoodLogs) ⇒ <code>Promise</code>
-    * [~getBodyTimeSeries(bodyMetric, from, to)](#Hypertonic..getBodyTimeSeries) ⇒ <code>Promise</code>
-    * [~getTimeSeries(activity, from, to)](#Hypertonic..getTimeSeries) ⇒ <code>Promise</code>
+- [Hypertonic](#hypertonic)
+    - [Example](#example)
+    - [How can I get my token?](#how-can-i-get-my-token)
+        - [OAuth 2](#oauth-2)
+        - [Fitbit Token Object](#fitbit-token-object)
+    - [API Reference](#api-reference)
+        - [Hypertonic(token) ⇒ <code>Function</code>](#hypertonictoken--codefunction-code)
+        - [Hypertonic~getProfile() ⇒ <code>Promise</code>](#hypertonicgetprofile--codepromise-code)
+        - [Hypertonic~getLifetimeStats() ⇒ <code>Promise</code>](#hypertonicgetlifetimestats--codepromise-code)
+        - [Hypertonic~getInvitations() ⇒ <code>Promise</code>](#hypertonicgetinvitations--codepromise-code)
+        - [Hypertonic~getBadges() ⇒ <code>Promise</code>](#hypertonicgetbadges--codepromise-code)
+        - [Hypertonic~getFrequentActivities() ⇒ <code>Promise</code>](#hypertonicgetfrequentactivities--codepromise-code)
+        - [Hypertonic~getRecentActivities() ⇒ <code>Promise</code>](#hypertonicgetrecentactivities--codepromise-code)
+        - [Hypertonic~getFavoriteActivities() ⇒ <code>Promise</code>](#hypertonicgetfavoriteactivities--codepromise-code)
+        - [Hypertonic~getFood(foodType) ⇒ <code>Promise</code>](#hypertonicgetfoodfoodtype--codepromise-code)
+        - [Hypertonic~getFavoriteFoods() ⇒ <code>Promise</code>](#hypertonicgetfavoritefoods--codepromise-code)
+        - [Hypertonic~getFrequentFoods() ⇒ <code>Promise</code>](#hypertonicgetfrequentfoods--codepromise-code)
+        - [Hypertonic~getRecentFoods() ⇒ <code>Promise</code>](#hypertonicgetrecentfoods--codepromise-code)
+        - [Hypertonic~getMeals() ⇒ <code>Promise</code>](#hypertonicgetmeals--codepromise-code)
+        - [Hypertonic~getMeal(mealId) ⇒ <code>Promise</code>](#hypertonicgetmealmealid--codepromise-code)
+        - [Hypertonic~getFoodUnits() ⇒ <code>Promise</code>](#hypertonicgetfoodunits--codepromise-code)
+        - [Hypertonic~getFoodLocales() ⇒ <code>Promise</code>](#hypertonicgetfoodlocales--codepromise-code)
+        - [Hypertonic~getFoodGoals() ⇒ <code>Promise</code>](#hypertonicgetfoodgoals--codepromise-code)
+        - [Hypertonic~getWaterGoals() ⇒ <code>Promise</code>](#hypertonicgetwatergoals--codepromise-code)
+        - [Hypertonic~getFoodTimeSeries(from, to) ⇒ <code>Promise</code>](#hypertonicgetfoodtimeseriesfrom--to--codepromise-code)
+        - [Hypertonic~getWaterTimeSeries(from, to) ⇒ <code>Promise</code>](#hypertonicgetwatertimeseriesfrom--to--codepromise-code)
+        - [Hypertonic~getDevices() ⇒ <code>Promise</code>](#hypertonicgetdevices--codepromise-code)
+        - [Hypertonic~getAlarms(trackerId) ⇒ <code>Promise</code>](#hypertonicgetalarmstrackerid--codepromise-code)
+        - [Hypertonic~getActivityTypes() ⇒ <code>Promise</code>](#hypertonicgetactivitytypes--codepromise-code)
+        - [Hypertonic~getActivityGoals(period) ⇒ <code>Promise</code>](#hypertonicgetactivitygoalsperiod--codepromise-code)
+        - [Hypertonic~getActivityType(activityId) ⇒ <code>Promise</code>](#hypertonicgetactivitytypeactivityid--codepromise-code)
+        - [Hypertonic~getBodyGoal(bodyMetric) ⇒ <code>Promise</code>](#hypertonicgetbodygoalbodymetric--codepromise-code)
+        - [Hypertonic~getFriends(friends) ⇒ <code>Promise</code>](#hypertonicgetfriendsfriends--codepromise-code)
+        - [Hypertonic~getActivityLogsList() ⇒ <code>Promise</code>](#hypertonicgetactivitylogslist--codepromise-code)
+        - [Hypertonic~getActivityTCX(logId) ⇒ <code>Promise</code>](#hypertonicgetactivitytcxlogid--codepromise-code)
+        - [Hypertonic~getBodyFatLogs(from, to) ⇒ <code>Promise</code>](#hypertonicgetbodyfatlogsfrom--to--codepromise-code)
+        - [Hypertonic~getBodyWeightLogs(from, to) ⇒ <code>Promise</code>](#hypertonicgetbodyweightlogsfrom--to--codepromise-code)
+        - [Hypertonic~getSleepLogs(from, to) ⇒ <code>Promise</code>](#hypertonicgetsleeplogsfrom--to--codepromise-code)
+        - [Hypertonic~getSummary(date) ⇒ <code>Promise</code>](#hypertonicgetsummarydate--codepromise-code)
+        - [Hypertonic~getWaterLogs(date) ⇒ <code>Promise</code>](#hypertonicgetwaterlogsdate--codepromise-code)
+        - [Hypertonic~getFoodLogs(date) ⇒ <code>Promise</code>](#hypertonicgetfoodlogsdate--codepromise-code)
+        - [Hypertonic~getBodyTimeSeries(bodyMetric, from, to) ⇒ <code>Promise</code>](#hypertonicgetbodytimeseriesbodymetric--from--to--codepromise-code)
+        - [Hypertonic~getTimeSeries(activity, from, to, detailLevel, startTime, endTime) ⇒ <code>Promise</code>](#hypertonicgettimeseriesactivity--from--to--detaillevel--starttime--endtime--codepromise-code)
 
 <a name="Hypertonic..getProfile"></a>
 
@@ -378,10 +444,10 @@ The Get Weight Logs API retrieves a list of all user's body weight log entries f
 
 **Kind**: inner method of [<code>Hypertonic</code>](#Hypertonic)
 
-| Param | Type                         |
-| ------- | ----------------------------- |
-| from   | <code>any</code> |
-| to       | <code>any</code> |
+| Param | Type             |
+| ----- | ---------------- |
+| from  | <code>any</code> |
+| to    | <code>any</code> |
 
 <a name="Hypertonic..getSleepLogs"></a>
 
@@ -392,10 +458,10 @@ The Get Sleep Logs by Date endpoint returns a summary and list of a user's sleep
 
 **Kind**: inner method of [<code>Hypertonic</code>](#Hypertonic)
 
-| Param | Type |
-| --- | --- |
-| from | <code>any</code> |
-| to | <code>any</code> |
+| Param | Type             |
+| ----- | ---------------- |
+| from  | <code>any</code> |
+| to    | <code>any</code> |
 
 <a name="Hypertonic..getSummary"></a>
 
@@ -456,7 +522,7 @@ The Get Body Time Series API returns time series data in the specified range for
 
 <a name="Hypertonic..getTimeSeries"></a>
 
-### Hypertonic~getTimeSeries(activity, from, to) ⇒ <code>Promise</code>
+### Hypertonic~getTimeSeries(activity, from, to, detailLevel, startTime, endTime) ⇒ <code>Promise</code>
 Get Activity Time Series
 
 The Get Activity Time Series endpoint returns time series data in the specified range for a given resource in the format requested using units in the unit system that corresponds to the Accept-Language header provided.
@@ -464,69 +530,12 @@ The Get Activity Time Series endpoint returns time series data in the specified 
 **Kind**: inner method of [<code>Hypertonic</code>](#Hypertonic)
 **Returns**: <code>Promise</code> - Activity time series data.
 
-| Param    | Type             | Description                            |
-| -------- | ---------------- | -------------------------------------- |
-| activity | <code>any</code> | name of activity e.g. steps, heartrate |
-| from     | <code>any</code> | from date                              |
-| to       | <code>any</code> | to date                                |
+| Param       | Type             | Description                            |
+| ----------- | ---------------- | -------------------------------------- |
+| activity    | <code>any</code> | name of activity e.g. steps, heartrate |
+| from        | <code>any</code> | from date                              |
+| to          | <code>any</code> | to date                                |
+| detailLevel | <code>any</code> | granularity level e.g. 1sec            |
+| startTime   | <code>any</code> | time range parameter  e.g. 00:00       |
+| endTime     | <code>any</code> | time range parameter  e.g. 00:01       |
 
-
-## How can I get my token?
-
-A working example can be found in the example directory.
-### OAuth 2
-
-First off, to be able to authenticate and get your access token, you will need a <b>client id and secret</b> from [Fitbit](https://dev.fitbit.com/). This example uses `simple-oauth2`. The JSON object below contains the necessary information needed to authenticate.
-
-``` json
-{
-    "credentials": {
-        "client": {
-            "id": "<FROM_FITBIT>",
-            "secret": "<FROM_FITBIT>"
-        },
-        "auth": {
-            "tokenHost": "https://api.fitbit.com",
-            "tokenPath": "/oauth2/token",
-            "authorizeHost": "https://www.fitbit.com",
-            "authorizePath": "/oauth2/authorize"
-        }
-    },
-    "settings": {
-        "scopes": "activity profile settings social heartrate sleep",
-        "expires_in": 604800
-    }
-}
-```
-
-| Option        | Description                                                                      |
-| ------------- | -------------------------------------------------------------------------------- |
-| client id     | Identifier for your application given by the OAuth server.                       |
-| client secret | Only known to the application and the authorisation server.                      |
-| scopes        | Specify API access granted to the user. Must be a <i>space delimited string</i>. |
-
-
-
-``` javascript
-const auth = oauth2.create(fitbit.credentials);
-const authUrl = auth.authorizationCode
-                        .authorizeURL({ scope: fitbit.settings.scopes });
-```
-
-### Fitbit Token Object
-
-Once you authenticate with Fitbit you will receive an object which looks like the below code snippet. `hypertonic`  accepts the access_token value (e.g. `new `hypertonic` (token.access_token)`).
-
-```json
-{
-    "token": {
-        "access_token": "",
-        "expires_in": 604800,
-        "refresh_token": "",
-        "scope": "",
-        "token_type": "Bearer",
-        "user_id": "",
-        "expires_at": ""
-    }
-}
-```
