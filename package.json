@@ -1,6 +1,6 @@
 {
   "name": "hypertonic",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "description": "Fitbit API Wrapper",
   "typings": "typings/hypertonic.d.ts",
   "main": "build/hypertonic.js",
