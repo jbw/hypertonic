@@ -12,7 +12,8 @@
   "license": "MIT",
   "dependencies": {
     "append-query": "^2.0.1",
-    "axios": "^0.17.1"
+    "axios": "^0.17.1",
+    "snyk": "^1.161.1"
   },
   "files": [
     "build"
@@ -30,14 +31,15 @@
     "build": "webpack --env dev --config ./webpack/webpack.config.js",
     "build:prod": "webpack --env prod -p --config ./webpack/webpack.config.prod.js",
     "build:analyze": "webpack --env prod -p --config ./webpack/webpack.config.analyze.js",
-    "prepublish": "yarn run lint && yarn run test && yarn run build:prod",
+    "prepublish": "npm run snyk-protect; yarn run lint && yarn run test && yarn run build:prod",
     "publish": "npm run build:prod",
     "tslint": "tslint typings/*.ts",
     "lint": "eslint src",
     "typescript": "tsc --project ./typings/tests",
     "format": "eslint ./src/*.js --fix",
     "test:size": "bundlesize",
-    "test:ts": "mocha --opts ./typings/tests/mocha.opts"
+    "test:ts": "mocha --opts ./typings/tests/mocha.opts",
+    "snyk-protect": "snyk protect"
   },
   "nyc": {
     "exclude": [
@@ -84,5 +86,6 @@
     "webpack": "^3.10.0",
     "webpack-bundle-analyzer": "^2.10.0",
     "webpack-merge": "^4.1.1"
-  }
+  },
+  "snyk": true
 }
